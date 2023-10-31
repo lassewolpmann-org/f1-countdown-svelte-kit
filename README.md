@@ -1,4 +1,4 @@
-# f1-countdown.com
+# f2-countdown.com
 
 Source code for f2-countdown.com, a website created for F2 Fans to keep track of the schedule and never miss a race again.  
 
