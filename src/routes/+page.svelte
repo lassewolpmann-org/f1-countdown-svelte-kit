@@ -53,4 +53,4 @@
     <UpcomingEventList {nextEvents} />
 </main>
 <Border />
-<Footer />
+<Footer {seriesName} />
