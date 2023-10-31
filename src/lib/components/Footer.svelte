@@ -40,6 +40,18 @@
         <h4>Made with <i class="fa-solid fa-heart"></i><br>by Lasse Wolpmann</h4>
     </div>
     <div>
+        <h4>All series</h4>
+        <a href="https://f1-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 1
+        </a>
+        <a href="https://f2-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 2
+        </a>
+        <a href="https://f3-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 3
+        </a>
+    </div>
+    <div>
         <h4>Project links</h4>
         <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit" target="_blank">
             <i class="fa-brands fa-github"></i> Code
@@ -52,18 +64,6 @@
         </a>
         <a href="/privacy-policy" target="_blank">
             <i class="fa-solid fa-cookie-bite"></i> Privacy Policy
-        </a>
-    </div>
-    <div>
-        <h4>All countdowns</h4>
-        <a href="https://f1-countdown.com" target="_blank">
-            <i class="fa-solid fa-timer"></i> F1 Countdown
-        </a>
-        <a href="https://f2-countdown.com" target="_blank">
-            <i class="fa-solid fa-timer"></i> F2 Countdown
-        </a>
-        <a href="https://f3-countdown.com" target="_blank">
-            <i class="fa-solid fa-timer"></i> F3 Countdown
         </a>
     </div>
     <div>
