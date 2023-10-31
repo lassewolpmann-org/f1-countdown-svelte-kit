@@ -22,7 +22,7 @@ export class MetaDescription {
         const nextEventName = `${this.nextEvent.name} Grand Prix`;
         const nextEventSessions = Object.keys(this.nextEvent.sessions).map((sessionName => sessionName.toUpperCase()));
 
-        dString = dString.concat(`${nextEventYear} ${this.seriesName.toUpperCase()} ${nextEventName} ${nextEventSessions.join(', ')}; `)
+        dString = dString.concat(`${nextEventYear} ${this.seriesName.toUpperCase()} ${nextEventName} ${nextEventSessions.join(', ')}.`)
 
         return dString
     }
