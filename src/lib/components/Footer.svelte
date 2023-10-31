@@ -1,3 +1,6 @@
+<script lang="ts">
+    export let seriesName: string;
+</script>
 <style>
     footer {
         display: flex;
@@ -38,10 +41,10 @@
     </div>
     <div>
         <h4>Project links</h4>
-        <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit" target="_blank">
             <i class="fa-brands fa-github"></i> Code
         </a>
-        <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
             <i class="fa-solid fa-scale-balanced"></i> License
         </a>
         <a href="mailto:lasse@f1-countdown.com">
