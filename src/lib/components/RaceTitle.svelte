@@ -2,14 +2,9 @@
     // Type imports
     import type { Event } from "$lib/types/Data";
 
-    export let nextEvents: Event[];
+    export let nextEvent: Event | undefined, seriesName: string;
 
-    let nextEvent: undefined | Event, nextEventName: string;
-
-    $: if (nextEvents) {
-        nextEvent = nextEvents.at(0);
-        nextEventName = nextEvent !== undefined ? nextEvent.name : "Unknown Grand Prix";
-    }
+    const nextEventName: string = nextEvent ? nextEvent.name : "Undefined";
 </script>
 
 <style>
@@ -27,4 +22,4 @@
     }
 </style>
 
-<h1 class="event-name">{nextEventName} Grand Prix</h1>
+<h1 class="event-name">{seriesName.toUpperCase()} {nextEventName} Grand Prix</h1>

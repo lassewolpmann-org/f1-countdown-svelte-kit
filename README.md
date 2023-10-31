@@ -1,17 +1,15 @@
-# f1-countdown.com
+# f3-countdown.com
 
-Source code for f1-countdown.com, a website created for F1 Fans to keep track of the schedule and never miss a race again.  
-
-# Running Locally
+Source code for f3-countdown.com, a website created for F3 Fans to keep track of the schedule and never miss a race again.  
 
 ## Developing
 ```bash
 # clone project
-git clone https://github.com/lassewolpmann/f1-countdown-svelte-kit.git
-cd f1-countdown-svelte-kit/
+git clone https://github.com/lassewolpmann-org/f3-countdown-svelte-kit.git
+cd f3-countdown-svelte-kit/
 
 # install dependencies
-npm install (or pnpm install` or yarn`)
+npm install
 
 # start development server
 npm run dev
@@ -25,17 +23,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-## Running with Docker
-```bash
-docker compose up
-```
-
-or
-
-```bash
-docker compose up -d
-```
-
-to run in the background.  
-You can then access the running container on http://localhost:3000

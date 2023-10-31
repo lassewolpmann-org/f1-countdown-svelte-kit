@@ -1,6 +1,0 @@
-services:
-  f1-countdown:
-    container_name: "f1-countdown"
-    build: .
-    ports:
-      - "3000:3000"

@@ -3,17 +3,12 @@
     import Footer from "$lib/components/Footer.svelte";
     import Timer from "$lib/components/Timer/Timer.svelte";
     import UpcomingEventList from "$lib/components/UpcomingEventList/UpcomingEventList.svelte";
-    import SeriesSelection from "$lib/components/SeriesSelection/SeriesSelection.svelte";
     import Border from "$lib/components/Border.svelte";
     import MetaDescription from "$lib/components/MetaDescription/MetaDescription.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
     import SessionSelection from "$lib/components/SessionSelection/SessionSelection.svelte";
 
-    // Store imports
-    import { currentSeries } from "$lib/components/SeriesSelection/currentSeries";
-
     // Type imports
-    import type { Event, SeriesData } from "$lib/types/Data";
     import type { PageData } from './$types';
 
     // Font imports
@@ -29,52 +24,33 @@
 
     export let data: PageData;
 
-    let currentSeriesData: SeriesData | undefined;
-    let nextEvents: Event[];
-    let nextEvent: Event | undefined;
-    let nextEventSessions: { [key: string]: string };
-
-    const seriesData = data['seriesData'];
-    const seriesList = data['seriesList'];
-
-    $: if (seriesData) {
-        currentSeriesData = seriesData[$currentSeries];
-        if (currentSeriesData) nextEvents = currentSeriesData.nextEvents;
-        nextEvent = nextEvents.at(0);
-        if (nextEvent) nextEventSessions = nextEvent.sessions;
-    }
+    const seriesName = data.seriesName;
+    const seriesData = data.seriesData;
+    const nextEvents = seriesData.nextEvents;
+    const nextEvent = nextEvents.at(0);
+    const nextEventSessions = nextEvent ? nextEvent.sessions : {} as { [key: string]: string };
 </script>
 <style>
-    main, header {
+    main {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    main {
         flex-direction: column;
-    }
-
-    header {
-        padding: 20px;
-        flex-direction: row;
-        gap: 50px;
     }
 </style>
 
 
-<MetaDescription {seriesData} {seriesList} />
+<MetaDescription {seriesData} {seriesName} {nextEvent} />
+<svelte:head>
+    <title>{seriesName.toUpperCase()} Countdown</title>
+</svelte:head>
 
-<header>
-    <SeriesSelection {seriesList} />
-</header>
-<Border />
 <main>
-    <RaceTitle {nextEvents} />
+    <RaceTitle {nextEvent} {seriesName} />
     <SessionSelection {nextEventSessions} />
     <Timer {nextEventSessions} />
     <Border />
     <UpcomingEventList {nextEvents} />
 </main>
 <Border />
-<Footer />
+<Footer {seriesName} />
