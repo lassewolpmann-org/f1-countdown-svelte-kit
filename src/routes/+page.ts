@@ -3,7 +3,7 @@ import type { Event, SeriesData } from "$lib/types/Data";
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ fetch }: any) => {
-    const seriesName: string = 'f1';
+    const seriesName: string = 'f3';
     const seriesData: SeriesData = {} as SeriesData;
 
     const allEvents = await getAllEvents(seriesName, fetch);
