@@ -1,7 +1,6 @@
 <script lang="ts">
     // Function imports
-    import { calculateOffset } from "$lib/components/SeriesSelection/SeriesSelection";
-    import { findCurrentSessionIndex } from "$lib/components/SessionSelection/SessionSelection";
+    import { findCurrentSessionIndex, calculateOffset } from "$lib/components/SessionSelection/SessionSelection";
     import { afterUpdate } from "svelte";
 
     // Store imports

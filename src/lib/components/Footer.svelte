@@ -1,3 +1,6 @@
+<script lang="ts">
+    export let seriesName: string;
+</script>
 <style>
     footer {
         display: flex;
@@ -37,11 +40,23 @@
         <h4>Made with <i class="fa-solid fa-heart"></i><br>by Lasse Wolpmann</h4>
     </div>
     <div>
+        <h4>All series</h4>
+        <a href="https://f1-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 1
+        </a>
+        <a href="https://f2-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 2
+        </a>
+        <a href="https://f3-countdown.com">
+            <i class="fa-solid fa-timer"></i> Formula 3
+        </a>
+    </div>
+    <div>
         <h4>Project links</h4>
-        <a href="https://github.com/lassewolpmann/f1-countdown-svelte-kit" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit" target="_blank">
             <i class="fa-brands fa-github"></i> Code
         </a>
-        <a href="https://github.com/lassewolpmann/f1-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
             <i class="fa-solid fa-scale-balanced"></i> License
         </a>
         <a href="mailto:lasse@f1-countdown.com">
