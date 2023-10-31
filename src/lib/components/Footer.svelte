@@ -38,10 +38,10 @@
     </div>
     <div>
         <h4>Project links</h4>
-        <a href="https://github.com/lassewolpmann/f1-countdown-svelte-kit" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit" target="_blank">
             <i class="fa-brands fa-github"></i> Code
         </a>
-        <a href="https://github.com/lassewolpmann/f1-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
+        <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
             <i class="fa-solid fa-scale-balanced"></i> License
         </a>
         <a href="mailto:lasse@f1-countdown.com">
@@ -49,6 +49,18 @@
         </a>
         <a href="/privacy-policy" target="_blank">
             <i class="fa-solid fa-cookie-bite"></i> Privacy Policy
+        </a>
+    </div>
+    <div>
+        <h4>All countdowns</h4>
+        <a href="https://f1-countdown.com" target="_blank">
+            <i class="fa-solid fa-timer"></i> F1 Countdown
+        </a>
+        <a href="https://f2-countdown.com" target="_blank">
+            <i class="fa-solid fa-timer"></i> F2 Countdown
+        </a>
+        <a href="https://f3-countdown.com" target="_blank">
+            <i class="fa-solid fa-timer"></i> F3 Countdown
         </a>
     </div>
     <div>
