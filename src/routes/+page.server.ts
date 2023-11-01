@@ -1,6 +1,6 @@
 import type { Actions } from './$types';
-import * as pg from 'pg'
-import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } from '$env/static/private'
+import pg from 'pg'
+import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } from '$env/static/private';
 
 export const actions = {
     default: async ({ request }) => {
