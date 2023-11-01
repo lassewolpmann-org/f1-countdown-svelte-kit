@@ -1,10 +1,10 @@
 import type { Actions } from './$types';
-import { Client } from 'pg';
+import * as pg from 'pg'
 import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } from '$env/static/private'
 
 export const actions = {
     default: async ({ request }) => {
-        const client = new Client({
+        const client = new pg.Client({
             host: POSTGRES_HOST,
             port: +POSTGRES_PORT,
             database: POSTGRES_DB,
