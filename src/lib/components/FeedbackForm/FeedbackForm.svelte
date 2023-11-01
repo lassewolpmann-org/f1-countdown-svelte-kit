@@ -17,10 +17,6 @@
 
         gap: 15px;
 
-        button {
-            font-size: 24px;
-        }
-
         .form {
             display: none;
             flex-direction: column;
@@ -62,7 +58,7 @@
     <button on:click={() => formExpanded = !formExpanded}><i class="fa-solid fa-message-smile"></i></button>
     <div class:expanded={formExpanded} class="form">
         {#if !hasGivenFeedback}
-            <h3>Would you recommend this website?</h3>
+            <h3>Did you find this website helpful?</h3>
             <div class="buttons">
                 <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Good"><i class="fa-solid fa-thumbs-up"></i></button>
                 <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Bad"><i class="fa-solid fa-thumbs-down"></i></button>
