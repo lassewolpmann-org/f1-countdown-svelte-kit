@@ -23,10 +23,10 @@
             font-size: 24px;
         }
 
-        form {
+        div {
             display: none;
             height: min-content;
-            width: 600px;
+            width: min-content;
             background: var(--table-row-primary-color);
 
             border-radius: 10px;
@@ -34,39 +34,26 @@
             overflow-y: scroll;
 
             padding: 20px;
-
-            textarea {
-                resize: none;
-
-                width: 100%;
-                height: 100px;
-
-                border-radius: 5px;
-            }
         }
 
-        form.expanded {
-            display: block;
+        div.expanded {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
         }
     }
 </style>
 <div class="feedback-form">
     <button on:click={() => formExpanded = !formExpanded}><i class="fa-solid fa-message-smile"></i></button>
-    <form class:expanded={formExpanded} id="feedback" method="POST" use:enhance on:submit={() => hasGivenFeedback = true}>
+    <div class:expanded={formExpanded}>
         {#if !hasGivenFeedback}
-            <h4>Would you recommend this website to another person?</h4>
-            <label for="yes">Yes</label>
-            <input type="radio" id="yes" name="recommend" value="yes" required>
-
-            <label for="no">No</label>
-            <input type="radio" id="no" name="recommend" value="no" required>
-
-            <h4>Do you have any feedback? (optional)</h4>
-            <textarea form="feedback" placeholder="Your feedback" name="feedback" />
-
-            <input type="submit">
+            <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Good"><i class="fa-solid fa-thumbs-up"></i></button>
+            <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Bad"><i class="fa-solid fa-thumbs-down"></i></button>
         {:else}
-            <p>Thank you for the feedback!</p>
+            <p>Thanks!</p>
         {/if}
-    </form>
+    </div>
 </div>
