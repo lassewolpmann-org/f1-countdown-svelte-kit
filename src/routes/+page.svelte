@@ -20,6 +20,7 @@
     import "@fontsource/poppins/600.css";
     import "@fontsource/poppins/700.css";
     import "@fontsource/poppins/800.css";
+    import FeedbackForm from "$lib/components/FeedbackForm/FeedbackForm.svelte";
 
 
     export let data: PageData;
@@ -54,3 +55,4 @@
 </main>
 <Border />
 <Footer {seriesName} />
+<FeedbackForm />
