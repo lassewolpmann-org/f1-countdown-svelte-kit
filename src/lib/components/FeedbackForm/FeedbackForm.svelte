@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { enhance } from '$app/forms';
-
     let formExpanded: boolean, hasGivenFeedback: boolean;
 </script>
 <style lang="scss">
