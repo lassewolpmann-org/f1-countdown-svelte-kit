@@ -1,5 +1,6 @@
 import type { Actions } from './$types';
 import postgres from 'postgres'
+import { Stream } from 'node:stream';
 
 import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } from '$env/static/private';
 
