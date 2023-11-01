@@ -27,6 +27,8 @@
             border-radius: 10px;
 
             padding: 10px;
+
+            text-align: center;
         }
 
         .form.expanded {
@@ -52,17 +54,15 @@
         }
     }
 </style>
-<div class="feedback-form">
-    <button on:click={() => formExpanded = !formExpanded}><i class="fa-solid fa-message-smile"></i></button>
-    <div class:expanded={formExpanded} class="form">
-        {#if !hasGivenFeedback}
+{#if !hasGivenFeedback}
+    <div class="feedback-form">
+        <button on:click={() => formExpanded = !formExpanded}><i class="fa-solid fa-message-smile"></i></button>
+        <div class:expanded={formExpanded} class="form">
             <h3>Did you find this website helpful?</h3>
             <div class="buttons">
                 <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Good"><i class="fa-solid fa-thumbs-up"></i></button>
                 <button on:click={() => hasGivenFeedback = true} class="plausible-event-name=Bad"><i class="fa-solid fa-thumbs-down"></i></button>
             </div>
-        {:else}
-            <p>Thank you for your feedback!</p>
-        {/if}
+        </div>
     </div>
-</div>
+{/if}
