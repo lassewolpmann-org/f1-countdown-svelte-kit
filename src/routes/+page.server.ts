@@ -1,34 +1,37 @@
 import type { Actions } from './$types';
-
-import pg from 'pg';
-const client = new pg.Client({
-    host: POSTGRES_HOST,
-    port: +POSTGRES_PORT,
-    database: POSTGRES_DB,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD
-});
+import postgres from 'postgres'
 
 import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } from '$env/static/private';
 
 export const actions = {
     default: async ({ request }) => {
-        try {
-            await client.connect();
+        const sql = postgres({
+            host: POSTGRES_HOST,
+            port: +POSTGRES_PORT,
+            database: POSTGRES_DB,
+            user: POSTGRES_USER,
+            password: POSTGRES_PASSWORD
+        })
 
+        try {
             const data: FormData = await request.formData();
 
             const recommend = data.get('recommend') === 'yes';
             const feedback = data.get('feedback');
 
-            const text = 'INSERT INTO feedback(recommend, feedback) VALUES ($1, $2) RETURNING *'
-            const values = [recommend, feedback]
+            if (feedback) {
+                const res = await sql`
+                insert into feedback (
+                    recommend, feedback
+                ) values (
+                    ${ recommend }, ${ feedback.toString() }
+                )
+                
+                returning *
+                `
 
-            const res = await client.query(text, values);
-
-            console.log(res.rows[0])
-
-            await client.end();
+                console.log(res)
+            }
         } catch (e) {
             console.log(e);
         }
