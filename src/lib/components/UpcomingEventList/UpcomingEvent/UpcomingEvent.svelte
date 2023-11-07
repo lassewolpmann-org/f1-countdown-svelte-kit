@@ -37,10 +37,10 @@
     .session {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
 
         background: var(--table-row-primary-color);
-        padding: 10px 20px;
+        padding: 12px 25px;
         border-radius: 10px;
 
         .head {
@@ -53,11 +53,13 @@
             align-items: center;
             justify-content: center;
 
-            .date, .weather {
-                flex: 4;
+            .weather {
+                flex: 3;
             }
 
             .date {
+                flex: 6;
+
                 display: flex;
                 flex-direction: column;
 
@@ -82,6 +84,12 @@
             background: var(--table-row-secondary-color);
             border-radius: 0;
             border-bottom: 2px solid var(--table-row-primary-color);
+
+            .body {
+                .weather {
+                    flex: 4;
+                }
+            }
         }
 
         .session:first-child {
@@ -101,10 +109,6 @@
     @media only screen and (max-width: 768px) {
         .upcoming-event, .session {
             font-size: 14px;
-        }
-
-        .session {
-            gap: 15px;
         }
     }
 </style>
@@ -139,7 +143,6 @@
                     <div class="weather">
                         <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(i)} />
                     </div>
-                    <div class="toggle-visibility"></div>
                 </div>
             </div>
         {/each}
