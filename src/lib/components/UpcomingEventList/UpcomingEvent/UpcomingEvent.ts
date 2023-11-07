@@ -2,7 +2,6 @@ import type { Event } from "$lib/types/Data"
 
 export class UpcomingEvent {
     event: Event
-    locationURL: string;
     eventName: string;
 
     sessionNames: string[];
@@ -18,10 +17,9 @@ export class UpcomingEvent {
 
     constructor(event: Event) {
         this.event = event;
-        this.locationURL = `https://www.google.com/maps/place/${this.event.latitude},${this.event.longitude}`;
         this.eventName = this.parseName(this.event.name);
 
-        this.sessionNames = Object.keys(this.event.sessions).map(this.toUpper);
+        this.sessionNames = Object.keys(this.event.sessions).map((eventName) => eventName.toUpperCase());
 
         this.sessionsHidden = true;
 
@@ -43,8 +41,9 @@ export class UpcomingEvent {
 
     parseDate = (sessionDate: string) => {
         return new Date(sessionDate).toLocaleString(undefined, {
-            month: 'short',
-            day: '2-digit'
+            day: '2-digit',
+            month: 'long',
+            weekday: 'long'
         })
     }
 
@@ -53,9 +52,5 @@ export class UpcomingEvent {
             hour: '2-digit',
             minute: '2-digit'
         })
-    }
-
-    toUpper = (name: string) => {
-        return name.toUpperCase()
     }
 }

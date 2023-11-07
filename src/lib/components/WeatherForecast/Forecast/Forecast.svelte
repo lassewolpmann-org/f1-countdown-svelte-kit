@@ -12,14 +12,13 @@
         align-items: flex-start;
         justify-content: center;
 
-        font-size: 16px;
-
-        .max {
+        .temp {
             color: var(--main-text-color);
         }
 
-        .min {
+        .rain {
             color: var(--secondary-text-color);
+            font-weight: 300;
         }
     }
 
@@ -31,11 +30,7 @@
 </style>
 <div class="forecast">
     {#if forecast.weatherAvailable}
-        <div class="max">
-            <i class="fa-regular fa-temperature-sun"></i> {forecast.temp} °C
-        </div>
-        <div class="min">
-            <i class="fa-solid fa-cloud-rain"></i> {forecast.rain}%
-        </div>
+        <span class="temp"><i class="fa-regular fa-temperature-sun"></i> {forecast.temp} °C</span>
+        <span class="rain"><i class="fa-solid fa-cloud-rain"></i> {forecast.rain}%</span>
     {/if}
 </div>
