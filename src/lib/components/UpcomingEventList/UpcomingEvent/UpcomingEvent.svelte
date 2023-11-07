@@ -44,7 +44,9 @@
         border-radius: 10px;
 
         .head {
-            font-weight: 500;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--table-row-secondary-color);
         }
 
         .body {
@@ -66,11 +68,10 @@
                 flex-direction: column;
 
                 .day {
-                    color: var(--main-text-color);
+                    font-weight: 500;
                 }
 
                 .time {
-                    color: var(--secondary-text-color);
                     font-weight: 300;
                 }
             }
@@ -82,25 +83,24 @@
     }
 
     .all-sessions {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
         .session {
             background: var(--table-row-secondary-color);
-            border-radius: 0;
-            border-bottom: 2px solid var(--table-row-primary-color);
+            padding: 8px 25px;
+
+            .head {
+                border-bottom: 2px solid var(--table-row-primary-color);
+                padding-bottom: 8px;
+            }
 
             .body {
                 .weather {
                     flex: 4;
                 }
             }
-        }
-
-        .session:first-child {
-            border-radius: 10px 10px 0 0;
-        }
-
-        .session:last-child {
-            border-radius: 0 0 10px 10px;
-            border-bottom: none;
         }
     }
 

@@ -29,6 +29,7 @@ export class WeatherForecast {
     }
 
     async getWeatherForecast() {
+        // TODO: Make forecast more accurate if session is closer
         const apiURL: URL = new URL('https://pro.openweathermap.org/data/2.5/forecast/climate');
         apiURL.searchParams.append('lat', this.latitude.toString());
         apiURL.searchParams.append('lon', this.longitude.toString());
