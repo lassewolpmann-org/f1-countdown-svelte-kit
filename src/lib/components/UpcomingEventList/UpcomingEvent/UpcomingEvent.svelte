@@ -4,6 +4,7 @@
 
     // Type imports
     import type { Event } from "$lib/types/Data";
+    import WeatherForecast from "$lib/components/WeatherForecast/WeatherForecast.svelte";
 
     export let event: Event;
 
@@ -49,9 +50,12 @@
             flex: 6;
         }
 
+        .date, .weather {
+            flex: 2;
+        }
+
         .date {
             font-weight: 300;
-            flex: 2;
 
             display: flex;
             flex-direction: column;
@@ -102,8 +106,11 @@
     <div class="session">
         <div class="name">{upcomingEvent.eventName}</div>
         <div class="date">
-            <span>{upcomingEvent.raceDate}</span>
-            <span>{upcomingEvent.raceTime}</span>
+            <span><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.raceDate}</span>
+            <span><i class="fa-solid fa-clock"></i> {upcomingEvent.raceTime}</span>
+        </div>
+        <div class="weather">
+            <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(-1)} />
         </div>
         <div class="toggle-visibility">
             <button on:click={toggleSessionVisibility} aria-label="Show or hide all Sessions of Event">
@@ -118,8 +125,11 @@
                     {upcomingEvent.sessionNames.at(i)}
                 </div>
                 <div class="date">
-                    <span>{upcomingEvent.sessionDates.at(i)}</span>
-                    <span>{upcomingEvent.sessionTimes.at(i)}</span>
+                    <span><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.sessionDates.at(i)}</span>
+                    <span><i class="fa-solid fa-clock"></i> {upcomingEvent.sessionTimes.at(i)}</span>
+                </div>
+                <div class="weather">
+                    <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(i)} />
                 </div>
                 <div class="toggle-visibility"></div>
             </div>
