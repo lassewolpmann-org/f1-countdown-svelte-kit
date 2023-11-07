@@ -29,11 +29,11 @@ export class WeatherForecast {
     }
 
     async getWeatherForecast() {
-        const apiURL: URL = new URL('https://api.openweathermap.org/data/2.5/forecast/daily');
+        const apiURL: URL = new URL('https://pro.openweathermap.org/data/2.5/forecast/climate');
         apiURL.searchParams.append('lat', this.latitude.toString());
         apiURL.searchParams.append('lon', this.longitude.toString());
         apiURL.searchParams.append('appid', this.apiKey);
-        apiURL.searchParams.append('cnt', '16');
+        apiURL.searchParams.append('cnt', '30');
         apiURL.searchParams.append('units', 'metric');
 
         const res = await fetch(apiURL);

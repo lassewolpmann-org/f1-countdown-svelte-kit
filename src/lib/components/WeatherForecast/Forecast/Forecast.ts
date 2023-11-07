@@ -26,10 +26,9 @@ interface Weather {
         eve: number,
         morn: number
     },
-    gust: number,
     humidity: number,
-    pop: number,
     pressure: number,
+    rain: number,
     speed: number,
     sunrise: number,
     sunset: number,
@@ -62,6 +61,7 @@ export class Forecast {
 
     constructor(forecastData: ForecastType, sessionDate: string) {
         this.forecast = forecastData;
+
         this.sessionDate = new Date(sessionDate);
         this.sessionDate.setHours(this.sessionDate.getHours() + this.forecast.city.timezone / 60 / 60 + this.sessionDate.getTimezoneOffset() / 60);
         this.filteredForecast = this.filterWeather();
@@ -89,7 +89,7 @@ export class Forecast {
             }
 
             this.temp = Math.round(this.temp);
-            this.rain = Math.round(sessionWeather.pop * 100);
+            this.rain = sessionWeather.rain ? Math.round(sessionWeather.rain) : 0;
 
             this.weatherAvailable = true;
         }
