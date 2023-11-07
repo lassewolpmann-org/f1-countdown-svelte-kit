@@ -53,6 +53,8 @@
             align-items: center;
             justify-content: center;
 
+            gap: 10px;
+
             .weather {
                 flex: 3;
             }
