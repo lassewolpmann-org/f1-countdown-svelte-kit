@@ -12,12 +12,13 @@
         align-items: flex-start;
         justify-content: center;
 
+        color: var(--secondary-text-color);
+
         .temp {
-            color: var(--main-text-color);
+            font-weight: 500;
         }
 
         .rain {
-            color: var(--secondary-text-color);
             font-weight: 300;
         }
     }
