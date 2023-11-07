@@ -4,6 +4,7 @@
 
     // Type imports
     import type { Event } from "$lib/types/Data";
+    import WeatherForecast from "$lib/components/WeatherForecast/WeatherForecast.svelte";
 
     export let event: Event;
 
@@ -35,34 +36,48 @@
 
     .session {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 30px;
+        flex-direction: column;
+        gap: 15px;
 
         background: var(--table-row-primary-color);
-        padding: 10px 20px;
+        padding: 12px 25px;
         border-radius: 10px;
 
-        .name {
+        .head {
             font-weight: 500;
-            flex: 6;
         }
 
-        .date {
-            font-weight: 300;
-            flex: 2;
-
+        .body {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
 
-            span:last-child {
-                color: var(--secondary-text-color);
+            gap: 10px;
+
+            .weather {
+                flex: 3;
             }
-        }
 
-        .toggle-visibility {
-            flex: 1;
+            .date {
+                flex: 6;
+
+                display: flex;
+                flex-direction: column;
+
+                .day {
+                    color: var(--main-text-color);
+                }
+
+                .time {
+                    color: var(--secondary-text-color);
+                    font-weight: 300;
+                }
+            }
+
+            .toggle-visibility {
+                flex: 1;
+            }
         }
     }
 
@@ -71,6 +86,12 @@
             background: var(--table-row-secondary-color);
             border-radius: 0;
             border-bottom: 2px solid var(--table-row-primary-color);
+
+            .body {
+                .weather {
+                    flex: 4;
+                }
+            }
         }
 
         .session:first-child {
@@ -91,37 +112,40 @@
         .upcoming-event, .session {
             font-size: 14px;
         }
-
-        .session {
-            gap: 15px;
-        }
     }
 </style>
 
 <div class="upcoming-event">
     <div class="session">
-        <div class="name">{upcomingEvent.eventName}</div>
-        <div class="date">
-            <span>{upcomingEvent.raceDate}</span>
-            <span>{upcomingEvent.raceTime}</span>
-        </div>
-        <div class="toggle-visibility">
-            <button on:click={toggleSessionVisibility} aria-label="Show or hide all Sessions of Event">
-                <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
-            </button>
+        <div class="head">{upcomingEvent.eventName}</div>
+        <div class="body">
+            <div class="date">
+                <span class="day"><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.raceDate}</span>
+                <span class="time"><i class="fa-solid fa-clock"></i> {upcomingEvent.raceTime}</span>
+            </div>
+            <div class="weather">
+                <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(-1)} />
+            </div>
+            <div class="toggle-visibility">
+                <button on:click={toggleSessionVisibility} aria-label="Show or hide all Sessions of Event">
+                    <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
+                </button>
+            </div>
         </div>
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
             <div class="session">
-                <div class="name">
-                    {upcomingEvent.sessionNames.at(i)}
+                <div class="head">{upcomingEvent.sessionNames.at(i)}</div>
+                <div class="body">
+                    <div class="date">
+                        <span class="day"><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.sessionDates.at(i)}</span>
+                        <span class="time"><i class="fa-solid fa-clock"></i> {upcomingEvent.sessionTimes.at(i)}</span>
+                    </div>
+                    <div class="weather">
+                        <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(i)} />
+                    </div>
                 </div>
-                <div class="date">
-                    <span>{upcomingEvent.sessionDates.at(i)}</span>
-                    <span>{upcomingEvent.sessionTimes.at(i)}</span>
-                </div>
-                <div class="toggle-visibility"></div>
             </div>
         {/each}
     </div>

@@ -67,12 +67,15 @@
         </a>
     </div>
     <div>
-        <h4>Session data</h4>
+        <h4>Data sources</h4>
         <a href="https://github.com/sportstimes/f1" target="_blank">
             <i class="fa-brands fa-github"></i> sportstimes
         </a>
         <a href="https://github.com/sportstimes/f1/blob/main/LICENSE" target="_blank">
             <i class="fa-solid fa-scale-balanced"></i> License
+        </a>
+        <a href="https://openweathermap.org/api" target="_blank">
+            <i class="fa-solid fa-cloud"></i> OpenWeatherMap
         </a>
     </div>
 </footer>
