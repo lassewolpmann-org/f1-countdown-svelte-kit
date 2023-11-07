@@ -46,12 +46,12 @@
         border-radius: 10px;
 
         .name {
+            flex: 8;
             font-weight: 500;
-            flex: 6;
         }
 
         .date, .weather {
-            flex: 2;
+            flex: 4;
         }
 
         .date {
