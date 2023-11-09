@@ -1,110 +1,115 @@
-interface ForecastType {
+export interface HourlyForecast {
     city: {
-        coord: {
-            lon: number,
-            lat: number
-        },
-        country: string,
-        id: number,
-        name: string,
-        population: number,
         timezone: number
     },
-    cnt: number,
-    cod: string,
-    list: Weather[],
-    message: number
+    list: HourlyWeather[]
 }
 
-interface Weather {
-    clouds: number,
-    deg: number,
+
+
+export interface DailyForecast {
+    city: {
+        timezone: number
+    },
+    list: DailyWeather[]
+}
+
+interface HourlyWeather {
     dt: number,
-    feels_like: {
-        day: number,
-        night: number,
-        eve: number,
-        morn: number
+    main: {
+        temp: number
     },
-    humidity: number,
-    pressure: number,
-    rain: number,
-    speed: number,
-    sunrise: number,
-    sunset: number,
-    temp: {
-        day: number,
-        min: number,
-        max: number,
-        night: number,
-        eve: number,
-        morn: number
-    },
-    weather: [WeatherDescription]
+    rain: {
+        '1h': number
+    }
 }
 
-interface WeatherDescription {
-    description: string,
-    icon: string,
-    id: number,
-    main: string
+interface DailyWeather {
+    dt: number,
+    temp: {
+        morn: number,
+        day: number,
+        eve: number,
+        night: number
+    },
+    rain: number
 }
 
 export class Forecast {
-    private forecast: ForecastType;
-    private filteredForecast: Weather[];
-    private readonly sessionDate: Date;
-
+    public sessionDate: Date;
     public temp: number = 0;
     public rain: number = 0;
     public weatherAvailable: boolean = false;
 
-    constructor(forecastData: ForecastType, sessionDate: string) {
-        this.forecast = forecastData;
-
+    constructor(forecastData: HourlyForecast | DailyForecast, sessionDate: string, accuracy: string) {
         this.sessionDate = new Date(sessionDate);
-        this.sessionDate.setHours(this.sessionDate.getHours() + this.forecast.city.timezone / 60 / 60 + this.sessionDate.getTimezoneOffset() / 60);
-        this.filteredForecast = this.filterWeather();
 
-        const sessionWeather: Weather | undefined = this.filteredForecast.at(0);
-
-        if (sessionWeather && (new Date() < this.sessionDate)) {
-            const sessionHour: number = this.sessionDate.getHours();
-
-            if (0 <= sessionHour && sessionHour < 3) {
-                // Take temperature value of previous night
-                const sessionWeatherIndex: number = this.forecast.list.findIndex((weather: Weather): boolean => {
-                    return weather.dt === sessionWeather.dt;
-                })
-                const previousDayWeather: Weather | undefined = this.forecast.list.at(sessionWeatherIndex - 1);
-                this.temp = previousDayWeather ? previousDayWeather.temp.night : 0;
-            } else if (3 <= sessionHour && sessionHour < 9) {
-                this.temp = sessionWeather.temp.morn;
-            } else if (9 <= sessionHour && sessionHour < 15) {
-                this.temp = sessionWeather.temp.day;
-            } else if (15 <= sessionHour && sessionHour < 21) {
-                this.temp = sessionWeather.temp.eve;
-            } else {
-                this.temp = sessionWeather.temp.night;
-            }
-
-            this.temp = Math.round(this.temp);
-            this.rain = sessionWeather.rain ? Math.round(sessionWeather.rain) : 0;
-
-            this.weatherAvailable = true;
+        if (accuracy === 'hourly') {
+            this.getHourlyWeather(forecastData as HourlyForecast);
+        } else if (accuracy === 'daily' || accuracy === 'climate') {
+            this.getDailyWeather(forecastData as DailyForecast);
         }
     }
 
-    filterWeather(): Weather[] {
-        return this.forecast.list.filter((weather: Weather): boolean => {
+    filterWeather(forecast: DailyForecast): DailyWeather[] {
+        return forecast.list.filter((weather: DailyWeather): boolean => {
             const weatherTimestamp: number = weather.dt * 1000;
             const weatherDate: Date = new Date(weatherTimestamp);
-            const weatherTimezoneOffset: number = this.forecast.city.timezone / 60 / 60;
+            const weatherTimezoneOffset: number = forecast.city.timezone / 60 / 60;
             const weatherDateTimezoneOffset: number = weatherDate.getTimezoneOffset() / 60;
 
             weatherDate.setHours(weatherDate.getHours() + weatherTimezoneOffset + weatherDateTimezoneOffset)
 
             return weatherDate.getDate() === this.sessionDate.getDate()
         });
+    }
+
+    getHourlyWeather(forecastData: HourlyForecast) {
+        const filteredForecast = forecastData.list.filter((weather: HourlyWeather) => {
+            return weather.dt * 1000 > this.sessionDate.getTime()
+        })
+
+        const sessionWeather: HourlyWeather | undefined = filteredForecast.at(0);
+        if (sessionWeather && (new Date() < this.sessionDate)) {
+            this.temp = Math.round(sessionWeather.main.temp);
+            this.rain = Math.round(sessionWeather.rain["1h"]);
+            this.weatherAvailable = true;
+        }
+    }
+
+    getDailyWeather(forecastData: DailyForecast) {
+        this.sessionDate.setHours(this.sessionDate.getHours() + forecastData.city.timezone / 60 / 60 + this.sessionDate.getTimezoneOffset() / 60);
+        const filteredForecast = forecastData.list.filter((weather: DailyWeather) => {
+            const weatherDate = new Date(weather.dt * 1000);
+            weatherDate.setHours(weatherDate.getHours() + forecastData.city.timezone / 60 / 60 + weatherDate.getTimezoneOffset())
+            return new Date(weather.dt * 1000).getDate() === this.sessionDate.getDate();
+        })
+
+        const sessionWeather: DailyWeather | undefined = filteredForecast.at(0);
+        if (sessionWeather && (new Date() < this.sessionDate)) {
+            let temp: number;
+            const sessionHour: number = this.sessionDate.getHours();
+
+            if (0 <= sessionHour && sessionHour < 9) {
+                temp = sessionWeather.temp.morn;
+            } else if (9 <= sessionHour && sessionHour < 15) {
+                temp = sessionWeather.temp.day;
+            } else if (15 <= sessionHour && sessionHour < 21) {
+                temp = sessionWeather.temp.eve;
+            } else {
+                temp = sessionWeather.temp.night;
+            }
+
+            this.temp = Math.round(temp);
+            this.rain = sessionWeather.rain ? Math.round(sessionWeather.rain) : 0;
+            this.weatherAvailable = true;
+        }
+    }
+
+    getLocalHour(timezone: number) {
+        const date = this.sessionDate;
+        date.setHours(date.getHours() + timezone / 60 / 60 + this.sessionDate.getTimezoneOffset() / 60);
+
+        return date.getHours();
     }
 }

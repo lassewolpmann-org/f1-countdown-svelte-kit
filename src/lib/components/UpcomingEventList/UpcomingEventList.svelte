@@ -15,7 +15,7 @@
 
         gap: 20px;
 
-        width: min(90vw, 700px);
+        width: min(90vw, 550px);
 
         margin: 25px 0;
     }

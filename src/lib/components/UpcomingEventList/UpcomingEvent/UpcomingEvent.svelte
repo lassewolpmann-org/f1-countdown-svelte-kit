@@ -4,7 +4,9 @@
 
     // Type imports
     import type { Event } from "$lib/types/Data";
-    import WeatherForecast from "$lib/components/WeatherForecast/WeatherForecast.svelte";
+
+    // Component imports
+    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/Session/Body.svelte";
 
     export let event: Event;
 
@@ -47,38 +49,10 @@
             font-weight: 600;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--table-row-secondary-color);
-        }
-
-        .body {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: center;
-
-            gap: 10px;
-
-            .weather {
-                flex: 3;
-            }
-
-            .date {
-                flex: 6;
-
-                display: flex;
-                flex-direction: column;
-
-                .day {
-                    font-weight: 500;
-                }
-
-                .time {
-                    font-weight: 300;
-                }
-            }
-
-            .toggle-visibility {
-                flex: 1;
-            }
+            justify-content: space-between;
         }
     }
 
@@ -94,12 +68,6 @@
             .head {
                 border-bottom: 2px solid var(--table-row-primary-color);
                 padding-bottom: 8px;
-            }
-
-            .body {
-                .weather {
-                    flex: 4;
-                }
             }
         }
     }
@@ -117,35 +85,31 @@
 
 <div class="upcoming-event">
     <div class="session">
-        <div class="head">{upcomingEvent.eventName}</div>
-        <div class="body">
-            <div class="date">
-                <span class="day"><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.raceDate}</span>
-                <span class="time"><i class="fa-solid fa-clock"></i> {upcomingEvent.raceTime}</span>
-            </div>
-            <div class="weather">
-                <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(-1)} />
-            </div>
-            <div class="toggle-visibility">
-                <button on:click={toggleSessionVisibility} aria-label="Show or hide all Sessions of Event">
-                    <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
-                </button>
-            </div>
+        <div class="head">
+            <span class="name">{upcomingEvent.eventName}</span>
+            <button on:click={toggleSessionVisibility}>
+                <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
+            </button>
         </div>
+        <Body
+                {event}
+                date={upcomingEvent.raceDate}
+                time={upcomingEvent.raceTime}
+                sessionName={upcomingEvent.sessionNames.at(-1)}
+        />
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
             <div class="session">
-                <div class="head">{upcomingEvent.sessionNames.at(i)}</div>
-                <div class="body">
-                    <div class="date">
-                        <span class="day"><i class="fa-solid fa-calendar-day"></i> {upcomingEvent.sessionDates.at(i)}</span>
-                        <span class="time"><i class="fa-solid fa-clock"></i> {upcomingEvent.sessionTimes.at(i)}</span>
-                    </div>
-                    <div class="weather">
-                        <WeatherForecast {event} sessionName={upcomingEvent.sessionNames.at(i)} />
-                    </div>
+                <div class="head">
+                    {upcomingEvent.sessionNames.at(i)}
                 </div>
+                <Body
+                        {event}
+                        date={upcomingEvent.sessionDates.at(i)}
+                        time={upcomingEvent.sessionTimes.at(i)}
+                        sessionName={upcomingEvent.sessionNames.at(i)}
+                />
             </div>
         {/each}
     </div>
