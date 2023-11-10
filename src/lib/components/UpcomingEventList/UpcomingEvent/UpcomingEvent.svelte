@@ -1,6 +1,7 @@
 <script lang="ts">
     // Function imports
     import { UpcomingEvent } from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent";
+    import { onMount } from "svelte";
 
     // Type imports
     import type { Event } from "$lib/types/Data";
@@ -10,12 +11,18 @@
 
     export let event: Event;
 
-    let upcomingEvent: UpcomingEvent;
-    $: upcomingEvent = new UpcomingEvent(event)
+    const upcomingEvent = new UpcomingEvent(event);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
     }
+
+    onMount(async () => {
+        upcomingEvent.hourlyForecast = await upcomingEvent.getHourlyForecast();
+        upcomingEvent.dailyForecast = await upcomingEvent.getDailyForecast();
+        upcomingEvent.climateForecast = await upcomingEvent.getClimateForecast();
+        upcomingEvent.forecastAvailable = true;
+    })
 </script>
 <style lang="scss">
     .upcoming-event {
@@ -93,6 +100,10 @@
         </div>
         <Body
                 {event}
+                hourlyForecast={upcomingEvent.hourlyForecast}
+                dailyForecast={upcomingEvent.dailyForecast}
+                climateForecast={upcomingEvent.climateForecast}
+                forecastAvailable={upcomingEvent.forecastAvailable}
                 date={upcomingEvent.raceDate}
                 time={upcomingEvent.raceTime}
                 sessionName={upcomingEvent.sessionNames.at(-1)}
@@ -106,6 +117,10 @@
                 </div>
                 <Body
                         {event}
+                        hourlyForecast={upcomingEvent.hourlyForecast}
+                        dailyForecast={upcomingEvent.dailyForecast}
+                        climateForecast={upcomingEvent.climateForecast}
+                        forecastAvailable={upcomingEvent.forecastAvailable}
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
                         sessionName={upcomingEvent.sessionNames.at(i)}

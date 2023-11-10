@@ -1,69 +1,85 @@
-import type {Event} from "$lib/types/Data"
-import { PUBLIC_OPEN_WEATHER_MAP_API_KEY } from "$env/static/public"
-import { error } from "@sveltejs/kit";
+import type { Event } from "$lib/types/Data"
+
+export interface HourlyForecast {
+    city: {
+        timezone: number
+    },
+    list: HourlyWeather[]
+}
+
+export interface DailyForecast {
+    city: {
+        timezone: number
+    },
+    list: DailyWeather[]
+}
+
+interface HourlyWeather {
+    dt: number,
+    main: {
+        temp: number
+    },
+    rain: {
+        '1h': number
+    }
+}
+
+interface DailyWeather {
+    dt: number,
+    temp: {
+        morn: number,
+        day: number,
+        eve: number,
+        night: number,
+        max: number,
+        min: number
+    },
+    rain: number
+}
 
 export class WeatherForecast {
-    private readonly apiKey: string;
-
     private event: Event;
     private readonly sessionName: string;
-
-    private latitude: number;
-    private longitude: number;
-
     private readonly sessions: { [key: string]: string };
-
     sessionDate: string | undefined;
+    sessionTimestamp: number;
 
-    public accuracy: string;
+    temp: string;
+    rain: string;
 
-    constructor(event: Event, sessionName: string | undefined, accuracy: string) {
-        this.apiKey = PUBLIC_OPEN_WEATHER_MAP_API_KEY;
-
+    constructor(event: Event, sessionName: string | undefined, hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast) {
         this.event = event;
         this.sessionName = sessionName ? sessionName.toLowerCase() : "";
-
-        this.latitude = this.event.latitude;
-        this.longitude = this.event.longitude;
-
         this.sessions = this.event.sessions;
-
         this.sessionDate = this.sessions[this.sessionName];
+        this.sessionTimestamp = this.sessionDate ? new Date(this.sessionDate).getTime() : 0;
 
-        this.accuracy = accuracy;
-    }
+        const filteredHourly: HourlyWeather | undefined = hourlyForecast.list.filter((weather: HourlyWeather): boolean => {
+            return weather.dt * 1000 > this.sessionTimestamp;
+        }).at(0)
 
-    async getWeatherForecast() {
-        // TODO: Make forecast more accurate if session is closer
-        if (this.accuracy) {
-            let apiURL: URL;
+        const filteredDaily: DailyWeather | undefined = dailyForecast.list.filter((weather: DailyWeather): boolean => {
+            return weather.dt * 1000 > this.sessionTimestamp;
+        }).at(0)
 
-            if (this.accuracy === 'hourly') {
-                apiURL = new URL('https://pro.openweathermap.org/data/2.5/forecast/hourly');
-                apiURL.searchParams.append('cnt', '96');
-            } else if (this.accuracy === 'daily') {
-                apiURL = new URL('https://api.openweathermap.org/data/2.5/forecast/daily');
-                apiURL.searchParams.append('cnt', '16');
-            } else if (this.accuracy === 'climate') {
-                apiURL = new URL('https://pro.openweathermap.org/data/2.5/forecast/climate');
-                apiURL.searchParams.append('cnt', '30');
-            } else {
-                throw error(404, {
-                    message: "Couldn't retrieve data from Weather API"
-                })
-            }
+        const filteredClimate: DailyWeather | undefined = climateForecast.list.filter((weather: DailyWeather): boolean => {
+            return weather.dt * 1000 > this.sessionTimestamp;
+        }).at(0)
 
-            apiURL.searchParams.append('lat', this.latitude.toString());
-            apiURL.searchParams.append('lon', this.longitude.toString());
-            apiURL.searchParams.append('appid', this.apiKey);
-            apiURL.searchParams.append('units', 'metric');
-
-            const res = await fetch(apiURL);
-            return await res.json();
+        if (filteredHourly) {
+            this.temp = Math.round(filteredHourly.main.temp).toString();
+            this.rain = Math.round(filteredHourly.rain["1h"]).toString();
+        } else if (filteredDaily) {
+            const averageTemp = (filteredDaily.temp.max + filteredDaily.temp.min) / 2;
+            this.temp = Math.round(averageTemp).toString();
+            this.rain = filteredDaily.rain ? Math.round(filteredDaily.rain).toString() : '0';
+        } else if (filteredClimate) {
+            const averageTemp = (filteredClimate.temp.max + filteredClimate.temp.min) / 2;
+            this.temp = Math.round(averageTemp).toString();
+            this.rain = filteredClimate.rain ? Math.round(filteredClimate.rain).toString() : '0';
         } else {
-            throw error(404, {
-                message: "Couldn't retrieve data from Weather API"
-            })
+            this.temp = '-';
+            this.rain = '-';
         }
     }
 }

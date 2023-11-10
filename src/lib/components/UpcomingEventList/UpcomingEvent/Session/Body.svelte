@@ -1,8 +1,10 @@
 <script lang="ts">
     import WeatherForecast from "$lib/components/WeatherForecast/WeatherForecast.svelte";
     import type { Event } from "$lib/types/Data";
+    import type { DailyForecast, HourlyForecast } from "$lib/components/WeatherForecast/WeatherForecast";
 
     export let date: string | undefined, time: string | undefined, event: Event, sessionName: string | undefined;
+    export let hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast, forecastAvailable: boolean;
 </script>
 <style lang="scss">
     .body {
@@ -43,6 +45,11 @@
         <span class="time"><i class="fa-solid fa-clock"></i> {time}</span>
     </div>
     <div class="weather">
-        <WeatherForecast {event} sessionName={sessionName} />
+        {#if forecastAvailable}
+            <WeatherForecast {event} sessionName={sessionName} {hourlyForecast} {dailyForecast} {climateForecast} />
+        {:else}
+            <i class="fa-duotone fa-loader fa-spin"></i>
+        {/if}
     </div>
+
 </div>
