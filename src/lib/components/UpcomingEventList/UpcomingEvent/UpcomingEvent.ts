@@ -1,5 +1,5 @@
 import type { Event } from "$lib/types/Data"
-import type { DailyForecast, HourlyForecast } from "$lib/components/WeatherForecast/WeatherForecast";
+import type { DailyForecast, HourlyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 import { PUBLIC_OPEN_WEATHER_MAP_API_KEY } from "$env/static/public";
 
 export class UpcomingEvent {

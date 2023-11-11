@@ -1,11 +1,13 @@
 <script lang="ts">
     // Type imports
-    import type { Event, SeriesData } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
+
+    // Class imports
     import { MetaDescription } from "$lib/components/MetaDescription/MetaDescription";
 
-    export let seriesData: SeriesData, seriesName: string, nextEvent: Event | undefined;
+    export let series: string, nextRace: RaceData, sessions: { [key: string]: string };
 
-    const metaDescription = new MetaDescription(seriesName, seriesData, nextEvent);
+    const metaDescription = new MetaDescription(series, nextRace, sessions);
 </script>
 
 <svelte:head>
