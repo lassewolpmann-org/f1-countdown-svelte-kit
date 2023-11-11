@@ -1,7 +1,7 @@
 <script lang="ts">
-    import WeatherForecast from "$lib/components/WeatherForecast/WeatherForecast.svelte";
+    import WeatherForecast from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast.svelte";
     import type { Event } from "$lib/types/Data";
-    import type { DailyForecast, HourlyForecast } from "$lib/components/WeatherForecast/WeatherForecast";
+    import type { DailyForecast, HourlyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 
     export let date: string | undefined, time: string | undefined, event: Event, sessionName: string | undefined;
     export let hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast, forecastAvailable: boolean;

@@ -4,14 +4,12 @@
 
 <style lang="scss">
     .error {
-        margin: 50px;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-        img {
-            margin-top: 50px;
-            width: min(90vw, 500px);
-            height: auto;
-        }
+        padding: 50px;
 
         h2 {
             span {
@@ -26,6 +24,5 @@
     {#if $page.error}
         <h2><span>Error message: </span>{$page.error.message}</h2>
     {/if}
-    <img src="https://e0.365dm.com/15/11/2048x1152/mclaren-sunbathing-alonso-seat-sunbath-fernando_3376727.jpg" alt="Sit back and relax">
     <h3>Until we resolve the issue, just sit back and relax.</h3>
 </div>

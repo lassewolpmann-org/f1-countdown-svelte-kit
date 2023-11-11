@@ -7,6 +7,7 @@
     import MetaDescription from "$lib/components/MetaDescription/MetaDescription.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
     import SessionSelection from "$lib/components/SessionSelection/SessionSelection.svelte";
+    import FeedbackForm from "$lib/components/FeedbackForm/FeedbackForm.svelte";
 
     // Type imports
     import type { PageData } from './$types';
@@ -20,16 +21,10 @@
     import "@fontsource/poppins/600.css";
     import "@fontsource/poppins/700.css";
     import "@fontsource/poppins/800.css";
-    import FeedbackForm from "$lib/components/FeedbackForm/FeedbackForm.svelte";
-
 
     export let data: PageData;
 
-    const seriesName = data.seriesName;
-    const seriesData = data.seriesData;
-    const nextEvents = seriesData.nextEvents;
-    const nextEvent = nextEvents.at(0);
-    const nextEventSessions = nextEvent ? nextEvent.sessions : {} as { [key: string]: string };
+    const { apiData } = data;
 </script>
 <style>
     main {
@@ -40,19 +35,18 @@
     }
 </style>
 
-
-<MetaDescription {seriesData} {seriesName} {nextEvent} />
+<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRaceSessions} />
 <svelte:head>
-    <title>{seriesName.toUpperCase()} Countdown</title>
+    <title>{apiData.series.toUpperCase()} Countdown</title>
 </svelte:head>
 
 <main>
-    <RaceTitle {nextEvent} {seriesName} />
-    <SessionSelection {nextEventSessions} />
-    <Timer {nextEventSessions} />
+    <RaceTitle nextRace={apiData.nextRace} series={apiData.series} />
+    <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
+    <Timer nextEventSessions={apiData.nextRaceSessions} />
     <Border />
-    <UpcomingEventList {nextEvents} />
+    <UpcomingEventList nextEvents={apiData.nextRaces} />
 </main>
 <Border />
-<Footer {seriesName} />
+<Footer seriesName={apiData.series} />
 <FeedbackForm />
