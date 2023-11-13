@@ -55,20 +55,20 @@ export class WeatherForecast {
         this.sessionTimestamp = this.sessionDate ? new Date(this.sessionDate).getTime() : 0;
 
         const filteredHourly: HourlyWeather | undefined = hourlyForecast.list.filter((weather: HourlyWeather): boolean => {
-            return weather.dt * 1000 > this.sessionTimestamp;
+            return weather.dt * 1000 >= this.sessionTimestamp;
         }).at(0)
 
         const filteredDaily: DailyWeather | undefined = dailyForecast.list.filter((weather: DailyWeather): boolean => {
-            return weather.dt * 1000 > this.sessionTimestamp;
+            return weather.dt * 1000 >= this.sessionTimestamp;
         }).at(0)
 
         const filteredClimate: DailyWeather | undefined = climateForecast.list.filter((weather: DailyWeather): boolean => {
-            return weather.dt * 1000 > this.sessionTimestamp;
+            return weather.dt * 1000 >= this.sessionTimestamp;
         }).at(0)
 
         if (filteredHourly) {
             this.temp = Math.round(filteredHourly.main.temp).toString();
-            this.rain = Math.round(filteredHourly.rain["1h"]).toString();
+            this.rain = filteredHourly.rain ? Math.round(filteredHourly.rain["1h"]).toString() : '0';
         } else if (filteredDaily) {
             const averageTemp = (filteredDaily.temp.max + filteredDaily.temp.min) / 2;
             this.temp = Math.round(averageTemp).toString();
