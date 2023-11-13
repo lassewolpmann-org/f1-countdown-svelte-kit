@@ -6,7 +6,7 @@
 </script>
 
 <style>
-    .event-name {
+    h1 {
         font-size: 48px;
         margin: 10px 0;
         text-align: center;
@@ -14,7 +14,7 @@
     }
 
     @media only screen and (max-width: 768px) {
-        .event-name {
+        h1 {
             font-size: 32px;
         }
     }

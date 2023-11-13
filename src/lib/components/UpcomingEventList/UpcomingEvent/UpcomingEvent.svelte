@@ -4,12 +4,12 @@
     import { onMount } from "svelte";
 
     // Type imports
-    import type { Event } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
 
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/Session/Body.svelte";
 
-    export let event: Event;
+    export let event: RaceData;
 
     const upcomingEvent = new UpcomingEvent(event);
 

@@ -1,12 +1,12 @@
 <script lang="ts">
     // Type imports
-    import type { Event } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
     import type { HourlyForecast, DailyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 
     // Class imports
     import { WeatherForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 
-    export let event: Event, sessionName: string | undefined, hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast;
+    export let event: RaceData, sessionName: string | undefined, hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast;
 
     const forecast = new WeatherForecast(event, sessionName, hourlyForecast, dailyForecast, climateForecast);
 </script>
