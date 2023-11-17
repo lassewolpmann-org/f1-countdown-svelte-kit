@@ -17,6 +17,17 @@
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
     }
 
+    const isInPast = (sessionDateTime: string | undefined): boolean => {
+        if (sessionDateTime) {
+            const currentTimestamp = new Date().getTime();
+            const sessionTimestamp = new Date(sessionDateTime).getTime();
+
+            return sessionTimestamp < currentTimestamp
+        } else {
+            return false
+        }
+    }
+
     onMount(async () => {
         upcomingEvent.hourlyForecast = await upcomingEvent.getHourlyForecast();
         upcomingEvent.dailyForecast = await upcomingEvent.getDailyForecast();
@@ -61,6 +72,19 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        .checkmark {
+            opacity: 0;
+            font-size: 20px;
+        }
+    }
+
+    .session.inPast {
+        color: var(--secondary-text-color);
+
+        .checkmark {
+            opacity: 1;
+        }
     }
 
     .all-sessions {
@@ -86,6 +110,10 @@
     @media only screen and (max-width: 768px) {
         .upcoming-event, .session {
             font-size: 14px;
+
+            .checkmark {
+                font-size: 18px;
+            }
         }
     }
 </style>
@@ -111,9 +139,10 @@
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
-            <div class="session">
+            <div class="session" class:inPast={isInPast(upcomingEvent.sessionsDateTime.at(i))}>
                 <div class="head">
-                    {upcomingEvent.sessionNames.at(i)}
+                    <span class="name">{upcomingEvent.sessionNames.at(i)}</span>
+                    <span class="checkmark"><i class="fa-solid fa-flag-checkered"></i></span>
                 </div>
                 <Body
                         {event}
