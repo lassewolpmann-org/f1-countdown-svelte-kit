@@ -35,6 +35,11 @@
     }
 </style>
 <div class="forecast">
-    <span class="temp">{forecast.temp} °C <i class="fa-regular fa-temperature-sun"></i></span>
-    <span class="rain">{forecast.rain} mm <i class="fa-solid fa-cloud-rain"></i></span>
+    {#if new Date().getTime() < forecast.sessionTimestamp}
+        <span class="temp">{forecast.temp} °C <i class="fa-regular fa-temperature-sun"></i></span>
+        <span class="rain">{forecast.rain} mm <i class="fa-solid fa-cloud-rain"></i></span>
+    {:else}
+        <span class="temp">- °C <i class="fa-regular fa-temperature-sun"></i></span>
+        <span class="rain">- mm <i class="fa-solid fa-cloud-rain"></i></span>
+    {/if}
 </div>
