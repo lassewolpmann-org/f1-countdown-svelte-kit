@@ -1,9 +1,9 @@
-import type { Event } from "$lib/types/Data"
+import type { RaceData } from "$lib/types/RaceData";
 import type { DailyForecast, HourlyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 import { PUBLIC_OPEN_WEATHER_MAP_API_KEY } from "$env/static/public";
 
 export class UpcomingEvent {
-    event: Event
+    event: RaceData
     eventName: string;
 
     sessionNames: string[];
@@ -22,9 +22,9 @@ export class UpcomingEvent {
     climateForecast: DailyForecast = {} as DailyForecast;
     forecastAvailable: boolean = false;
 
-    constructor(event: Event) {
+    constructor(event: RaceData) {
         this.event = event;
-        this.eventName = this.parseName(this.event.name);
+        this.eventName = this.parseName();
 
         this.sessionNames = Object.keys(this.event.sessions).map((eventName) => eventName.toUpperCase());
 
@@ -38,15 +38,15 @@ export class UpcomingEvent {
         this.raceTime = this.sessionTimes.at(-1);
     }
 
-    parseName = (name: string) => {
-        if (name.includes("Grand Prix")) {
-            return name
+    parseName() {
+        if (this.event.name.includes("Grand Prix")) {
+            return this.event.name
         } else {
-            return name + " Grand Prix"
+            return this.event.name + " Grand Prix"
         }
     }
 
-    parseDate = (sessionDate: string) => {
+    parseDate(sessionDate: string) {
         return new Date(sessionDate).toLocaleString(undefined, {
             day: '2-digit',
             month: 'long',
@@ -54,7 +54,7 @@ export class UpcomingEvent {
         })
     }
 
-    parseTime = (sessionDate: string) => {
+    parseTime(sessionDate: string) {
         return new Date(sessionDate).toLocaleString(undefined, {
             hour: '2-digit',
             minute: '2-digit'

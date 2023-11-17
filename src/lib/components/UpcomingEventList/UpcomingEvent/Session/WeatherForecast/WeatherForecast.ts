@@ -1,4 +1,4 @@
-import type { Event } from "$lib/types/Data"
+import type { RaceData } from "$lib/types/RaceData";
 
 export interface HourlyForecast {
     city: {
@@ -38,7 +38,7 @@ interface DailyWeather {
 }
 
 export class WeatherForecast {
-    private event: Event;
+    private event: RaceData;
     private readonly sessionName: string;
     private readonly sessions: { [key: string]: string };
     sessionDate: string | undefined;
@@ -47,7 +47,7 @@ export class WeatherForecast {
     temp: string;
     rain: string;
 
-    constructor(event: Event, sessionName: string | undefined, hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast) {
+    constructor(event: RaceData, sessionName: string | undefined, hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast) {
         this.event = event;
         this.sessionName = sessionName ? sessionName.toLowerCase() : "";
         this.sessions = this.event.sessions;

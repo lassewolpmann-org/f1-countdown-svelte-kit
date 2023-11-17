@@ -1,9 +1,9 @@
 <script lang="ts">
     import WeatherForecast from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast.svelte";
-    import type { Event } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
     import type { DailyForecast, HourlyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
 
-    export let date: string | undefined, time: string | undefined, event: Event, sessionName: string | undefined;
+    export let date: string | undefined, time: string | undefined, event: RaceData, sessionName: string | undefined;
     export let hourlyForecast: HourlyForecast, dailyForecast: DailyForecast, climateForecast: DailyForecast, forecastAvailable: boolean;
 </script>
 <style lang="scss">
