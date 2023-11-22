@@ -7,7 +7,6 @@
     import MetaDescription from "$lib/components/MetaDescription/MetaDescription.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
     import SessionSelection from "$lib/components/SessionSelection/SessionSelection.svelte";
-    import FeedbackForm from "$lib/components/FeedbackForm/FeedbackForm.svelte";
 
     // Type imports
     import type { PageData } from './$types';
@@ -49,4 +48,3 @@
 </main>
 <Border />
 <Footer seriesName={apiData.series} />
-<FeedbackForm />
