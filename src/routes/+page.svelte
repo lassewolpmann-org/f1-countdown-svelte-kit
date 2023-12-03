@@ -21,14 +21,9 @@
     import "@fontsource/poppins/700.css";
     import "@fontsource/poppins/800.css";
 
-
     export let data: PageData;
 
-    const seriesName = data.seriesName;
-    const seriesData = data.seriesData;
-    const nextEvents = seriesData.nextEvents;
-    const nextEvent = nextEvents.at(0);
-    const nextEventSessions = nextEvent ? nextEvent.sessions : {} as { [key: string]: string };
+    const { apiData } = data;
 </script>
 <style>
     main {
@@ -39,18 +34,22 @@
     }
 </style>
 
-
-<MetaDescription {seriesData} {seriesName} {nextEvent} />
+<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRaceSessions} />
 <svelte:head>
-    <title>{seriesName.toUpperCase()} Countdown</title>
+    <title>{apiData.series.toUpperCase()} Countdown</title>
 </svelte:head>
 
 <main>
-    <RaceTitle {nextEvent} {seriesName} />
-    <SessionSelection {nextEventSessions} />
-    <Timer {nextEventSessions} />
-    <Border />
-    <UpcomingEventList {nextEvents} />
+    {#if Object.keys(apiData.nextRaceSessions).length > 0}
+        <RaceTitle nextRace={apiData.nextRace} />
+        <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
+        <Timer nextEventSessions={apiData.nextRaceSessions} />
+        <Border />
+        <UpcomingEventList nextEvents={apiData.nextRaces} />
+    {:else}
+        <h1>There doesn't seem to be any data available.</h1>
+        <h2>Please come back at another time.</h2>
+    {/if}
 </main>
 <Border />
-<Footer {seriesName} />
+<Footer seriesName={apiData.series} />

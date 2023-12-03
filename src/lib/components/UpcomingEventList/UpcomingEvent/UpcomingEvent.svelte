@@ -1,18 +1,39 @@
 <script lang="ts">
     // Function imports
     import { UpcomingEvent } from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent";
+    import { onMount } from "svelte";
 
     // Type imports
-    import type { Event } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
 
-    export let event: Event;
+    // Component imports
+    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/Session/Body.svelte";
 
-    let upcomingEvent: UpcomingEvent;
-    $: upcomingEvent = new UpcomingEvent(event)
+    export let event: RaceData;
+
+    const upcomingEvent = new UpcomingEvent(event);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
     }
+
+    const isInPast = (sessionDateTime: string | undefined): boolean => {
+        if (sessionDateTime) {
+            const currentTimestamp = new Date().getTime();
+            const sessionTimestamp = new Date(sessionDateTime).getTime();
+
+            return sessionTimestamp < currentTimestamp
+        } else {
+            return false
+        }
+    }
+
+    onMount(async () => {
+        upcomingEvent.hourlyForecast = await upcomingEvent.getHourlyForecast();
+        upcomingEvent.dailyForecast = await upcomingEvent.getDailyForecast();
+        upcomingEvent.climateForecast = await upcomingEvent.getClimateForecast();
+        upcomingEvent.forecastAvailable = true;
+    })
 </script>
 <style lang="scss">
     .upcoming-event {
@@ -35,51 +56,50 @@
 
     .session {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 30px;
+        flex-direction: column;
+        gap: 15px;
 
         background: var(--table-row-primary-color);
-        padding: 10px 20px;
+        padding: 12px 25px;
         border-radius: 10px;
 
-        .name {
-            font-weight: 500;
-            flex: 6;
-        }
-
-        .date {
-            font-weight: 300;
-            flex: 2;
-
+        .head {
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--table-row-secondary-color);
             display: flex;
-            flex-direction: column;
-
-            span:last-child {
-                color: var(--secondary-text-color);
-            }
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .toggle-visibility {
-            flex: 1;
+        .checkmark {
+            opacity: 0;
+            font-size: 20px;
+        }
+    }
+
+    .session.inPast {
+        color: var(--secondary-text-color);
+
+        .checkmark {
+            opacity: 1;
         }
     }
 
     .all-sessions {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
         .session {
             background: var(--table-row-secondary-color);
-            border-radius: 0;
-            border-bottom: 2px solid var(--table-row-primary-color);
-        }
+            padding: 8px 25px;
 
-        .session:first-child {
-            border-radius: 10px 10px 0 0;
-        }
-
-        .session:last-child {
-            border-radius: 0 0 10px 10px;
-            border-bottom: none;
+            .head {
+                border-bottom: 2px solid var(--table-row-primary-color);
+                padding-bottom: 8px;
+            }
         }
     }
 
@@ -90,38 +110,50 @@
     @media only screen and (max-width: 768px) {
         .upcoming-event, .session {
             font-size: 14px;
-        }
 
-        .session {
-            gap: 15px;
+            .checkmark {
+                font-size: 18px;
+            }
         }
     }
 </style>
 
 <div class="upcoming-event">
     <div class="session">
-        <div class="name">{upcomingEvent.eventName}</div>
-        <div class="date">
-            <span>{upcomingEvent.raceDate}</span>
-            <span>{upcomingEvent.raceTime}</span>
-        </div>
-        <div class="toggle-visibility">
-            <button on:click={toggleSessionVisibility} aria-label="Show or hide all Sessions of Event">
+        <div class="head">
+            <span class="name">{upcomingEvent.eventName}</span>
+            <button on:click={toggleSessionVisibility}>
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>
         </div>
+        <Body
+                {event}
+                hourlyForecast={upcomingEvent.hourlyForecast}
+                dailyForecast={upcomingEvent.dailyForecast}
+                climateForecast={upcomingEvent.climateForecast}
+                forecastAvailable={upcomingEvent.forecastAvailable}
+                date={upcomingEvent.raceDate}
+                time={upcomingEvent.raceTime}
+                sessionName={upcomingEvent.sessionNames.at(-1)}
+        />
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
-            <div class="session">
-                <div class="name">
-                    {upcomingEvent.sessionNames.at(i)}
+            <div class="session" class:inPast={isInPast(upcomingEvent.sessionsDateTime.at(i))}>
+                <div class="head">
+                    <span class="name">{upcomingEvent.sessionNames.at(i)}</span>
+                    <span class="checkmark"><i class="fa-solid fa-flag-checkered"></i></span>
                 </div>
-                <div class="date">
-                    <span>{upcomingEvent.sessionDates.at(i)}</span>
-                    <span>{upcomingEvent.sessionTimes.at(i)}</span>
-                </div>
-                <div class="toggle-visibility"></div>
+                <Body
+                        {event}
+                        hourlyForecast={upcomingEvent.hourlyForecast}
+                        dailyForecast={upcomingEvent.dailyForecast}
+                        climateForecast={upcomingEvent.climateForecast}
+                        forecastAvailable={upcomingEvent.forecastAvailable}
+                        date={upcomingEvent.sessionDates.at(i)}
+                        time={upcomingEvent.sessionTimes.at(i)}
+                        sessionName={upcomingEvent.sessionNames.at(i)}
+                />
             </div>
         {/each}
     </div>

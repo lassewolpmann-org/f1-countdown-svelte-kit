@@ -1,68 +1,91 @@
 /** @type {import('./$types').PageLoad} */
-import type { Event, SeriesData } from "$lib/types/Data";
+import type { RaceData, DataConfig } from "$lib/types/RaceData";
 import { error } from '@sveltejs/kit';
 
+class APIData {
+    allRaces: RaceData[];
+    series: string;
+    currentYear: number;
+    nextRaces: RaceData[];
+    nextRace: RaceData;
+    nextRaceSessions: { [key: string]: string };
+    dataConfig: DataConfig;
+
+    constructor() {
+        this.allRaces = [];
+        this.nextRaces = [];
+        this.nextRace = {} as RaceData;
+        this.nextRaceSessions = {} as { [key: string]: string };
+        this.dataConfig = {} as DataConfig;
+
+        this.series = 'f2';
+        this.currentYear = new Date().getFullYear();
+    }
+
+    async getDataConfig(fetch: any) {
+        const configURL = new URL('https://raw.githubusercontent.com');
+        configURL.pathname = `sportstimes/f1/main/_db/${this.series}/config.json`;
+
+        const res = await fetch(configURL);
+
+        if (res.ok) {
+            return await res.json();
+        } else {
+            throw error(404, "Couldn't retrieve config from API")
+        }
+    }
+
+    async getAllRaces(fetch: any, year: number) {
+        const apiURL = new URL('https://raw.githubusercontent.com');
+        apiURL.pathname = `sportstimes/f1/main/_db/${this.series}/${year}.json`;
+
+        const res = await fetch(apiURL);
+
+        if (res.ok) {
+            const data = await res.json();
+            return data['races']
+        } else {
+            throw error(404, "Couldn't retrieve data from API")
+        }
+    }
+
+    getNextRaces(): RaceData[] {
+        let nextRaces: RaceData[] = this.allRaces.filter((race: RaceData): boolean => {
+            const lastSessionDate: string | undefined = Object.values(race.sessions).at(-1);
+            const lastSessionTimestamp: number = lastSessionDate ? new Date(lastSessionDate).getTime() : 0;
+
+            const currentTimestamp: number = new Date().getTime();
+
+            // For debug purposes
+            // const currentTimestamp = new Date('2023-12-31').getTime();
+
+            return lastSessionTimestamp > currentTimestamp
+        })
+
+        const nextRace: RaceData | undefined = nextRaces.at(0);
+        if (nextRace) this.nextRace = nextRace;
+        if (nextRace) this.nextRaceSessions = nextRace.sessions;
+
+        return nextRaces
+    }
+}
+
 export const load = (async ({ fetch }: any) => {
-    const seriesName: string = 'f2';
-    const seriesData: SeriesData = {} as SeriesData;
+    const apiData: APIData = new APIData();
+    apiData.dataConfig = await apiData.getDataConfig(fetch);
+    apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear);
+    const nextRaces = apiData.getNextRaces();
 
-    const allEvents = await getAllEvents(seriesName, fetch);
-    seriesData.nextEvents = getNextEvents(allEvents);
-    seriesData.previousEvent = getPreviousEvent(allEvents, seriesData.nextEvents);
-
-    if (!seriesData) throw error(404, {
-        message: "Couldn't retrieve data from API"
-    })
+    // Switch to next year if no races are upcoming
+    const nextYear = apiData.currentYear + 1;
+    if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(nextYear)) {
+        apiData.allRaces = await apiData.getAllRaces(fetch, nextYear);
+        apiData.nextRaces = apiData.getNextRaces();
+    } else {
+        apiData.nextRaces = nextRaces;
+    }
 
     return {
-        seriesData: seriesData,
-        seriesName: seriesName
+        apiData
     }
 });
-
-async function getAllEvents(series: string, fetch: any) {
-    const currentYear: number = new Date().getFullYear();
-
-    const apiURL: URL = new URL(`https://raw.githubusercontent.com/sportstimes/f1/main/_db/${series}/${currentYear}.json`);
-    const res: Response = await fetch(apiURL);
-
-    const allEvents = await res.json();
-
-    return allEvents['races']
-}
-
-function getNextEvents(allEvents: Array<Event>): Event[] {
-    const timestamp: number = new Date().getTime();
-    // const timestamp: number = new Date('2023-10-30').getTime();
-
-    let nextEvents: Array<Event> = allEvents.filter((event: Event): boolean => {
-        const eventSessions: object = event['sessions'];
-        const eventSessionTimestamps: string[] = Object.values(eventSessions);
-
-        const raceEndTime: string | undefined = eventSessionTimestamps.at(-1);
-
-        return raceEndTime ? new Date(raceEndTime).getTime() > timestamp : false
-    })
-
-    if (nextEvents.length === 0) {
-        const lastEvent: Event | undefined = allEvents.at(-1);
-        if (lastEvent) nextEvents = [lastEvent];
-    }
-
-    return nextEvents
-}
-
-function getPreviousEvent(allEvents: Array<Event>, nextEvents: Array<Event>): Event {
-    let previousEvent;
-
-    if (allEvents.length === nextEvents.length) {
-        previousEvent = allEvents.at(-1);
-    } else {
-        const previousEventIndex = allEvents.length - nextEvents.length - 1;
-        previousEvent = allEvents.at(previousEventIndex);
-    }
-
-    if (!previousEvent) previousEvent = {} as Event
-
-    return previousEvent
-}

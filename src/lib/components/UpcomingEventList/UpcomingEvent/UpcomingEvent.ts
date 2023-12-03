@@ -1,8 +1,9 @@
-import type { Event } from "$lib/types/Data"
+import type { RaceData } from "$lib/types/RaceData";
+import type { DailyForecast, HourlyForecast } from "$lib/components/UpcomingEventList/UpcomingEvent/Session/WeatherForecast/WeatherForecast";
+import { PUBLIC_OPEN_WEATHER_MAP_API_KEY } from "$env/static/public";
 
 export class UpcomingEvent {
-    event: Event
-    locationURL: string;
+    event: RaceData
     eventName: string;
 
     sessionNames: string[];
@@ -16,12 +17,16 @@ export class UpcomingEvent {
     raceDate: string | undefined;
     raceTime: string | undefined;
 
-    constructor(event: Event) {
-        this.event = event;
-        this.locationURL = `https://www.google.com/maps/place/${this.event.latitude},${this.event.longitude}`;
-        this.eventName = this.parseName(this.event.name);
+    hourlyForecast: HourlyForecast = {} as HourlyForecast;
+    dailyForecast: DailyForecast = {} as DailyForecast;
+    climateForecast: DailyForecast = {} as DailyForecast;
+    forecastAvailable: boolean = false;
 
-        this.sessionNames = Object.keys(this.event.sessions).map(this.toUpper);
+    constructor(event: RaceData) {
+        this.event = event;
+        this.eventName = this.parseName();
+
+        this.sessionNames = Object.keys(this.event.sessions).map((eventName) => eventName.toUpperCase());
 
         this.sessionsHidden = true;
 
@@ -33,29 +38,62 @@ export class UpcomingEvent {
         this.raceTime = this.sessionTimes.at(-1);
     }
 
-    parseName = (name: string) => {
-        if (name.includes("Grand Prix")) {
-            return name
+    parseName() {
+        if (this.event.name.includes("Grand Prix")) {
+            return this.event.name
         } else {
-            return name + " Grand Prix"
+            return this.event.name + " Grand Prix"
         }
     }
 
-    parseDate = (sessionDate: string) => {
+    parseDate(sessionDate: string) {
         return new Date(sessionDate).toLocaleString(undefined, {
-            month: 'short',
-            day: '2-digit'
+            day: '2-digit',
+            month: 'long',
+            weekday: 'long'
         })
     }
 
-    parseTime = (sessionDate: string) => {
+    parseTime(sessionDate: string) {
         return new Date(sessionDate).toLocaleString(undefined, {
             hour: '2-digit',
             minute: '2-digit'
         })
     }
 
-    toUpper = (name: string) => {
-        return name.toUpperCase()
+    getHourlyForecast = async () => {
+        const apiURL = new URL('https://pro.openweathermap.org/data/2.5/forecast/hourly');
+        apiURL.searchParams.append('lat', this.event.latitude.toString());
+        apiURL.searchParams.append('lon', this.event.longitude.toString());
+        apiURL.searchParams.append('appid', PUBLIC_OPEN_WEATHER_MAP_API_KEY);
+        apiURL.searchParams.append('units', 'metric');
+        apiURL.searchParams.append('cnt', '96');
+
+        const res = await fetch(apiURL);
+        return await res.json()
+    }
+
+    getDailyForecast = async () => {
+        const apiURL = new URL('https://api.openweathermap.org/data/2.5/forecast/daily');
+        apiURL.searchParams.append('lat', this.event.latitude.toString());
+        apiURL.searchParams.append('lon', this.event.longitude.toString());
+        apiURL.searchParams.append('appid', PUBLIC_OPEN_WEATHER_MAP_API_KEY);
+        apiURL.searchParams.append('units', 'metric');
+        apiURL.searchParams.append('cnt', '16');
+
+        const res = await fetch(apiURL);
+        return await res.json()
+    }
+
+    getClimateForecast = async () => {
+        const apiURL = new URL('https://pro.openweathermap.org/data/2.5/forecast/climate');
+        apiURL.searchParams.append('lat', this.event.latitude.toString());
+        apiURL.searchParams.append('lon', this.event.longitude.toString());
+        apiURL.searchParams.append('appid', PUBLIC_OPEN_WEATHER_MAP_API_KEY);
+        apiURL.searchParams.append('units', 'metric');
+        apiURL.searchParams.append('cnt', '30');
+
+        const res = await fetch(apiURL);
+        return await res.json()
     }
 }

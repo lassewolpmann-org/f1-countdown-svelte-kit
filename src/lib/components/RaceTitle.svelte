@@ -1,14 +1,12 @@
 <script lang="ts">
     // Type imports
-    import type { Event } from "$lib/types/Data";
+    import type { RaceData } from "$lib/types/RaceData";
 
-    export let nextEvent: Event | undefined, seriesName: string;
-
-    const nextEventName: string = nextEvent ? nextEvent.name : "Undefined";
+    export let nextRace: RaceData;
 </script>
 
 <style>
-    .event-name {
+    h1 {
         font-size: 48px;
         margin: 10px 0;
         text-align: center;
@@ -16,10 +14,10 @@
     }
 
     @media only screen and (max-width: 768px) {
-        .event-name {
+        h1 {
             font-size: 32px;
         }
     }
 </style>
 
-<h1 class="event-name">{seriesName.toUpperCase()} {nextEventName} Grand Prix</h1>
+<h1 class="event-name">{nextRace.name} Grand Prix</h1>

@@ -1,40 +1,16 @@
-import type { SeriesData, Event } from "$lib/types/Data";
+import type { RaceData } from "$lib/types/RaceData";
 
 export class MetaDescription {
-    seriesData: SeriesData;
-    seriesName: string;
-    nextEvent: Event;
-
     descriptionString: string;
 
-    constructor(seriesName: string, seriesData: SeriesData, nextEvent: Event) {
-        this.seriesData = seriesData;
-        this.seriesName = seriesName;
-        this.nextEvent = nextEvent ? nextEvent : {} as Event;
+    constructor(series: string, nextRace: RaceData, sessions: { [key: string]: string }) {
+        let dString = `When is the next ${series.toUpperCase()} race? Countdown to the ${new Date().getFullYear()}`;
 
-        this.descriptionString = this.createDescriptionString();
-    }
+        const raceName = `${nextRace.name} Grand Prix`;
+        const sessionNames = Object.keys(sessions).map((session) => session.toUpperCase());
 
-    createDescriptionString(): string {
-        let dString = `When is the next ${this.seriesName.toUpperCase()} race? Countdown to the `
+        dString = dString.concat(` ${series.toUpperCase()} ${raceName} ${sessionNames.join(', ')}.`);
 
-        const nextEventYear = this.getEventYear(this.nextEvent);
-        const nextEventName = `${this.nextEvent.name} Grand Prix`;
-        const nextEventSessions = Object.keys(this.nextEvent.sessions).map((sessionName => sessionName.toUpperCase()));
-
-        dString = dString.concat(`${nextEventYear} ${this.seriesName.toUpperCase()} ${nextEventName} ${nextEventSessions.join(', ')}.`)
-
-        return dString
-    }
-
-    getEventYear(event: Event): number {
-        const eventSessions = event.sessions;
-        const raceYear = Object.values(eventSessions).at(-1);
-
-        if (raceYear) {
-            return new Date(raceYear).getFullYear()
-        } else {
-            return 0
-        }
+        this.descriptionString = dString;
     }
 }

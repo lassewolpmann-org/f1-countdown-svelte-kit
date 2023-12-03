@@ -1,8 +1,4 @@
-export interface AllSeriesData {
-    [key: string]: SeriesData
-}
-
-export interface Event {
+export interface RaceData {
     name: string;
     location: string;
     latitude: number;
@@ -10,10 +6,12 @@ export interface Event {
     round: number;
     slug: string;
     localeKey: string;
+    tbc: boolean;
     sessions: { [key: string]: string };
 }
 
-export interface SeriesData {
-    nextEvents: Array<Event>,
-    previousEvent: Event | undefined
+export interface DataConfig {
+    availableYears: [number],
+    sessions: [string],
+    sessionLengths: { [key: string]: number}
 }
