@@ -6,5 +6,12 @@ export interface RaceData {
     round: number;
     slug: string;
     localeKey: string;
+    tbc: boolean;
     sessions: { [key: string]: string };
+}
+
+export interface DataConfig {
+    availableYears: [number],
+    sessions: [string],
+    sessionLengths: { [key: string]: number}
 }

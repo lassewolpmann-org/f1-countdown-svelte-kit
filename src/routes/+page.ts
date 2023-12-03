@@ -1,30 +1,45 @@
 /** @type {import('./$types').PageLoad} */
-import type { RaceData } from "$lib/types/RaceData";
+import type { RaceData, DataConfig } from "$lib/types/RaceData";
 import { error } from '@sveltejs/kit';
 
 class APIData {
     allRaces: RaceData[];
     series: string;
     currentYear: number;
-    apiURL: URL;
     nextRaces: RaceData[];
     nextRace: RaceData;
     nextRaceSessions: { [key: string]: string };
+    dataConfig: DataConfig;
 
     constructor() {
         this.allRaces = [];
         this.nextRaces = [];
         this.nextRace = {} as RaceData;
         this.nextRaceSessions = {} as { [key: string]: string };
+        this.dataConfig = {} as DataConfig;
 
         this.series = 'f1';
         this.currentYear = new Date().getFullYear();
-        this.apiURL = new URL('https://raw.githubusercontent.com');
-        this.apiURL.pathname = `sportstimes/f1/main/_db/${this.series}/${this.currentYear}.json`;
     }
 
-    async getAllRaces(fetch: any) {
-        const res = await fetch(this.apiURL);
+    async getDataConfig(fetch: any) {
+        const configURL = new URL('https://raw.githubusercontent.com');
+        configURL.pathname = `sportstimes/f1/main/_db/${this.series}/config.json`;
+
+        const res = await fetch(configURL);
+
+        if (res.ok) {
+            return await res.json();
+        } else {
+            throw error(404, "Couldn't retrieve config from API")
+        }
+    }
+
+    async getAllRaces(fetch: any, year: number) {
+        const apiURL = new URL('https://raw.githubusercontent.com');
+        apiURL.pathname = `sportstimes/f1/main/_db/${this.series}/${year}.json`;
+
+        const res = await fetch(apiURL);
 
         if (res.ok) {
             const data = await res.json();
@@ -47,11 +62,6 @@ class APIData {
             return lastSessionTimestamp > currentTimestamp
         })
 
-        if (nextRaces.length === 0) {
-            const lastRaceOfSeason: RaceData | undefined = this.allRaces.at(-1);
-            if (lastRaceOfSeason) nextRaces = [lastRaceOfSeason];
-        }
-
         const nextRace: RaceData | undefined = nextRaces.at(0);
         if (nextRace) this.nextRace = nextRace;
         if (nextRace) this.nextRaceSessions = nextRace.sessions;
@@ -62,8 +72,17 @@ class APIData {
 
 export const load = (async ({ fetch }: any) => {
     const apiData: APIData = new APIData();
-    apiData.allRaces = await apiData.getAllRaces(fetch);
-    apiData.nextRaces = apiData.getNextRaces();
+    apiData.dataConfig = await apiData.getDataConfig(fetch);
+    apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear);
+    const nextRaces = apiData.getNextRaces();
+
+    // Switch to next year if no races are upcoming
+    if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(apiData.currentYear + 1)) {
+        apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear + 1);
+        apiData.nextRaces = apiData.getNextRaces();
+    } else {
+        apiData.nextRaces = nextRaces;
+    }
 
     return {
         apiData
