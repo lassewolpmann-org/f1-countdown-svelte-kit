@@ -40,11 +40,16 @@
 </svelte:head>
 
 <main>
-    <RaceTitle nextRace={apiData.nextRace} series={apiData.series} />
-    <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
-    <Timer nextEventSessions={apiData.nextRaceSessions} />
-    <Border />
-    <UpcomingEventList nextEvents={apiData.nextRaces} />
+    {#if Object.keys(apiData.nextRaceSessions).length > 0}
+        <RaceTitle nextRace={apiData.nextRace} />
+        <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
+        <Timer nextEventSessions={apiData.nextRaceSessions} />
+        <Border />
+        <UpcomingEventList nextEvents={apiData.nextRaces} />
+    {:else}
+        <h1>There doesn't seem to be any data available.</h1>
+        <h2>Please come back at another time.</h2>
+    {/if}
 </main>
 <Border />
 <Footer seriesName={apiData.series} />
