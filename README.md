@@ -1,14 +1,12 @@
-# f2-countdown.com
+# f3-countdown.com
 
-Source code for f2-countdown.com, a website created for F2 Fans to keep track of the schedule and never miss a race again.  
-
-# Running Locally
+Source code for f3-countdown.com, a website created for F3 Fans to keep track of the schedule and never miss a race again.  
 
 ## Developing
 ```bash
 # clone project
-git clone https://github.com/lassewolpmann-org/f2-countdown-svelte-kit.git
-cd f2-countdown-svelte-kit/
+git clone https://github.com/lassewolpmann-org/f3-countdown-svelte-kit.git
+cd f3-countdown-svelte-kit/
 
 # install dependencies
 npm install
