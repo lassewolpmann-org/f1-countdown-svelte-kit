@@ -18,7 +18,7 @@ class APIData {
         this.nextRaceSessions = {} as { [key: string]: string };
         this.dataConfig = {} as DataConfig;
 
-        this.series = 'f3';
+        this.series = 'f1';
         this.currentYear = new Date().getFullYear();
     }
 
