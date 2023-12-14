@@ -71,6 +71,15 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
+
+            .tbc {
+                background: var(--main-text-color);
+                color: var(--table-row-primary-color);
+                padding: 1px 5px;
+                margin-right: 3px;
+                border-radius: 3px;
+                font-size: 14px;
+            }
         }
 
         .checkmark {
@@ -121,7 +130,7 @@
 <div class="upcoming-event">
     <div class="session">
         <div class="head">
-            <span class="name">{upcomingEvent.eventName}</span>
+            <span class="name"><span class="tbc">{upcomingEvent.event.tbc ? "TBC" : ""}</span> {upcomingEvent.eventName}</span>
             <button on:click={toggleSessionVisibility}>
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>

@@ -2,7 +2,7 @@
     // Type imports
     import type { RaceData } from "$lib/types/RaceData";
 
-    export let nextRace: RaceData, series: string;
+    export let nextRace: RaceData;
 </script>
 
 <style>
@@ -20,4 +20,4 @@
     }
 </style>
 
-<h1 class="event-name">{series.toUpperCase()} {nextRace.name} Grand Prix</h1>
+<h1 class="event-name">{nextRace.name} Grand Prix</h1>

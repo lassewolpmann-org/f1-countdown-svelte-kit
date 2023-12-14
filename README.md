@@ -2,8 +2,6 @@
 
 Source code for f1-countdown.com, a website created for F1 Fans to keep track of the schedule and never miss a race again.  
 
-# Running Locally
-
 ## Developing
 ```bash
 # clone project

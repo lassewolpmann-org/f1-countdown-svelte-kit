@@ -77,8 +77,9 @@ export const load = (async ({ fetch }: any) => {
     const nextRaces = apiData.getNextRaces();
 
     // Switch to next year if no races are upcoming
-    if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(apiData.currentYear + 1)) {
-        apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear + 1);
+    const nextYear = apiData.currentYear + 1;
+    if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(nextYear)) {
+        apiData.allRaces = await apiData.getAllRaces(fetch, nextYear);
         apiData.nextRaces = apiData.getNextRaces();
     } else {
         apiData.nextRaces = nextRaces;
