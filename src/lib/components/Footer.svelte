@@ -87,7 +87,7 @@
                 <i class="fa-solid fa-scale-balanced"></i> License
             </a>
             <a href="mailto:lasse@f1-countdown.com">
-                <i class="fa-solid fa-envelope"></i> Feedback
+                <i class="fa-solid fa-envelope"></i> Contact
             </a>
             <a href="/privacy-policy" target="_blank">
                 <i class="fa-solid fa-cookie-bite"></i> Privacy Policy
