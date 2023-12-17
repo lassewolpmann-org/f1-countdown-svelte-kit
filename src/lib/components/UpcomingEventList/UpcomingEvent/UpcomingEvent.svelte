@@ -1,7 +1,6 @@
 <script lang="ts">
     // Function imports
     import { UpcomingEvent } from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent";
-    import { onMount } from "svelte";
 
     // Type imports
     import type { RaceData } from "$lib/types/RaceData";
@@ -27,13 +26,6 @@
             return false
         }
     }
-
-    onMount(async () => {
-        upcomingEvent.hourlyForecast = await upcomingEvent.getHourlyForecast();
-        upcomingEvent.dailyForecast = await upcomingEvent.getDailyForecast();
-        upcomingEvent.climateForecast = await upcomingEvent.getClimateForecast();
-        upcomingEvent.forecastAvailable = true;
-    })
 </script>
 <style lang="scss">
     .upcoming-event {
@@ -136,14 +128,8 @@
             </button>
         </div>
         <Body
-                {event}
-                hourlyForecast={upcomingEvent.hourlyForecast}
-                dailyForecast={upcomingEvent.dailyForecast}
-                climateForecast={upcomingEvent.climateForecast}
-                forecastAvailable={upcomingEvent.forecastAvailable}
                 date={upcomingEvent.raceDate}
                 time={upcomingEvent.raceTime}
-                sessionName={upcomingEvent.sessionNames.at(-1)}
         />
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
@@ -154,14 +140,8 @@
                     <span class="checkmark"><i class="fa-solid fa-flag-checkered"></i></span>
                 </div>
                 <Body
-                        {event}
-                        hourlyForecast={upcomingEvent.hourlyForecast}
-                        dailyForecast={upcomingEvent.dailyForecast}
-                        climateForecast={upcomingEvent.climateForecast}
-                        forecastAvailable={upcomingEvent.forecastAvailable}
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
-                        sessionName={upcomingEvent.sessionNames.at(i)}
                 />
             </div>
         {/each}
