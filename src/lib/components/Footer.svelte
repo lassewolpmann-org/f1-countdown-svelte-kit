@@ -101,9 +101,6 @@
             <a href="https://github.com/sportstimes/f1/blob/main/LICENSE" target="_blank">
                 <i class="fa-solid fa-scale-balanced"></i> License
             </a>
-            <a href="https://openweathermap.org/api" target="_blank">
-                <i class="fa-solid fa-cloud"></i> OpenWeatherMap
-            </a>
         </div>
     </div>
     <div class="legal">

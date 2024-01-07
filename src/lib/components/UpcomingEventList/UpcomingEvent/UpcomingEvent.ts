@@ -32,7 +32,7 @@ export class UpcomingEvent {
     }
 
     parseName() {
-        if (this.event.name.includes("Grand Prix")) {
+        if (this.event.name.includes("Grand Prix") || this.event.name.includes("TESTING")) {
             return this.event.name
         } else {
             return this.event.name + " Grand Prix"

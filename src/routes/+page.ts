@@ -1,11 +1,18 @@
 /** @type {import('./$types').PageLoad} */
 import type { RaceData, DataConfig } from "$lib/types/RaceData";
 import { error } from '@sveltejs/kit';
+import type { CarLaunch } from "$lib/types/CarLaunch";
 
 class APIData {
     allRaces: RaceData[];
     series: string;
     currentYear: number;
+
+    carLaunches: CarLaunch[];
+    carLaunch: CarLaunch;
+
+    preSeasonTesting: RaceData;
+
     nextRaces: RaceData[];
     nextRace: RaceData;
     nextRaceSessions: { [key: string]: string };
@@ -13,9 +20,16 @@ class APIData {
 
     constructor() {
         this.allRaces = [];
+
+        this.carLaunches = [];
+        this.carLaunch = {} as CarLaunch;
+
+        this.preSeasonTesting = {} as RaceData;
+
         this.nextRaces = [];
         this.nextRace = {} as RaceData;
         this.nextRaceSessions = {} as { [key: string]: string };
+
         this.dataConfig = {} as DataConfig;
 
         this.series = 'f1';
@@ -57,7 +71,7 @@ class APIData {
             const currentTimestamp: number = new Date().getTime();
 
             // For debug purposes
-            // const currentTimestamp = new Date('2023-12-31').getTime();
+            // const currentTimestamp = new Date('2024-05-31').getTime();
 
             return lastSessionTimestamp > currentTimestamp
         })
@@ -75,6 +89,14 @@ export const load = (async ({ fetch }: any) => {
     apiData.dataConfig = await apiData.getDataConfig(fetch);
     apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear);
     const nextRaces = apiData.getNextRaces();
+
+    // Car Launches
+    const launchRes = await fetch('/car-launches');
+    apiData.carLaunches = await launchRes.json();
+
+    // Pre-Season Testing
+    const testingRes = await fetch('/preseason-testing');
+    apiData.preSeasonTesting = await testingRes.json();
 
     // Switch to next year if no races are upcoming
     const nextYear = apiData.currentYear + 1;

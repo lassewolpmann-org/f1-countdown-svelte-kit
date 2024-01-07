@@ -8,14 +8,6 @@
         align-items: center;
         justify-content: space-between;
 
-        .weather {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
         .date {
             flex: 2;
 
