@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { RaceData } from "$lib/types/RaceData";
 
-export const GET: RequestHandler = ({ url }) => {
+export const GET: RequestHandler = () => {
     // Source: https://www.formula1.com/en/racing/2024/Pre-Season-Testing.html
 
     const preSeasonTesting: RaceData = {
