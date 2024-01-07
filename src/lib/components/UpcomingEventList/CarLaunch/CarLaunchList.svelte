@@ -46,6 +46,12 @@
             }
         }
     }
+
+    @media only screen and (max-width: 768px) {
+        .car-launch {
+            font-size: 14px;
+        }
+    }
 </style>
 {#if carLaunches.length > 0}
     <h3>Car Launches</h3>
