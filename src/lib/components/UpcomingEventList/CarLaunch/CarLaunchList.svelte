@@ -27,10 +27,19 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
+
+            border-bottom: 2px solid var(--table-row-secondary-color);
+            padding-bottom: 12px;
         }
 
         .body {
             font-weight: 400;
+            padding-top: 12px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .social {
@@ -63,11 +72,10 @@
                     <span class="social"><a href={carLaunch.announcement} target="_blank"><i class="fa-brands fa-instagram" /></a></span>
                 {/if}
             </div>
-            {#if carLaunch.tbc}
-                <span class="body"><i class="fa-solid fa-calendar-day" /> TBC</span>
-            {:else}
-                <span class="body"><i class="fa-solid fa-calendar-day" /> {parseDate(carLaunch.date)}</span>
-            {/if}
+            <div class="body">
+                <span><i class="fa-solid fa-calendar-day" /> {parseDate(carLaunch.date)}</span>
+                <span ><i class="fa-solid fa-location-dot" /> {carLaunch.location}</span>
+            </div>
         </div>
     {/each}
 {/if}

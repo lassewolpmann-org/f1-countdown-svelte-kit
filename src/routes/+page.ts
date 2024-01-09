@@ -69,10 +69,6 @@ class APIData {
             const lastSessionTimestamp: number = lastSessionDate ? new Date(lastSessionDate).getTime() : 0;
 
             const currentTimestamp: number = new Date().getTime();
-
-            // For debug purposes
-            // const currentTimestamp = new Date('2024-05-31').getTime();
-
             return lastSessionTimestamp > currentTimestamp
         })
 

@@ -9,21 +9,18 @@
 
     export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData;
 
-    function showData(): boolean {
-        const nextEvent = nextEvents.at(0)
-        if (!nextEvent) return false
+    const showPreseasonTesting = (): boolean => {
+        const testingSessions = preSeasonTesting.sessions;
+        const lastSessionDate = Object.values(testingSessions).at(-1);
 
-        const firstSession = Object.values(nextEvent.sessions).at(0);
-        if (!firstSession) return false
+        if (lastSessionDate) {
+            const sessionTimestamp = new Date(lastSessionDate).getTime();
+            const currentTimestamp = new Date().getTime();
 
-        const currentTimestamp = new Date().getTime();
-
-        // For debug purposes
-        // const currentTimestamp = new Date('2024-05-31').getTime();
-
-        const sessionTimestamp = new Date(firstSession).getTime();
-
-        return currentTimestamp < sessionTimestamp
+            return currentTimestamp < sessionTimestamp
+        } else {
+            return false
+        }
     }
 </script>
 
@@ -41,16 +38,16 @@
 </style>
 
 <div class="upcoming-event-list">
+    {#if carLaunches.length > 0}
+        <CarLaunchList {carLaunches} />
+    {/if}
+
+    {#if preSeasonTesting && showPreseasonTesting()}
+        <h3>Pre-Season Testing</h3>
+        <UpcomingEvent event={preSeasonTesting} />
+    {/if}
+
     {#if nextEvents.length > 0}
-        {#if carLaunches.length > 0 && showData()}
-            <CarLaunchList {carLaunches} />
-        {/if}
-
-        {#if preSeasonTesting && showData()}
-            <h3>Pre-Season Testing</h3>
-            <UpcomingEvent event={preSeasonTesting} />
-        {/if}
-
         <h3>Upcoming Grands Prix</h3>
         {#each nextEvents as event}
             <UpcomingEvent {event} />

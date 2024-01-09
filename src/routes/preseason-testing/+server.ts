@@ -21,5 +21,5 @@ export const GET: RequestHandler = () => {
         }
     }
 
-    return json(preSeasonTesting);
+    return json(preSeasonTesting)
 };
