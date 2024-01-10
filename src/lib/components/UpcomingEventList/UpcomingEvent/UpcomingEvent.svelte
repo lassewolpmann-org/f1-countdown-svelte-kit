@@ -6,7 +6,7 @@
     import type { RaceData } from "$lib/types/RaceData";
 
     // Component imports
-    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/Session/Body.svelte";
+    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
     export let event: RaceData;
 

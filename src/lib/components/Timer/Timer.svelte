@@ -1,12 +1,12 @@
 <script lang="ts">
     // Component imports
-    import TimerElement from "$lib/components/Timer/TimerElement/TimerElement.svelte";
+    import TimerElement from "$lib/components/Timer/TimerElement.svelte";
 
     // Store imports
-    import { currentSessionIndex } from "$lib/components/SessionSelection/currentSessionIndex";
+    import { currentSessionIndex } from "$lib/stores/currentSessionIndex";
 
     // Class imports
-    import { Timer } from "$lib/components/Timer/Timer";
+    import { Timer } from "$lib/classes/Timer";
 
     // Function imports
     import { onDestroy } from "svelte";
