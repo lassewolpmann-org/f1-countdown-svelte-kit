@@ -6,22 +6,9 @@
     // Component imports
     import UpcomingEvent from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent.svelte";
     import CarLaunchList from "$lib/components/UpcomingEventList/CarLaunch/CarLaunchList.svelte";
+    import PreSeason from "$lib/components/UpcomingEventList/PreSeason/PreSeason.svelte";
 
     export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData;
-
-    const showPreseasonTesting = (): boolean => {
-        const testingSessions = preSeasonTesting.sessions;
-        const lastSessionDate = Object.values(testingSessions).at(-1);
-
-        if (lastSessionDate) {
-            const sessionTimestamp = new Date(lastSessionDate).getTime();
-            const currentTimestamp = new Date().getTime();
-
-            return currentTimestamp < sessionTimestamp
-        } else {
-            return false
-        }
-    }
 </script>
 
 <style lang="scss">
@@ -42,9 +29,8 @@
         <CarLaunchList {carLaunches} />
     {/if}
 
-    {#if preSeasonTesting && showPreseasonTesting()}
-        <h3>Pre-Season Testing</h3>
-        <UpcomingEvent event={preSeasonTesting} />
+    {#if preSeasonTesting}
+        <PreSeason {preSeasonTesting} />
     {/if}
 
     {#if nextEvents.length > 0}

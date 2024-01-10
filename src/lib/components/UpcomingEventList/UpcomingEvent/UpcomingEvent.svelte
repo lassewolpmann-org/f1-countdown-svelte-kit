@@ -1,6 +1,6 @@
 <script lang="ts">
-    // Function imports
-    import { UpcomingEvent } from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent";
+    // Class imports
+    import { UpcomingEvent } from "$lib/classes/UpcomingEvent";
 
     // Type imports
     import type { RaceData } from "$lib/types/RaceData";
@@ -17,14 +17,12 @@
     }
 
     const isInPast = (sessionDateTime: string | undefined): boolean => {
-        if (sessionDateTime) {
-            const currentTimestamp = new Date().getTime();
-            const sessionTimestamp = new Date(sessionDateTime).getTime();
+        if (!sessionDateTime) return false
 
-            return sessionTimestamp < currentTimestamp
-        } else {
-            return false
-        }
+        const currentTimestamp = new Date().getTime();
+        const sessionTimestamp = new Date(sessionDateTime).getTime();
+
+        return sessionTimestamp < currentTimestamp
     }
 </script>
 <style lang="scss">

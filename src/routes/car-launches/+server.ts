@@ -2,7 +2,6 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { CarLaunch } from "$lib/types/CarLaunch";
 
-
 export const GET: RequestHandler = () => {
     // Source: https://www.formula1.com/en/latest/article.f1-2024-new-car-launch-dates-season.2VOQ3Ho1HCp28sYK0KDnof.html
 
