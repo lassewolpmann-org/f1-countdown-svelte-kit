@@ -1,15 +1,8 @@
 <script lang="ts">
     import type { CarLaunch } from "$lib/types/CarLaunch";
+    import { parseDate } from "$lib/functions/parseDate";
 
     export let carLaunches: CarLaunch[];
-
-    function parseDate(sessionDate: string) {
-        return new Date(sessionDate).toLocaleString(undefined, {
-            day: '2-digit',
-            month: 'long',
-            weekday: 'long'
-        })
-    }
 </script>
 <style lang="scss">
     .car-launch {

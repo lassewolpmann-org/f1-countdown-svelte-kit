@@ -1,6 +1,7 @@
 <script lang="ts">
     // Type imports
     import type { RaceData } from "$lib/types/RaceData";
+    import { parseName } from "$lib/functions/parseName";
 
     export let nextRace: RaceData;
 </script>
@@ -20,4 +21,4 @@
     }
 </style>
 
-<h1 class="event-name">{nextRace.name} Grand Prix</h1>
+<h1 class="event-name">{parseName(nextRace.name)}</h1>

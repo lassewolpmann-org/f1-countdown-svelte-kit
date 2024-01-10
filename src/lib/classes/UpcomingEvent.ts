@@ -1,4 +1,7 @@
 import type { RaceData } from "$lib/types/RaceData";
+import { parseName } from "$lib/functions/parseName";
+import { parseDate } from "$lib/functions/parseDate";
+import { parseTime } from "$lib/functions/parseTime";
 
 export class UpcomingEvent {
     event: RaceData
@@ -17,40 +20,17 @@ export class UpcomingEvent {
 
     constructor(event: RaceData) {
         this.event = event;
-        this.eventName = this.parseName();
+        this.eventName = parseName(this.event.name);
 
         this.sessionNames = Object.keys(this.event.sessions).map((eventName) => eventName.toUpperCase());
 
         this.sessionsHidden = true;
 
         this.sessionsDateTime = Object.values(this.event.sessions);
-        this.sessionDates = this.sessionsDateTime.map(this.parseDate);
-        this.sessionTimes = this.sessionsDateTime.map(this.parseTime);
+        this.sessionDates = this.sessionsDateTime.map(parseDate);
+        this.sessionTimes = this.sessionsDateTime.map(parseTime);
 
         this.raceDate = this.sessionDates.at(-1);
         this.raceTime = this.sessionTimes.at(-1);
-    }
-
-    parseName() {
-        if (this.event.name.includes("Grand Prix") || this.event.name.includes("TESTING")) {
-            return this.event.name
-        } else {
-            return this.event.name + " Grand Prix"
-        }
-    }
-
-    parseDate(sessionDate: string) {
-        return new Date(sessionDate).toLocaleString(undefined, {
-            day: '2-digit',
-            month: 'long',
-            weekday: 'long'
-        })
-    }
-
-    parseTime(sessionDate: string) {
-        return new Date(sessionDate).toLocaleString(undefined, {
-            hour: '2-digit',
-            minute: '2-digit'
-        })
     }
 }
