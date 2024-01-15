@@ -45,7 +45,12 @@
         <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
         <Timer nextEventSessions={apiData.nextRaceSessions} />
         <Border />
-        <UpcomingEventList nextEvents={apiData.nextRaces} carLaunches={apiData.carLaunches} preSeasonTesting={apiData.preSeasonTesting} />
+        <UpcomingEventList
+                nextEvents={apiData.nextRaces}
+                carLaunches={apiData.carLaunches}
+                preSeasonTesting={apiData.preSeasonTesting}
+                flags={apiData.flags}
+        />
     {:else}
         <h1>There doesn't seem to be any data available.</h1>
         <h2>Please come back at another time.</h2>

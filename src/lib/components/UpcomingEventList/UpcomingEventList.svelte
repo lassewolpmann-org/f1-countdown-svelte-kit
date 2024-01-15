@@ -8,7 +8,7 @@
     import CarLaunchList from "$lib/components/UpcomingEventList/CarLaunch/CarLaunchList.svelte";
     import PreSeason from "$lib/components/UpcomingEventList/PreSeason/PreSeason.svelte";
 
-    export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData;
+    export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData, flags: {[key: string]: string};
 </script>
 
 <style lang="scss">
@@ -30,13 +30,13 @@
     {/if}
 
     {#if preSeasonTesting}
-        <PreSeason {preSeasonTesting} />
+        <PreSeason {preSeasonTesting} {flags} />
     {/if}
 
     {#if nextEvents.length > 0}
         <h3>Upcoming Grands Prix</h3>
         {#each nextEvents as event}
-            <UpcomingEvent {event} />
+            <UpcomingEvent {event} {flags} />
         {/each}
     {:else}
         <p>There are no more upcoming races this year</p>

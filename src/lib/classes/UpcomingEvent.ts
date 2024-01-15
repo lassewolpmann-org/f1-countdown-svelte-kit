@@ -18,7 +18,9 @@ export class UpcomingEvent {
     raceDate: string | undefined;
     raceTime: string | undefined;
 
-    constructor(event: RaceData) {
+    flag: string | undefined;
+
+    constructor(event: RaceData, flags: {[key: string]: string}) {
         this.event = event;
         this.eventName = parseName(this.event.name);
 
@@ -32,5 +34,7 @@ export class UpcomingEvent {
 
         this.raceDate = this.sessionDates.at(-1);
         this.raceTime = this.sessionTimes.at(-1);
+
+        this.flag = flags[this.event.localeKey]
     }
 }

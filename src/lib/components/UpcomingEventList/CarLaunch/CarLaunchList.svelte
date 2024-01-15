@@ -33,6 +33,14 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
+
+            span {
+                i {
+                    color: var(--secondary-text-color);
+                    width: 20px;
+                    padding-right: 3px;
+                }
+            }
         }
 
         .social {

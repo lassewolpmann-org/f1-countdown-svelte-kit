@@ -8,9 +8,9 @@
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
-    export let event: RaceData;
+    export let event: RaceData, flags: {[key: string]: string};
 
-    const upcomingEvent = new UpcomingEvent(event);
+    const upcomingEvent = new UpcomingEvent(event, flags);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
@@ -61,15 +61,6 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-
-            .tbc {
-                background: var(--main-text-color);
-                color: var(--table-row-primary-color);
-                padding: 1px 5px;
-                margin-right: 3px;
-                border-radius: 3px;
-                font-size: 14px;
-            }
         }
 
         .checkmark {
@@ -120,7 +111,7 @@
 <div class="upcoming-event">
     <div class="session">
         <div class="head">
-            <span class="name"><span class="tbc">{upcomingEvent.event.tbc ? "TBC" : ""}</span> {upcomingEvent.eventName}</span>
+            <span class="name">{upcomingEvent.flag} {upcomingEvent.eventName}</span>
             <button on:click={toggleSessionVisibility}>
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>
@@ -128,6 +119,7 @@
         <Body
                 date={upcomingEvent.raceDate}
                 time={upcomingEvent.raceTime}
+                tbc={upcomingEvent.event.tbc}
         />
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
@@ -140,6 +132,7 @@
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
+                        tbc={upcomingEvent.event.tbc}
                 />
             </div>
         {/each}

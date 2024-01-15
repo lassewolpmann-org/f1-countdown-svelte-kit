@@ -12,7 +12,7 @@ export const GET: RequestHandler = () => {
         longitude: 50.5082522,
         round: 0,
         slug: "pre-season-testing",
-        localeKey: "bahrain",
+        localeKey: "bahrain-grand-prix",
         tbc: true,
         sessions: {
             "Day 1": "2024-02-21T12:00:00Z",

@@ -19,6 +19,10 @@ export const load = (async ({ fetch }: any) => {
     const testingRes = await fetch('/preseason-testing');
     apiData.preSeasonTesting = await testingRes.json();
 
+    // Flags
+    const flagsRes = await fetch('/flags');
+    apiData.flags = await flagsRes.json();
+
     // Switch to next year if no races are upcoming
     const nextYear = apiData.currentYear + 1;
     if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(nextYear)) {

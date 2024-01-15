@@ -2,7 +2,7 @@
     import type { RaceData } from "$lib/types/RaceData";
     import UpcomingEvent from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent.svelte";
 
-    export let preSeasonTesting: RaceData;
+    export let preSeasonTesting: RaceData, flags: {[key: string]: string};
 
     const showPreseasonTesting = (): boolean => {
         const testingSessions = preSeasonTesting.sessions;
@@ -20,5 +20,5 @@
 </script>
 {#if showPreseasonTesting()}
     <h3>Pre-Season Testing</h3>
-    <UpcomingEvent event={preSeasonTesting} />
+    <UpcomingEvent event={preSeasonTesting} {flags} />
 {/if}

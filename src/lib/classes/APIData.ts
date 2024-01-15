@@ -14,6 +14,8 @@ export class APIData {
 
     preSeasonTesting: RaceData = {} as RaceData;
 
+    flags: { [key: string]: string } = {} as { [key: string]: string };
+
     nextRaceSessions: { [key: string]: string } = {} as { [key: string]: string };
     dataConfig: DataConfig = {} as DataConfig;
 
