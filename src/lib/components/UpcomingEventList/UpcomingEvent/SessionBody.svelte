@@ -40,6 +40,14 @@
             border-radius: 5px;
         }
     }
+
+    @media only screen and (max-width: 768px) {
+        .body {
+            .tbc {
+                font-size: 12px;
+            }
+        }
+    }
 </style>
 <div class="body">
     <div class="date">
