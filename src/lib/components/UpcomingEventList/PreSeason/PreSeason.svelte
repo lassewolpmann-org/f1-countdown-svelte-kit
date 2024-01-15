@@ -18,9 +18,6 @@
         }
     }
 </script>
-<style lang="scss">
-
-</style>
 {#if showPreseasonTesting()}
     <h3>Pre-Season Testing</h3>
     <UpcomingEvent event={preSeasonTesting} />
