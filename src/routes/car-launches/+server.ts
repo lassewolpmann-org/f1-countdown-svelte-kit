@@ -10,7 +10,7 @@ export const GET: RequestHandler = () => {
         {team_name: "Stake F1 Team", location: "London", tbc: false, date: "2024-02-05T12:00:00Z", announcement: "https://www.instagram.com/p/C1juv7VNj6F/"},
         {team_name: "Aston Martin", location: "Silverstone", tbc: false, date: "2024-02-12T12:00:00Z", announcement: "https://www.instagram.com/p/C1rQaj3MJ1O/"},
         {team_name: "Ferrari", location: "TBC", tbc: false, date: "2024-02-13T12:00:00Z", announcement: "https://www.instagram.com/p/C1AFL2VqvoN/"},
-        {team_name: "Red Bull", location: "TBC", tbc: true, date: "", announcement: ""},
+        {team_name: "Red Bull", location: "TBC", tbc: false, date: "2024-02-15T12:00:00Z", announcement: "https://www.instagram.com/p/C2IH88JP_Ph/"},
         {team_name: "Mercedes", location: "TBC", tbc: false, date: "2024-02-14T12:00:00Z", announcement: "https://www.instagram.com/p/C2HXajQtJV-/"},
         {team_name: "McLaren", location: "TBC", tbc: true, date: "", announcement: ""},
         {team_name: "Alpine", location: "TBC", tbc: true, date: "", announcement: ""},
