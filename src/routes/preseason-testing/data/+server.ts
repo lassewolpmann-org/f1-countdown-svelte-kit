@@ -13,11 +13,11 @@ export const GET: RequestHandler = () => {
         round: 0,
         slug: "pre-season-testing",
         localeKey: "bahrain-grand-prix",
-        tbc: true,
+        tbc: false,
         sessions: {
-            "Day 1": "2024-02-21T12:00:00Z",
-            "Day 2": "2024-02-22T12:00:00Z",
-            "Day 3": "2024-02-23T12:00:00Z"
+            "Day 1": "2024-02-21T07:00:00Z",
+            "Day 2": "2024-02-22T07:00:00Z",
+            "Day 3": "2024-02-23T07:00:00Z"
         }
     }
 

@@ -13,6 +13,7 @@ export class APIData {
     carLaunches: CarLaunch[] = [];
 
     preSeasonTesting: RaceData = {} as RaceData;
+    preSeasonTestingConfig: DataConfig = {} as DataConfig;
 
     flags: { [key: string]: string } = {} as { [key: string]: string };
 

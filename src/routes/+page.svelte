@@ -49,7 +49,9 @@
                 nextEvents={apiData.nextRaces}
                 carLaunches={apiData.carLaunches}
                 preSeasonTesting={apiData.preSeasonTesting}
+                preSeasonTestingConfig={apiData.preSeasonTestingConfig}
                 flags={apiData.flags}
+                dataConfig={apiData.dataConfig}
         />
     {:else}
         <h1>There doesn't seem to be any data available.</h1>

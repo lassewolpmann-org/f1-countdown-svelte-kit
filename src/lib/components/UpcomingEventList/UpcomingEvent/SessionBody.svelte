@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let date: string | undefined, time: string | undefined, tbc: boolean;
+    export let date: string | undefined, time: string | undefined, endTime: string | undefined, tbc: boolean;
 </script>
 <style lang="scss">
     .body {
@@ -52,7 +52,7 @@
 <div class="body">
     <div class="date">
         <span class="day"><i class="fa-solid fa-calendar-day"></i> {date}</span>
-        <span class="time"><i class="fa-solid fa-clock"></i> {time}</span>
+        <span class="time"><i class="fa-solid fa-clock"></i> {time} - {endTime}</span>
     </div>
     {#if tbc}
         <span class="tbc">TBC</span>

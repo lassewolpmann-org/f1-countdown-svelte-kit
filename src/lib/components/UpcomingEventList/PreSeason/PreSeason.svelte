@@ -1,8 +1,9 @@
 <script lang="ts">
     import type { RaceData } from "$lib/types/RaceData";
     import UpcomingEvent from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent.svelte";
+    import type {DataConfig} from "$lib/types/RaceData.js";
 
-    export let preSeasonTesting: RaceData, flags: {[key: string]: string};
+    export let preSeasonTesting: RaceData, preSeasonTestingConfig: DataConfig, flags: {[key: string]: string};
 
     const showPreseasonTesting = (): boolean => {
         const testingSessions = preSeasonTesting.sessions;
@@ -20,5 +21,5 @@
 </script>
 {#if showPreseasonTesting()}
     <h3>Pre-Season Testing</h3>
-    <UpcomingEvent event={preSeasonTesting} {flags} />
+    <UpcomingEvent event={preSeasonTesting} {flags} dataConfig={preSeasonTestingConfig} />
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
     // Type imports
-    import type { RaceData } from "$lib/types/RaceData";
+    import type {DataConfig, RaceData} from "$lib/types/RaceData";
     import type { CarLaunch } from "$lib/types/CarLaunch";
 
     // Component imports
@@ -8,7 +8,7 @@
     import CarLaunchList from "$lib/components/UpcomingEventList/CarLaunch/CarLaunchList.svelte";
     import PreSeason from "$lib/components/UpcomingEventList/PreSeason/PreSeason.svelte";
 
-    export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData, flags: {[key: string]: string};
+    export let nextEvents: RaceData[], carLaunches: CarLaunch[], preSeasonTesting: RaceData, preSeasonTestingConfig: DataConfig, flags: {[key: string]: string}, dataConfig: DataConfig;
 </script>
 
 <style lang="scss">
@@ -30,13 +30,13 @@
     {/if}
 
     {#if preSeasonTesting}
-        <PreSeason {preSeasonTesting} {flags} />
+        <PreSeason {preSeasonTesting} {preSeasonTestingConfig} {flags} />
     {/if}
 
     {#if nextEvents.length > 0}
         <h3>Upcoming Grands Prix</h3>
         {#each nextEvents as event}
-            <UpcomingEvent {event} {flags} />
+            <UpcomingEvent {event} {flags} {dataConfig} />
         {/each}
     {:else}
         <p>There are no more upcoming races this year</p>

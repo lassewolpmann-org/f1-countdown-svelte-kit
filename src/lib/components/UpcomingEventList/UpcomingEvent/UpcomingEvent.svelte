@@ -3,14 +3,14 @@
     import { UpcomingEvent } from "$lib/classes/UpcomingEvent";
 
     // Type imports
-    import type { RaceData } from "$lib/types/RaceData";
+    import type {DataConfig, RaceData} from "$lib/types/RaceData";
 
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
-    export let event: RaceData, flags: {[key: string]: string};
+    export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
 
-    const upcomingEvent = new UpcomingEvent(event, flags);
+    const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
@@ -117,8 +117,9 @@
             </button>
         </div>
         <Body
-                date={upcomingEvent.raceDate}
-                time={upcomingEvent.raceTime}
+                date={upcomingEvent.sessionDates.at(-1)}
+                time={upcomingEvent.sessionTimes.at(-1)}
+                endTime={upcomingEvent.sessionEndTimes.at(-1)}
                 tbc={upcomingEvent.event.tbc}
         />
     </div>
@@ -132,6 +133,7 @@
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
+                        endTime={upcomingEvent.sessionEndTimes.at(i)}
                         tbc={upcomingEvent.event.tbc}
                 />
             </div>

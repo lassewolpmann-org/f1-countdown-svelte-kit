@@ -16,8 +16,10 @@ export const load = (async ({ fetch }: any) => {
     apiData.carLaunches = await launchRes.json();
 
     // Pre-Season Testing
-    const testingRes = await fetch('/preseason-testing');
+    const testingRes = await fetch('/preseason-testing/data');
     apiData.preSeasonTesting = await testingRes.json();
+    const testingConfigRes = await fetch('/preseason-testing/config');
+    apiData.preSeasonTestingConfig = await testingConfigRes.json();
 
     // Flags
     const flagsRes = await fetch('/flags');
