@@ -1,7 +1,7 @@
-/** @type {import('./$types').PageLoad} */
 import { APIData } from "$lib/classes/APIData";
+import type { LayoutLoad } from "./$types"
 
-export const load = (async ({ fetch }: any) => {
+export const load: LayoutLoad = (async ({ fetch }: any) => {
     const apiData: APIData = new APIData();
 
     // API data config
