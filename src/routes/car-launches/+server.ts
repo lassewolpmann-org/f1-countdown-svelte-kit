@@ -15,7 +15,7 @@ export const GET: RequestHandler = () => {
         {team_name: "McLaren", location: "Silverstone", tbc: false, date: "2024-02-14T12:00:00Z", announcement: "https://www.instagram.com/mclaren/"},
         {team_name: "Alpine", location: "TBC", tbc: false, date: "2024-02-07T12:00:00Z", announcement: "https://www.instagram.com/p/C2HXe_4t1Sq/"},
         {team_name: "AlphaTauri", location: "TBC", tbc: true, date: "", announcement: ""},
-        {team_name: "Haas", location: "TBC", tbc: true, date: "", announcement: ""}
+        {team_name: "Haas", location: "Silverstone", tbc: false, date: "2024-02-11T12:00:00Z", announcement: "https://www.instagram.com/haasf1team/"}
     ]
 
     // Sort by ascending date
