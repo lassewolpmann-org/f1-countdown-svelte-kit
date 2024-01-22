@@ -1,7 +1,7 @@
 <script lang="ts">
     import Footer from "$lib/components/Footer.svelte";
     import Border from "$lib/components/Border.svelte";
-    import MetaDescription from "$lib/components/MetaDescription/MetaDescription.svelte";
+    import MetaDescription from "$lib/components/MetaDescription.svelte";
 
     import type { LayoutData } from './$types';
 

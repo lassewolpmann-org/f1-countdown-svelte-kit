@@ -11,5 +11,5 @@
 </script>
 
 <svelte:head>
-    <meta name="description" content="{metaDescription.descriptionString}">
+    <meta name="description" content="{metaDescription.metaString}">
 </svelte:head>

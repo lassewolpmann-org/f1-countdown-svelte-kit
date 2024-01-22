@@ -4,7 +4,7 @@
     import UpcomingEventList from "$lib/components/UpcomingEventList/UpcomingEventList.svelte";
     import Border from "$lib/components/Border.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
-    import SessionSelection from "$lib/components/SessionSelection/SessionSelection.svelte";
+    import SessionSelection from "$lib/components/SessionSelection.svelte";
 
     // Type imports
     import type { PageData } from './$types';

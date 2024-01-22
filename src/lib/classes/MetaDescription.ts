@@ -1,16 +1,19 @@
 import type { RaceData } from "$lib/types/RaceData";
 
 export class MetaDescription {
-    descriptionString: string;
+    metaString: string;
 
     constructor(series: string, nextRace: RaceData, sessions: { [key: string]: string }) {
-        let dString = `When is the next ${series.toUpperCase()} race? Countdown to the ${new Date().getFullYear()}`;
+        const firstSessionDate = Object.values(sessions).at(0);
+        const eventYear = firstSessionDate ? new Date(firstSessionDate).getFullYear() : new Date().getFullYear();
+
+        let metaString = `When is the next ${series.toUpperCase()} race? Countdown to the ${eventYear}`;
 
         const raceName = `${nextRace.name} Grand Prix`;
         const sessionNames = Object.keys(sessions).map((session) => session.toUpperCase());
 
-        dString = dString.concat(` ${series.toUpperCase()} ${raceName} ${sessionNames.join(', ')}.`);
+        metaString = metaString.concat(` ${series.toUpperCase()} ${raceName} ${sessionNames.join(', ')}.`);
 
-        this.descriptionString = dString;
+        this.metaString = metaString;
     }
 }
