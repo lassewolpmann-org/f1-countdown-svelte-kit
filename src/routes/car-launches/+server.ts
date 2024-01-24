@@ -14,7 +14,7 @@ export const GET: RequestHandler = () => {
         {team_name: "Mercedes", location: "Silverstone", tbc: false, date: "2024-02-14T12:00:00Z", announcement: "https://www.instagram.com/p/C2HXajQtJV-/"},
         {team_name: "McLaren", location: "Silverstone", tbc: false, date: "2024-02-14T12:00:00Z", announcement: "https://www.instagram.com/p/C2XrWcDCEWW/"},
         {team_name: "Alpine", location: "TBC", tbc: false, date: "2024-02-07T12:00:00Z", announcement: "https://www.instagram.com/p/C2HXe_4t1Sq/"},
-        {team_name: "AlphaTauri", location: "TBC", tbc: true, date: "", announcement: ""},
+        {team_name: "RB", location: "Las Vegas", tbc: false, date: "2024-02-08T12:00:00Z", announcement: "https://www.instagram.com/p/C2fBWYSqWlg/"},
         {team_name: "Haas", location: "Silverstone", tbc: false, date: "2024-02-11T12:00:00Z", announcement: "https://www.instagram.com/haasf1team/"}
     ]
 
