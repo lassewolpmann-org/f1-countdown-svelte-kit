@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { TimerElement } from "$lib/components/Timer/TimerElement/TimerElement";
+    import { TimerElement } from "$lib/classes/TimerElement";
 
     export let timeValue: number, timeValuePct: number, timeUnit: string, strokeColor: string;
 

@@ -1,0 +1,7 @@
+Sitemap: https://f1-countdown.com/sitemap.xml
+
+User-agent: *
+Disallow: /*.xml$
+Disallow: /cdn-cgi/
+Disallow: /_app/
+Disallow: /privacy-policy

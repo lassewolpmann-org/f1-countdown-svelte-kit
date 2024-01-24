@@ -16,6 +16,9 @@
     }
 </style>
 
+<svelte:head>
+    <title>Privacy Policy</title>
+</svelte:head>
 <a href="/"><i class="fa-solid fa-left"></i> Back to website</a>
 
 <section>

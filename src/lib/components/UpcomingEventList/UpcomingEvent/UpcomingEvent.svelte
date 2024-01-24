@@ -1,31 +1,31 @@
 <script lang="ts">
-    // Function imports
-    import { UpcomingEvent } from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent";
+    // Class imports
+    import { UpcomingEvent } from "$lib/classes/UpcomingEvent";
 
     // Type imports
-    import type { RaceData } from "$lib/types/RaceData";
+    import type {DataConfig, RaceData} from "$lib/types/RaceData";
 
     // Component imports
-    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/Session/Body.svelte";
+    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
-    export let event: RaceData;
+    export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
 
-    const upcomingEvent = new UpcomingEvent(event);
+    const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
     }
 
     const isInPast = (sessionDateTime: string | undefined): boolean => {
-        if (sessionDateTime) {
-            const currentTimestamp = new Date().getTime();
-            const sessionTimestamp = new Date(sessionDateTime).getTime();
+        if (!sessionDateTime) return false
 
-            return sessionTimestamp < currentTimestamp
-        } else {
-            return false
-        }
+        const currentTimestamp = new Date().getTime();
+        const sessionTimestamp = new Date(sessionDateTime).getTime();
+
+        return sessionTimestamp < currentTimestamp
     }
+
+    console.log(event);
 </script>
 <style lang="scss">
     .upcoming-event {
@@ -63,15 +63,6 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-
-            .tbc {
-                background: var(--main-text-color);
-                color: var(--table-row-primary-color);
-                padding: 1px 5px;
-                margin-right: 3px;
-                border-radius: 3px;
-                font-size: 14px;
-            }
         }
 
         .checkmark {
@@ -122,14 +113,16 @@
 <div class="upcoming-event">
     <div class="session">
         <div class="head">
-            <span class="name"><span class="tbc">{upcomingEvent.event.tbc ? "TBC" : ""}</span> {upcomingEvent.eventName}</span>
+            <span class="name">{upcomingEvent.flag} {upcomingEvent.eventName}</span>
             <button on:click={toggleSessionVisibility}>
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>
         </div>
         <Body
-                date={upcomingEvent.raceDate}
-                time={upcomingEvent.raceTime}
+                date={upcomingEvent.sessionDates.at(-1)}
+                time={upcomingEvent.sessionTimes.at(-1)}
+                endTime={upcomingEvent.sessionEndTimes.at(-1)}
+                tbc={upcomingEvent.event.tbc}
         />
     </div>
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
@@ -142,6 +135,8 @@
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
+                        endTime={upcomingEvent.sessionEndTimes.at(i)}
+                        tbc={upcomingEvent.event.tbc}
                 />
             </div>
         {/each}

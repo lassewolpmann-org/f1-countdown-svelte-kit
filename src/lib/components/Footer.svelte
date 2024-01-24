@@ -31,10 +31,6 @@
         }
     }
 
-    .fa-heart {
-        color: red;
-    }
-
     div {
         display: flex;
         flex-direction: column;
@@ -61,7 +57,7 @@
 <footer>
     <div class="links">
         <div>
-            <h4>Made with <i class="fa-solid fa-heart"></i><br>by Lasse Wolpmann</h4>
+            <h4>Made with <i class="fa-solid fa-heart" style="color: red"></i> by Lasse Wolpmann</h4>
         </div>
         <div>
             <h4>All series</h4>
@@ -100,9 +96,6 @@
             </a>
             <a href="https://github.com/sportstimes/f1/blob/main/LICENSE" target="_blank">
                 <i class="fa-solid fa-scale-balanced"></i> License
-            </a>
-            <a href="https://openweathermap.org/api" target="_blank">
-                <i class="fa-solid fa-cloud"></i> OpenWeatherMap
             </a>
         </div>
     </div>

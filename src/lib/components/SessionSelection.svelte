@@ -1,10 +1,11 @@
 <script lang="ts">
     // Function imports
-    import { findCurrentSessionIndex, calculateOffset } from "$lib/components/SessionSelection/SessionSelection";
+    import { findCurrentSessionIndex } from "$lib/functions/findCurrentSessionIndex";
+    import { calculateOffset } from "$lib/functions/calculateOffset";
     import { afterUpdate } from "svelte";
 
     // Store imports
-    import { currentSessionIndex } from "$lib/components/SessionSelection/currentSessionIndex";
+    import { currentSessionIndex } from "$lib/stores/currentSessionIndex";
 
     export let nextEventSessions: { [key: string]: string };
 

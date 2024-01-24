@@ -1,12 +1,10 @@
 <script lang="ts">
     // Component imports
-    import Footer from "$lib/components/Footer.svelte";
     import Timer from "$lib/components/Timer/Timer.svelte";
     import UpcomingEventList from "$lib/components/UpcomingEventList/UpcomingEventList.svelte";
     import Border from "$lib/components/Border.svelte";
-    import MetaDescription from "$lib/components/MetaDescription/MetaDescription.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
-    import SessionSelection from "$lib/components/SessionSelection/SessionSelection.svelte";
+    import SessionSelection from "$lib/components/SessionSelection.svelte";
 
     // Type imports
     import type { PageData } from './$types';
@@ -33,23 +31,22 @@
         flex-direction: column;
     }
 </style>
-
-<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRaceSessions} />
-<svelte:head>
-    <title>{apiData.series.toUpperCase()} Countdown</title>
-</svelte:head>
-
 <main>
     {#if Object.keys(apiData.nextRaceSessions).length > 0}
         <RaceTitle nextRace={apiData.nextRace} />
         <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
         <Timer nextEventSessions={apiData.nextRaceSessions} />
         <Border />
-        <UpcomingEventList nextEvents={apiData.nextRaces} />
+        <UpcomingEventList
+                nextEvents={apiData.nextRaces}
+                carLaunches={apiData.carLaunches}
+                preSeasonTesting={apiData.preSeasonTesting}
+                preSeasonTestingConfig={apiData.preSeasonTestingConfig}
+                flags={apiData.flags}
+                dataConfig={apiData.dataConfig}
+        />
     {:else}
         <h1>There doesn't seem to be any data available.</h1>
         <h2>Please come back at another time.</h2>
     {/if}
 </main>
-<Border />
-<Footer seriesName={apiData.series} />

@@ -3,7 +3,7 @@
     import type { RaceData } from "$lib/types/RaceData";
 
     // Class imports
-    import { MetaDescription } from "$lib/components/MetaDescription/MetaDescription";
+    import { MetaDescription } from "$lib/classes/MetaDescription";
 
     export let series: string, nextRace: RaceData, sessions: { [key: string]: string };
 
@@ -11,5 +11,5 @@
 </script>
 
 <svelte:head>
-    <meta name="description" content="{metaDescription.descriptionString}">
+    <meta name="description" content="{metaDescription.metaString}">
 </svelte:head>
