@@ -24,8 +24,6 @@
 
         return sessionTimestamp < currentTimestamp
     }
-
-    console.log(event);
 </script>
 <style lang="scss">
     .upcoming-event {
