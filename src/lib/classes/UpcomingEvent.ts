@@ -8,6 +8,7 @@ export class UpcomingEvent {
     eventName: string;
 
     sessionNames: string[];
+    uppercaseSessionNames: string [];
 
     sessionsHidden: boolean;
 
@@ -25,7 +26,8 @@ export class UpcomingEvent {
 
         this.eventName = parseName(this.event.name, this.flag);
 
-        this.sessionNames = Object.keys(this.event.sessions).map((eventName) => eventName.toUpperCase());
+        this.sessionNames = Object.keys(this.event.sessions);
+        this.uppercaseSessionNames = this.sessionNames.map((sessionName) => sessionName.toUpperCase());
 
         this.sessionsHidden = true;
 
