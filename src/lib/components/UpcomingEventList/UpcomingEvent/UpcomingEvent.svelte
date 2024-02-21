@@ -152,7 +152,7 @@
     <div class="session">
         <div class="head">
             <span class="name">{upcomingEvent.eventName}</span>
-            <button on:click={toggleSessionVisibility}>
+            <button on:click={toggleSessionVisibility} aria-label="Toggle Session Visibility">
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>
         </div>
