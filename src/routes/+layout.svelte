@@ -10,7 +10,7 @@
     const { apiData } = data;
 </script>
 
-<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRaceSessions} />
+<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRace.sessions} />
 <svelte:head>
     <title>{apiData.series.toUpperCase()} Countdown</title>
 </svelte:head>

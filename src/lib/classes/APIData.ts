@@ -1,6 +1,10 @@
-import type {DataConfig, RaceData} from "$lib/types/RaceData";
+import type { DataConfig, RaceData } from "$lib/types/RaceData";
 import type { CarLaunch } from "$lib/types/CarLaunch";
 import { error } from "@sveltejs/kit";
+
+import { flags } from "$lib/data/flags";
+import { testingData, testingConfig } from "$lib/data/preSeasonTesting";
+import { launchDates } from "$lib/data/carLaunches";
 
 export class APIData {
     allRaces: RaceData[] = [];
@@ -10,14 +14,13 @@ export class APIData {
     nextRaces: RaceData[] = [];
     nextRace: RaceData = {} as RaceData;
 
-    carLaunches: CarLaunch[] = [];
+    carLaunches: CarLaunch[] = launchDates;
 
-    preSeasonTesting: RaceData = {} as RaceData;
-    preSeasonTestingConfig: DataConfig = {} as DataConfig;
+    preSeasonTesting: RaceData = testingData;
+    preSeasonTestingConfig: DataConfig = testingConfig;
 
-    flags: { [key: string]: string } = {} as { [key: string]: string };
+    flags: { [key: string]: string } = flags;
 
-    nextRaceSessions: { [key: string]: string } = {} as { [key: string]: string };
     dataConfig: DataConfig = {} as DataConfig;
 
     constructor() {
@@ -57,7 +60,6 @@ export class APIData {
 
         const nextRace: RaceData | undefined = nextRaces.at(0);
         if (nextRace) this.nextRace = nextRace;
-        if (nextRace) this.nextRaceSessions = nextRace.sessions;
 
         return nextRaces
     }
