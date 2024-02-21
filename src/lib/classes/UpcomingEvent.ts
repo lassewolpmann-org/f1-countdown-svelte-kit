@@ -22,7 +22,7 @@ export class UpcomingEvent {
 
     constructor(event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig) {
         this.event = event;
-        this.flag = flags[this.event.localeKey]
+        this.flag = flags[this.event.localeKey];
 
         this.eventName = parseName(this.event.name, this.flag);
 

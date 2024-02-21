@@ -27,6 +27,8 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
+
+                gap: 6px;
             }
         }
     }
