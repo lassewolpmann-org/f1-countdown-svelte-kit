@@ -111,7 +111,7 @@
 <div class="upcoming-event">
     <div class="session">
         <div class="head">
-            <span class="name">{upcomingEvent.flag} {upcomingEvent.eventName}</span>
+            <span class="name">{upcomingEvent.eventName}</span>
             <button on:click={toggleSessionVisibility}>
                 <i class="fa-solid fa-chevron-up" class:hidden={upcomingEvent.sessionsHidden}></i>
             </button>

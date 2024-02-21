@@ -3,7 +3,8 @@
     import type { RaceData } from "$lib/types/RaceData";
     import { parseName } from "$lib/functions/parseName";
 
-    export let nextRace: RaceData;
+    export let nextRace: RaceData, flags: {[key: string]: string};
+    let flag = flags[nextRace.localeKey];
 </script>
 
 <style>
@@ -21,4 +22,4 @@
     }
 </style>
 
-<h1 class="event-name">{parseName(nextRace.name)}</h1>
+<h1 class="event-name">{parseName(nextRace.name, flag)}</h1>

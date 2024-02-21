@@ -1,7 +1,7 @@
-export const parseName = (name: string): string => {
+export const parseName = (name: string, flag: string | undefined): string => {
     if (name.includes("Grand Prix") || name.includes("TESTING")) {
-        return name
+        return `${flag} ${name}`
     } else {
-        return name + " Grand Prix"
+        return `${flag} ${name} Grand Prix`
     }
 }

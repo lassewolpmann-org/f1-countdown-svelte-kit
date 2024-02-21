@@ -33,7 +33,7 @@
 </style>
 <main>
     {#if Object.keys(apiData.nextRaceSessions).length > 0}
-        <RaceTitle nextRace={apiData.nextRace} />
+        <RaceTitle nextRace={apiData.nextRace} flags={apiData.flags} />
         <SessionSelection nextEventSessions={apiData.nextRaceSessions} />
         <Timer nextEventSessions={apiData.nextRaceSessions} />
         <Border />
