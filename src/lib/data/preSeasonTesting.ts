@@ -2,11 +2,14 @@ import type { RaceData, DataConfig } from "$lib/types/RaceData";
 
 export const testingConfig: DataConfig = {
     availableYears: [2024],
-    sessions: ["Day 1, Day 2, Day 3"],
+    sessions: ["Day 1 - Morning, Day 1 - Afternoon, Day 2 - Morning, Day 2 - Afternoon, Day 3 - Morning, Day 3 - Afternoon"],
     sessionLengths: {
-        "Day 1": 570,
-        "Day 2": 570,
-        "Day 3": 570
+        "Day 1 - Morning": 240,
+        "Day 1 - Afternoon": 240,
+        "Day 2 - Morning": 180,
+        "Day 2 - Afternoon": 240,
+        "Day 3 - Morning": 240,
+        "Day 3 - Afternoon": 240
     }
 }
 
@@ -20,8 +23,11 @@ export const testingData: RaceData = {
     localeKey: "bahrain-grand-prix",
     tbc: false,
     sessions: {
-        "Day 1": "2024-02-21T07:00:00Z",
-        "Day 2": "2024-02-22T07:00:00Z",
-        "Day 3": "2024-02-23T07:00:00Z"
+        "Day 1 - Morning": "2024-02-21T07:00:00Z",
+        "Day 1 - Afternoon": "2024-02-21T12:00:00Z",
+        "Day 2 - Morning": "2024-02-22T07:00:00Z",
+        "Day 2 - Afternoon": "2024-02-22T11:00:00Z",
+        "Day 3 - Morning": "2024-02-23T07:00:00Z",
+        "Day 3 - Afternoon": "2024-02-23T12:00:00Z"
     }
 }
