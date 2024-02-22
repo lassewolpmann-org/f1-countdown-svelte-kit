@@ -7,7 +7,7 @@ export const testingConfig: DataConfig = {
         "Day 1 - Morning": 240,
         "Day 1 - Afternoon": 240,
         "Day 2 - Morning": 180,
-        "Day 2 - Afternoon": 240,
+        "Day 2 - Afternoon": 300,
         "Day 3 - Morning": 240,
         "Day 3 - Afternoon": 240
     }
@@ -26,7 +26,7 @@ export const testingData: RaceData = {
         "Day 1 - Morning": "2024-02-21T07:00:00Z",
         "Day 1 - Afternoon": "2024-02-21T12:00:00Z",
         "Day 2 - Morning": "2024-02-22T07:00:00Z",
-        "Day 2 - Afternoon": "2024-02-22T11:00:00Z",
+        "Day 2 - Afternoon": "2024-02-22T11:10:00Z",
         "Day 3 - Morning": "2024-02-23T07:00:00Z",
         "Day 3 - Afternoon": "2024-02-23T12:00:00Z"
     }
