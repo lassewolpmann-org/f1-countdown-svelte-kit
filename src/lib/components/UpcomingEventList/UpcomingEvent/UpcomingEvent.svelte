@@ -8,25 +8,15 @@
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
+    // Function imports
+    import { isSessionInPast } from "$lib/functions/isSessionInPast";
+
     export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
 
     const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
 
     const toggleSessionVisibility = () => {
         upcomingEvent.sessionsHidden = !upcomingEvent.sessionsHidden
-    }
-
-    const isInPast = (sessionDateTime: string | undefined, sessionName: string | undefined): boolean => {
-        if (!sessionDateTime) return false
-        if (!sessionName) return false
-
-        const currentTimestamp = new Date().getTime();
-        const sessionDuration = dataConfig.sessionLengths[sessionName];
-
-        if (!sessionDuration) return false
-        const sessionEndTimestamp = new Date(sessionDateTime).getTime() + (sessionDuration * 60 * 1000);
-
-        return sessionEndTimestamp <= currentTimestamp
     }
 
     const isOngoing = (sessionDateTime: string | undefined, sessionName: string | undefined): boolean => {
@@ -166,7 +156,7 @@
     <div class="all-sessions" class:hidden={upcomingEvent.sessionsHidden}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
             <div class="session"
-                 class:inPast={isInPast(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i))}
+                 class:inPast={isSessionInPast(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i), dataConfig)}
                  class:isOngoing={isOngoing(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i))}
             >
                 <div class="head">

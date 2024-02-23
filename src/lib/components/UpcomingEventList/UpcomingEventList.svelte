@@ -1,6 +1,6 @@
 <script lang="ts">
     // Type imports
-    import type {DataConfig, RaceData} from "$lib/types/RaceData";
+    import type { DataConfig, RaceData } from "$lib/types/RaceData";
     import type { CarLaunch } from "$lib/types/CarLaunch";
 
     // Component imports
