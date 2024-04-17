@@ -13,6 +13,7 @@
 <MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRace.sessions} />
 <svelte:head>
     <title>{apiData.series.toUpperCase()} Countdown</title>
+    <meta name="apple-itunes-app" content="app-id=6472580786">
 </svelte:head>
 <slot></slot>
 <Border />
