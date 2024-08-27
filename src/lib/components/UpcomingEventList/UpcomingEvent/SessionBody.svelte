@@ -14,20 +14,9 @@
             align-items: flex-start;
             justify-content: center;
 
-            .day, .time {
-                i {
-                    color: var(--secondary-text-color);
-                    width: 20px;
-                    padding-right: 3px;
-                }
-            }
-
             .day {
-                font-weight: 500;
-            }
-
-            .time {
-                font-weight: 300;
+                color: #ff4444;
+                font-weight: 600;
             }
         }
 
@@ -51,8 +40,8 @@
 </style>
 <div class="body">
     <div class="date">
-        <span class="day"><i class="fa-solid fa-calendar-day"></i> {date}</span>
-        <span class="time"><i class="fa-solid fa-clock"></i> {time} - {endTime}</span>
+        <span class="day">{date}</span>
+        <span class="time">{time} - {endTime}</span>
     </div>
     {#if tbc}
         <span class="tbc">TBC</span>

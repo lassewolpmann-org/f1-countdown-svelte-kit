@@ -59,42 +59,26 @@
 <footer>
     <div class="links">
         <div>
-            <h4>Made with <i class="fa-solid fa-heart" style="color: red"></i> by Lasse Wolpmann</h4>
-        </div>
-        <div>
-            <h4>All series</h4>
-            <a href="https://f1-countdown.com">
-                <i class="fa-solid fa-timer"></i> Formula 1
-            </a>
-            <a href="https://f2-countdown.com">
-                <i class="fa-solid fa-timer"></i> Formula 2
-            </a>
-            <a href="https://f3-countdown.com">
-                <i class="fa-solid fa-timer"></i> Formula 3
-            </a>
+            <h4>Made with️ ❤️ by Lasse Wolpmann</h4>
         </div>
         <div>
             <h4>Project links</h4>
             <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit" target="_blank">
-                <i class="fa-brands fa-github"></i> Code
+                Code
             </a>
             <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
-                <i class="fa-solid fa-scale-balanced"></i> License
+                License
             </a>
-            <a href="mailto:lasse@f1-countdown.com">
-                <i class="fa-solid fa-envelope"></i> Contact
-            </a>
-            <a href="/privacy-policy" target="_blank">
-                <i class="fa-solid fa-cookie-bite"></i> Privacy Policy
-            </a>
+            <a href="mailto:lasse@f1-countdown.com">Contact</a>
+            <a href="/privacy-policy" target="_blank">Privacy Policy</a>
         </div>
         <div>
             <h4>Data sources</h4>
             <a href="https://github.com/sportstimes/f1" target="_blank">
-                <i class="fa-brands fa-github"></i> sportstimes
+               sportstimes
             </a>
             <a href="https://github.com/sportstimes/f1/blob/main/LICENSE" target="_blank">
-                <i class="fa-solid fa-scale-balanced"></i> License
+                License
             </a>
         </div>
     </div>

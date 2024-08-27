@@ -16,9 +16,9 @@
         display: flex;
         flex-direction: column;
 
-        gap: 20px;
+        gap: 30px;
 
-        width: min(90vw, 550px);
+        width: min(90vw, 1200px);
 
         margin: 25px 0;
     }
