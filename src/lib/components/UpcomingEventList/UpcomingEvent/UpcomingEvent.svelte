@@ -95,36 +95,10 @@
 
         .head {
             font-weight: 600;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--table-row-secondary-color);
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .checkmark, .car {
-            display: none;
-            font-size: 20px;
-        }
-    }
-
-    .session.inPast {
-        color: var(--secondary-text-color);
-
-        .checkmark {
-            display: flex;
-        }
-    }
-
-    .session.isOngoing {
-        .car {
-            display: flex;
-            transform-origin: center;
-            animation-name: car-moving;
-            animation-duration: 1.5s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
         }
     }
 
@@ -132,7 +106,6 @@
         display: flex;
         flex-direction: row;
         gap: 5px;
-        overflow-x: scroll;
 
         .session {
             flex: 1 1 0px;
@@ -148,28 +121,7 @@
 
     @media only screen and (max-width: 768px) {
         .all-sessions {
-            .session {
-                flex: 0 0 auto;
-            }
-        }
-
-        .upcoming-event, .session {
-            font-size: 14px;
-
-            .checkmark {
-                font-size: 18px;
-            }
-        }
-    }
-    
-    @keyframes car-moving {
-        from {
-            transform: translateX(-400%);
-        } 95% {
-            opacity: 0;
-        } to {
-            transform: translateX(0) rotate(540deg);
-            opacity: 0;
+            flex-direction: column;
         }
     }
 </style>
@@ -187,9 +139,7 @@
                  class:isOngoing={isOngoing(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i))}
             >
                 <div class="head">
-                    <span class="name">{innerWidth < 1200 ? upcomingEvent.shortSessionNames.at(i) : upcomingEvent.uppercaseSessionNames.at(i)}</span>
-                    <span class="checkmark"><i class="fa-solid fa-flag-checkered"></i></span>
-                    <span class="car"><i class="fa-duotone fa-tire"></i></span>
+                    <span class="name">{upcomingEvent.uppercaseSessionNames.at(i)}</span>
                 </div>
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
