@@ -10,7 +10,7 @@
     const { apiData } = data;
 </script>
 
-<MetaDescription series={apiData.series} nextRace={apiData.nextRace} sessions={apiData.nextRace.sessions} />
+<MetaDescription series={apiData.series} nextRace={apiData.nextRace} />
 <svelte:head>
     <title>{apiData.series.toUpperCase()} Countdown</title>
     <meta name="apple-itunes-app" content="app-id=6472580786">

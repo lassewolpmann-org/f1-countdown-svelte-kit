@@ -1,10 +1,5 @@
 import type { DataConfig, RaceData } from "$lib/types/RaceData";
-import type { CarLaunch } from "$lib/types/CarLaunch";
-import { error } from "@sveltejs/kit";
-
 import { flags } from "$lib/data/flags";
-import { testingData, testingConfig } from "$lib/data/preSeasonTesting";
-import { launchDates } from "$lib/data/carLaunches";
 
 export class APIData {
     allRaces: RaceData[] = [];
@@ -13,11 +8,6 @@ export class APIData {
 
     nextRaces: RaceData[] = [];
     nextRace: RaceData = {} as RaceData;
-
-    carLaunches: CarLaunch[] = launchDates;
-
-    preSeasonTesting: RaceData = testingData;
-    preSeasonTestingConfig: DataConfig = testingConfig;
 
     flags: { [key: string]: string } = flags;
 
@@ -32,21 +22,27 @@ export class APIData {
         const configURL = new URL('https://raw.githubusercontent.com');
         configURL.pathname = `sportstimes/f1/main/_db/${this.series}/config.json`;
 
-        const res = await fetch(configURL);
-        if (!res.ok) throw error(404, "Couldn't retrieve Config from API")
-
-        return await res.json();
+        try {
+            const res = await fetch(configURL);
+            return await res.json();
+        } catch (e) {
+            return
+        }
     }
 
     async getAllRaces(fetch: any, year: number) {
         const apiURL = new URL('https://raw.githubusercontent.com');
         apiURL.pathname = `sportstimes/f1/main/_db/${this.series}/${year}.json`;
 
-        const res = await fetch(apiURL);
-        if (!res.ok) throw error(404, "Couldn't retrieve data from API")
+        try {
+            const res = await fetch(apiURL);
+            const data = await res.json();
+            return data['races']
+        } catch (e) {
+            console.error(e);
 
-        const data = await res.json();
-        return data['races']
+            return []
+        }
     }
 
     getNextRaces(): RaceData[] {
