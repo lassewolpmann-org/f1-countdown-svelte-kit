@@ -99,7 +99,7 @@
         gap: 50px;
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1024px) {
         .timer-elements {
             gap: 25px;
         }

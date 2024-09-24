@@ -13,11 +13,6 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
-
-            .day {
-                color: #ff4444;
-                font-weight: 600;
-            }
         }
 
         .tbc {
@@ -27,14 +22,6 @@
             background: #666;
             padding: 4px 8px;
             border-radius: 5px;
-        }
-    }
-
-    @media only screen and (max-width: 768px) {
-        .body {
-            .tbc {
-                font-size: 12px;
-            }
         }
     }
 </style>

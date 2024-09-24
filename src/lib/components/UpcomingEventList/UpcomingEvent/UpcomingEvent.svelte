@@ -1,6 +1,5 @@
 <script lang="ts">
     // Function imports
-    import { isSessionInPast } from "$lib/functions/isSessionInPast";
     import { parseName } from "$lib/functions/parseName";
     import { parseDate } from "$lib/functions/parseDate";
     import { parseEndTimes, parseTime } from "$lib/functions/parseTime";
@@ -10,8 +9,6 @@
         eventName: string;
 
         sessionNames: string[];
-        shortSessionNames: string[];
-        uppercaseSessionNames: string [];
 
         sessionsHidden: boolean;
 
@@ -29,18 +26,7 @@
 
             this.eventName = parseName(this.event.name, this.flag);
 
-            this.sessionNames = Object.keys(this.event.sessions);
-            this.uppercaseSessionNames = this.sessionNames.map(name => name.toUpperCase());
-            this.shortSessionNames = this.uppercaseSessionNames.map(name => {
-                if (name === "SPRINTQUALIFYING") {
-                    return "SQ"
-                } else if (name === "QUALIFYING") {
-                    return "Q"
-                } else {
-                    return name
-                }
-            })
-
+            this.sessionNames = Object.keys(this.event.sessions).map(name => name.toUpperCase());
             this.sessionsHidden = true;
 
             this.sessionsDateTime = Object.values(this.event.sessions);
@@ -61,20 +47,6 @@
 
     let innerWidth = 0;
     const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
-
-    const isOngoing = (sessionDateTime: string | undefined, sessionName: string | undefined): boolean => {
-        if (!sessionDateTime) return false
-        if (!sessionName) return false
-
-        const currentTimestamp = new Date().getTime();
-        const sessionDuration = dataConfig.sessionLengths[sessionName];
-
-        if (!sessionDuration) return false
-        const sessionStartTimestamp = new Date(sessionDateTime).getTime();
-        const sessionEndTimestamp = sessionStartTimestamp + (sessionDuration * 60 * 1000);
-
-        return (sessionStartTimestamp < currentTimestamp) && (currentTimestamp < sessionEndTimestamp)
-    }
 </script>
 <svelte:window bind:innerWidth></svelte:window>
 <style lang="scss">
@@ -119,7 +91,7 @@
         }
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1024px) {
         .all-sessions {
             flex-direction: column;
         }
@@ -134,12 +106,9 @@
     </div>
     <div class="all-sessions">
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
-            <div class="session"
-                 class:inPast={isSessionInPast(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i), dataConfig)}
-                 class:isOngoing={isOngoing(upcomingEvent.sessionsDateTime.at(i), upcomingEvent.sessionNames.at(i))}
-            >
+            <div class="session">
                 <div class="head">
-                    <span class="name">{upcomingEvent.uppercaseSessionNames.at(i)}</span>
+                    <span class="name">{upcomingEvent.sessionNames.at(i)}</span>
                 </div>
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}

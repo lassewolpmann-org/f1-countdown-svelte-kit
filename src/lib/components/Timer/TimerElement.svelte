@@ -12,8 +12,8 @@
             this.timeValuePct = timeValuePct - Math.floor(timeValuePct);
             this.windowWidth = windowWidth;
 
-            this.diameter = this.windowWidth < 768 ? 135 : 270;
-            this.strokeWidth = this.windowWidth < 768 ? 6 : 12;
+            this.diameter = this.windowWidth <= 1024 ? 135 : 270;
+            this.strokeWidth = this.windowWidth <= 1024 ? 6 : 12;
             this.radius = this.diameter / 2 - (this.strokeWidth / 2);
             this.dashArray =  2 * Math.PI * this.radius;
             this.dashOffset = this.dashArray - this.dashArray * this.timeValuePct;
@@ -22,7 +22,7 @@
 
     export let timeValue: number, timeValuePct: number, timeUnit: string, strokeColor: string;
 
-    let innerWidth: number = 768;
+    let innerWidth: number = 1025;
 
     let timerElement: TimerElement = new TimerElement(innerWidth, timeValuePct);
     $: timerElement = new TimerElement(innerWidth, timeValuePct);
@@ -70,7 +70,7 @@
         }
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1024px) {
         .timer, svg {
             width: 135px;
             height: 135px;
