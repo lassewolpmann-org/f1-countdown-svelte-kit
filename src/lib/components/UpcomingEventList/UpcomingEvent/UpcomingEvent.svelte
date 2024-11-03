@@ -78,22 +78,19 @@
         display: flex;
         flex-direction: row;
         gap: 5px;
+        overflow-x: auto;
+        position: relative;
 
-        .session {
-            flex: 1 1 0px;
-            background: var(--table-row-secondary-color);
-            padding: 8px 25px;
+            .session {
+                flex: 1;
+                min-width: max-content;
+                background: var(--table-row-secondary-color);
+                padding: 8px 25px;
 
-            .head {
+                .head {
                 border-bottom: 2px solid var(--table-row-primary-color);
                 padding-bottom: 8px;
             }
-        }
-    }
-
-    @media only screen and (max-width: 1024px) {
-        .all-sessions {
-            flex-direction: column;
         }
     }
 </style>

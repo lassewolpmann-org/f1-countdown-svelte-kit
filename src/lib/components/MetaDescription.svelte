@@ -14,12 +14,13 @@
 
             let metaString = `When is the next ${series.toUpperCase()} race? Countdown to the ${eventYear}`;
 
-            const raceName = `${nextRace.name} Grand Prix`;
+            const raceName = `${nextRace.name} Grand Prix. Full schedule for`;
             const sessionNames = Object.keys(nextRace.sessions).map((session) => session.toUpperCase());
 
             metaString = metaString.concat(` ${series.toUpperCase()} ${raceName} ${sessionNames.join(', ')}.`);
 
             this.metaString = metaString;
+            console.log(this.metaString)
         }
     }
 
