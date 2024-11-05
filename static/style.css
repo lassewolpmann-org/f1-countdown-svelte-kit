@@ -1,11 +1,9 @@
+/*
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 html {
-    font-family: 'Poppins', sans-serif;
-    background: #111;
-
     --border: 2px solid rgba(36, 36, 36);
     --main-text-color: #eee;
     --secondary-text-color: #868686;
@@ -33,10 +31,10 @@ button {
     border-radius: 50%;
     transition: background 0.2s ease;
 
-    /* Necessary for switching between F1, F2, and F3 */
+    Necessary for switching between F1, F2, and F3
     z-index: 1;
 
-    /* Disable zoom on double-tap */
+    Disable zoom on double-tap
     touch-action: manipulation;
 }
 
@@ -54,3 +52,5 @@ a {
 a:hover {
     color: var(--button-hover-color);
 }
+
+ */

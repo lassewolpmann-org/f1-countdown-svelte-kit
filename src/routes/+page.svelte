@@ -23,15 +23,14 @@
 
     const { apiData } = data;
 </script>
-<style>
-    main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+<style lang="postcss">
+    :global(html) {
+        font-family: 'Poppins', sans-serif;
+        background: #111;
+        color: #eee;
     }
 </style>
-<main>
+<main class="flex flex-col items-center justify-center">
     {#if Object.keys(apiData.nextRace).length > 0}
         <RaceTitle nextRace={apiData.nextRace} flags={apiData.flags} />
         <SessionSelection nextEventSessions={apiData.nextRace.sessions} />
@@ -43,7 +42,9 @@
                 dataConfig={apiData.dataConfig}
         />
     {:else}
-        <h1>There doesn't seem to be any data available.</h1>
-        <h2>Please come back at another time.</h2>
+        <div class="p-10">
+            <h1>There doesn't seem to be any data available.</h1>
+            <h2>Please come back at another time.</h2>
+        </div>
     {/if}
 </main>

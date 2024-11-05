@@ -2,6 +2,7 @@
     import Footer from "$lib/components/Footer.svelte";
     import Border from "$lib/components/Border.svelte";
     import MetaDescription from "$lib/components/MetaDescription.svelte";
+    import "../app.css";
 
     import type { LayoutData } from './$types';
 

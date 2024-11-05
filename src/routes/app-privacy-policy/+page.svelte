@@ -10,12 +10,6 @@
     import "@fontsource/poppins/800.css";
 </script>
 
-<style>
-    section {
-        font-family: 'Poppins', sans-serif;
-    }
-</style>
-
 <svelte:head>
     <title>App Privacy Policy</title>
 </svelte:head>

@@ -1,9 +1,1 @@
-<style>
-    .element-border {
-        width: 100%;
-        height: 2px;
-        background: rgb(36, 36, 36);
-        display: block;
-    }
-</style>
-<div class="element-border"></div>
+<div class="block h-0.5 w-full bg-neutral-800"></div>

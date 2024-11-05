@@ -1,9 +1,10 @@
 import adapter from '@sveltejs/adapter-cloudflare';
 import preprocess from "svelte-preprocess";
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: preprocess({ typescript: true, scss: true}),
+	preprocess: [preprocess({ typescript: true, scss: true}), vitePreprocess()],
 
 	kit: {
 		adapter: adapter(),

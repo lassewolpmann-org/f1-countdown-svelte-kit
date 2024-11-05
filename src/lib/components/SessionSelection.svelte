@@ -34,33 +34,13 @@
     })
 </script>
 
-<style>
-    .session-selection {
-        margin: 10px 0;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 24px;
-
-        position: relative;
-        overflow: hidden;
+<style lang="postcss">
+    .selected {
+        color: var(--main-text-color);
+        font-weight: bold;
     }
 
-    .all-sessions {
-        transition: transform 0.3s ease;
-        width: 280px;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        transform: translateX(0px);
-    }
-
+    /*
     .session-selection:after {
         position: absolute;
         bottom: 0;
@@ -71,10 +51,7 @@
         background-image: linear-gradient(90deg, #111 15%, transparent 25%, transparent 75%, #111 85%);
     }
 
-    .session.selected {
-        color: var(--main-text-color);
-        font-weight: bold;
-    }
+
 
     .session {
         margin: 0 10px;
@@ -90,18 +67,16 @@
             width: 200px;
         }
     }
+
+     */
 </style>
 
-<div class="session-selection" data-nosnippet>
-    <button on:click={decreaseSessionIndex} aria-label="Decrease Session Index">
-        ←
-    </button>
-    <div class="all-sessions" bind:this={sessionListEl}>
+<div class="selector flex flex-row items-center justify-center relative w-72 overflow-hidden" data-nosnippet>
+    <button on:click={decreaseSessionIndex} aria-label="Decrease Session Index" class="bg-neutral-800 touch-manipulation z-10">←</button>
+    <div class="transition" bind:this={sessionListEl}>
         {#each Object.keys(nextEventSessions) as sessionName, sessionIndex}
-            <span class="session" class:selected={sessionIndex === $currentSessionIndex}>{sessionName.toUpperCase()}</span>
+            <span class="session text-neutral-400 p-1" class:selected={sessionIndex === $currentSessionIndex}>{sessionName.toUpperCase()}</span>
         {/each}
     </div>
-    <button on:click={increaseSessionIndex} aria-label="Increase Session Index">
-        →
-    </button>
+    <button on:click={increaseSessionIndex} aria-label="Increase Session Index" class="bg-neutral-800 touch-manipulation z-10">→</button>
 </div>
