@@ -1,8 +1,5 @@
 <script lang="ts">
     class Timer {
-        private readonly nextEventSessions: { [key: string]: string };
-        private readonly currentSessionIndex: number;
-
         public timerInterval: any;
 
         public delta: number;
@@ -17,18 +14,14 @@
         public deltaMinutesPct: number = 0;
         public deltaSecondsPct: number = 0;
 
-        constructor(nextEventSessions: { [key: string]: string }, currentSessionIndex: number) {
-            this.nextEventSessions = nextEventSessions;
-            this.currentSessionIndex = currentSessionIndex;
-            this.delta = this.calculateDelta();
+        constructor(sessionDate: string | undefined) {
+            this.delta = this.calculateDelta(sessionDate);
         }
 
-        calculateDelta = ()  => {
-            const nextEventSessionDates: string[] = Object.values(this.nextEventSessions);
-            const nextSessionTime: string | undefined = nextEventSessionDates.at(this.currentSessionIndex);
+        calculateDelta = (sessionDate: string | undefined)  => {
+            if (!sessionDate) return 0
 
-            let nextSessionTimestamp: number = 0;
-            if (nextSessionTime) nextSessionTimestamp = new Date(nextSessionTime).getTime();
+            let nextSessionTimestamp: number = new Date(sessionDate).getTime();
 
             this.delta = this.calculateDeltaInSeconds(nextSessionTimestamp);
 
@@ -59,59 +52,35 @@
     // Component imports
     import TimerElement from "$lib/components/Timer/TimerElement.svelte";
 
-    // Store imports
-    import { currentSessionIndex } from "$lib/stores/currentSessionIndex";
-
     // Function imports
     import { onDestroy } from "svelte";
 
-    export let nextEventSessions: { [key: string]: string };
+    export let sessionName: string, sessionDate: string | undefined;
 
-    let timer = new Timer(nextEventSessions, $currentSessionIndex);
+    let timer = new Timer(sessionDate);
 
     timer.timerInterval = setInterval(() => {
-        timer.delta = timer.calculateDelta();
+        timer.delta = timer.calculateDelta(sessionDate);
     }, 1000)
-
-    // Create a new timer object when either the sessions or session index update
-    $: timer = new Timer(nextEventSessions, $currentSessionIndex);
 
     onDestroy(() => {
         clearInterval(timer.timerInterval);
     })
 </script>
 
-<style>
-    .timer, .timer-elements {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .timer {
-        flex-direction: column;
-        margin: 30px 0;
-    }
-
-    .timer-elements {
-        flex-direction: row;
-        gap: 50px;
-    }
-
-    @media only screen and (max-width: 1024px) {
-        .timer-elements {
-            gap: 25px;
-        }
-    }
-</style>
-
-
-<div class="timer">
-    <div class="timer-elements" data-nosnippet>
-        <TimerElement timeValue={timer.deltaDays} timeValuePct={timer.deltaDaysPct} timeUnit="days" strokeColor="rgb(234, 53, 19)"/>
-        <TimerElement timeValue={timer.deltaHours} timeValuePct={timer.deltaHoursPct} timeUnit="hours" strokeColor="rgb(244, 200, 68)"/>
-        <TimerElement timeValue={timer.deltaMinutes} timeValuePct={timer.deltaMinutesPct} timeUnit="minutes" strokeColor="rgb(232, 232, 228)"/>
-        <TimerElement timeValue={timer.deltaSeconds} timeValuePct={timer.deltaSecondsPct} timeUnit="seconds" strokeColor="rgb(57, 97, 164)"/>
+<div class="flex flex-col items-start justify-center m-3 gap-1 bg-neutral-900 rounded-xl p-2">
+    <h1 class="text-lg font-medium">{sessionName.toUpperCase()}</h1>
+    <div class="grid grid-cols-4 gap-3">
+        <TimerElement timeValue={timer.deltaDays} timeValuePct={timer.deltaDaysPct} strokeColor="rgb(234, 53, 19)"/>
+        <TimerElement timeValue={timer.deltaHours} timeValuePct={timer.deltaHoursPct} strokeColor="rgb(244, 200, 68)"/>
+        <TimerElement timeValue={timer.deltaMinutes} timeValuePct={timer.deltaMinutesPct} strokeColor="rgb(232, 232, 228)"/>
+        <TimerElement timeValue={timer.deltaSeconds} timeValuePct={timer.deltaSecondsPct} strokeColor="rgb(57, 97, 164)"/>
+    </div>
+    <div class="grid grid-cols-4 gap-3 w-full text-center text-xs lg:text-lg text-neutral-400">
+        <span>days</span>
+        <span>hours</span>
+        <span>minutes</span>
+        <span>seconds</span>
     </div>
 </div>
+

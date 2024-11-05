@@ -26,15 +26,18 @@
 <style lang="postcss">
     :global(html) {
         font-family: 'Poppins', sans-serif;
-        background: #111;
-        color: #eee;
+        background: theme(colors.neutral.950);
+        color: theme(colors.neutral.200);
     }
 </style>
 <main class="flex flex-col items-center justify-center">
     {#if Object.keys(apiData.nextRace).length > 0}
         <RaceTitle nextRace={apiData.nextRace} flags={apiData.flags} />
-        <SessionSelection nextEventSessions={apiData.nextRace.sessions} />
-        <Timer nextEventSessions={apiData.nextRace.sessions} />
+
+        {#each Object.keys(apiData.nextRace.sessions) as sessionName}
+            <Timer {sessionName} sessionDate={apiData.nextRace.sessions[sessionName]} />
+        {/each}
+
         <Border />
         <UpcomingEventList
                 nextEvents={apiData.nextRaces}

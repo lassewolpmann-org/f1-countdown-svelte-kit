@@ -35,9 +35,13 @@
 </script>
 
 <style lang="postcss">
+    button {
+        background: theme(colors.neutral.800)
+    }
+
     .selected {
-        color: var(--main-text-color);
-        font-weight: bold;
+        color: inherit;
+        font-weight: 600;
     }
 
     /*
@@ -72,11 +76,11 @@
 </style>
 
 <div class="selector flex flex-row items-center justify-center relative w-72 overflow-hidden" data-nosnippet>
-    <button on:click={decreaseSessionIndex} aria-label="Decrease Session Index" class="bg-neutral-800 touch-manipulation z-10">←</button>
+    <button on:click={decreaseSessionIndex} aria-label="Decrease Session Index" class="touch-manipulation z-10 rounded-full w-12 aspect-square flex items-center justify-center">←</button>
     <div class="transition" bind:this={sessionListEl}>
         {#each Object.keys(nextEventSessions) as sessionName, sessionIndex}
             <span class="session text-neutral-400 p-1" class:selected={sessionIndex === $currentSessionIndex}>{sessionName.toUpperCase()}</span>
         {/each}
     </div>
-    <button on:click={increaseSessionIndex} aria-label="Increase Session Index" class="bg-neutral-800 touch-manipulation z-10">→</button>
+    <button on:click={increaseSessionIndex} aria-label="Increase Session Index" class="touch-manipulation z-10 rounded-full w-12 aspect-square flex items-center justify-center">→</button>
 </div>

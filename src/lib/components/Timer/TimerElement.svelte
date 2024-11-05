@@ -20,15 +20,20 @@
         }
     }
 
-    export let timeValue: number, timeValuePct: number, timeUnit: string, strokeColor: string;
+    export let timeValue: number, timeValuePct: number, strokeColor: string;
 
-    let innerWidth: number = 1025;
+    let svgWidth: number = 300;
 
-    let timerElement: TimerElement = new TimerElement(innerWidth, timeValuePct);
-    $: timerElement = new TimerElement(innerWidth, timeValuePct);
+    let strokeWidth = 6;
+    $: radius = (svgWidth / 2) - (strokeWidth / 2);
+    $: dashArray = 2 * Math.PI * radius;
+    $: dashOffset = dashArray - dashArray * (timeValuePct - Math.floor(timeValuePct));
+
+    $: console.log(radius, dashArray, dashOffset)
 </script>
 
 <style lang="scss">
+  /*
     .timer, svg {
         width: 270px;
         height: 270px;
@@ -84,30 +89,38 @@
             font-size: 16px;
         }
     }
+
+   */
+  span {
+    transform: translate(-50%, -50%);
+  }
+
+  circle {
+    stroke-linecap: round;
+    transition: stroke-dashoffset 250ms ease-in-out;
+  }
 </style>
 
-<svelte:window bind:innerWidth />
-<div class="timer" data-nosnippet>
-    <svg>
+<div bind:clientWidth={svgWidth} class="max-w-32 w-auto aspect-square relative">
+    <span class="absolute top-1/2 left-1/2 transform lg:text-2xl">{timeValue}</span>
+    <svg class="w-full h-full">
         <circle
-                class="countdown-circle"
+                class="fill-transparent -rotate-90 origin-center"
                 cx="50%"
                 cy="50%"
-                r="{timerElement.radius}px"
+                r="{radius}px"
                 stroke="{strokeColor}"
-                stroke-width="{timerElement.strokeWidth}"
-                stroke-dasharray="{timerElement.dashArray}"
-                stroke-dashoffset="{timerElement.dashOffset}"
+                stroke-width="{strokeWidth}px"
+                stroke-dasharray="{dashArray}px"
+                stroke-dashoffset="{dashOffset}px"
         />
         <circle
-                class="fill-circle"
+                class="fill-transparent opacity-50"
                 cx="50%"
                 cy="50%"
-                r="{timerElement.radius}px"
+                r="{radius}px"
                 stroke="{strokeColor}"
-                stroke-width="{timerElement.strokeWidth}"
+                stroke-width="{strokeWidth}px"
         />
     </svg>
-    <span class="time">{timeValue}</span>
-    <span class="text">{timeUnit}</span>
 </div>

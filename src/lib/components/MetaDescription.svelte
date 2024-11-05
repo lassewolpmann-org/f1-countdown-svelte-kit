@@ -20,7 +20,6 @@
             metaString = metaString.concat(` ${series.toUpperCase()} ${raceName} ${sessionNames.join(', ')}.`);
 
             this.metaString = metaString;
-            console.log(this.metaString)
         }
     }
 
