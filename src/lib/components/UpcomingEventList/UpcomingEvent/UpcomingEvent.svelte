@@ -43,11 +43,10 @@
 
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
-    import Border from "$lib/components/Border.svelte";
 
     export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
 
-    const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
+    $: upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
 </script>
 
 <div class="flex flex-col gap-2">
@@ -60,7 +59,6 @@
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}
                         endTime={upcomingEvent.sessionEndTimes.at(i)}
-                        tbc={upcomingEvent.event.tbc}
                 />
             </div>
         {/each}

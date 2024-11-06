@@ -1,26 +1,31 @@
-import type { DataConfig, RaceData } from "$lib/types/RaceData";
+import type {DataConfig, RaceData} from "$lib/types/RaceData";
 import { flags } from "$lib/data/flags";
 
+interface SeriesData {
+    allRaces: RaceData[]
+    nextRaces: RaceData[]
+    nextRace: RaceData
+    dataConfig: DataConfig
+}
+
 export class APIData {
-    allRaces: RaceData[] = [];
-    series: string;
+    seriesData: {[key: string]: SeriesData} = {}
+    seriesOptions: string[] = ["f1", "f2", "f3", "f1-academy"];
+
     currentYear: number;
-
-    nextRaces: RaceData[] = [];
-    nextRace: RaceData = {} as RaceData;
-
     flags: { [key: string]: string } = flags;
 
-    dataConfig: DataConfig = {} as DataConfig;
-
     constructor() {
-        this.series = 'f1';
+        for (let series of this.seriesOptions) {
+            this.seriesData[series] = {} as SeriesData
+        }
+
         this.currentYear = new Date().getFullYear();
     }
 
-    async getDataConfig(fetch: any) {
+    async getDataConfig(fetch: any, series: string) {
         const configURL = new URL('https://raw.githubusercontent.com');
-        configURL.pathname = `sportstimes/f1/main/_db/${this.series}/config.json`;
+        configURL.pathname = `sportstimes/f1/main/_db/${series}/config.json`;
 
         try {
             const res = await fetch(configURL);
@@ -30,9 +35,9 @@ export class APIData {
         }
     }
 
-    async getAllRaces(fetch: any, year: number) {
+    async getAllRaces(fetch: any, series: string) {
         const apiURL = new URL('https://raw.githubusercontent.com');
-        apiURL.pathname = `sportstimes/f1/main/_db/${this.series}/${year}.json`;
+        apiURL.pathname = `sportstimes/f1/main/_db/${series}/${this.currentYear}.json`;
 
         try {
             const res = await fetch(apiURL);
@@ -45,18 +50,13 @@ export class APIData {
         }
     }
 
-    getNextRaces(): RaceData[] {
-        let nextRaces: RaceData[] = this.allRaces.filter((race: RaceData): boolean => {
+    getNextRaces(allRaces: RaceData[]): RaceData[] {
+        return allRaces.filter((race: RaceData): boolean => {
             const lastSessionDate: string | undefined = Object.values(race.sessions).at(-1);
             const lastSessionTimestamp: number = lastSessionDate ? new Date(lastSessionDate).getTime() : 0;
 
             const currentTimestamp: number = new Date().getTime();
             return lastSessionTimestamp > currentTimestamp
         })
-
-        const nextRace: RaceData | undefined = nextRaces.at(0);
-        if (nextRace) this.nextRace = nextRace;
-
-        return nextRaces
     }
 }

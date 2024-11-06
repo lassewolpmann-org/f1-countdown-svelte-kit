@@ -1,23 +1,23 @@
 import { APIData } from "$lib/classes/APIData";
 import type { LayoutLoad } from "./$types";
+import type { RaceData } from "$lib/types/RaceData";
 
 export const load: LayoutLoad = (async ({ fetch }: any) => {
     const apiData: APIData = new APIData();
 
-    // API data config
-    apiData.dataConfig = await apiData.getDataConfig(fetch);
+    for (let series of apiData.seriesOptions) {
+        let seriesData = apiData.seriesData[series];
 
-    // Next races in season
-    apiData.allRaces = await apiData.getAllRaces(fetch, apiData.currentYear);
-    const nextRaces = apiData.getNextRaces();
+        if (!seriesData) continue
 
-    // Switch to next year if no races are upcoming
-    const nextYear = apiData.currentYear + 1;
-    if (nextRaces.length === 0 && apiData.dataConfig.availableYears.includes(nextYear)) {
-        apiData.allRaces = await apiData.getAllRaces(fetch, nextYear);
-        apiData.nextRaces = apiData.getNextRaces();
-    } else {
-        apiData.nextRaces = nextRaces;
+        seriesData.dataConfig = await apiData.getDataConfig(fetch, series);
+        seriesData.allRaces = await apiData.getAllRaces(fetch, series);
+        seriesData.nextRaces = apiData.getNextRaces(seriesData.allRaces);
+
+        let nextRace = seriesData.nextRaces.at(0)
+        seriesData.nextRace = nextRace ? nextRace : {} as RaceData
+
+        apiData.seriesData[series] = seriesData
     }
 
     return {
