@@ -3,6 +3,7 @@
     import { parseName } from "$lib/functions/parseName";
     import { parseDate } from "$lib/functions/parseDate";
     import { parseEndTimes, parseTime } from "$lib/functions/parseTime";
+    import { longSessionName } from "$lib/functions/parseSessionName";
 
     class UpcomingEvent {
         event: RaceData
@@ -26,7 +27,7 @@
 
             this.eventName = parseName(this.event.name, this.flag);
 
-            this.sessionNames = Object.keys(this.event.sessions).map(name => name.toUpperCase());
+            this.sessionNames = Object.keys(this.event.sessions).map(longSessionName);
             this.sessionsHidden = true;
 
             this.sessionsDateTime = Object.values(this.event.sessions);
@@ -42,71 +43,19 @@
 
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
+    import Border from "$lib/components/Border.svelte";
 
     export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
 
-    let innerWidth = 0;
     const upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
 </script>
-<svelte:window bind:innerWidth></svelte:window>
-<style lang="scss">
-    .upcoming-event {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
 
-    .session {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-
-        background: var(--table-row-primary-color);
-        padding: 12px 25px;
-        border-radius: 10px;
-
-        .head {
-            font-weight: 600;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
-    }
-
-    .all-sessions {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-        overflow-x: auto;
-        position: relative;
-
-            .session {
-                flex: 1;
-                min-width: max-content;
-                background: var(--table-row-secondary-color);
-                padding: 8px 25px;
-
-                .head {
-                border-bottom: 2px solid var(--table-row-primary-color);
-                padding-bottom: 8px;
-            }
-        }
-    }
-</style>
-
-<div class="upcoming-event">
-    <div class="session">
-        <div class="head">
-            <span class="name">{upcomingEvent.eventName}</span>
-        </div>
-    </div>
-    <div class="all-sessions">
+<div class="flex flex-col gap-2">
+    <span class="font-semibold text-base lg:text-xl bg-neutral-800 rounded-xl px-5 py-2.5">{flags[event.localeKey]} {event.name}</span>
+    <div class="flex flex-row overflow-x-auto gap-2">
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
-            <div class="session">
-                <div class="head">
-                    <span class="name">{upcomingEvent.sessionNames.at(i)}</span>
-                </div>
+            <div class="px-5 py-2.5 bg-neutral-800 rounded-xl w-full flex flex-col gap-1">
+                <span class="font-semibold w-max">{upcomingEvent.sessionNames.at(i)}</span>
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
                         time={upcomingEvent.sessionTimes.at(i)}

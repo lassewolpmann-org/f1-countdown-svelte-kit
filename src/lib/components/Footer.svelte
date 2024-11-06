@@ -1,23 +1,15 @@
 <script lang="ts">
     export let seriesName: string;
 </script>
-<style lang="scss">
-    @media only screen and (max-width: 768px) {
-        footer {
-            align-items: flex-start;
-
-            .links, .legal {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
+<style lang="postcss">
+    a:hover {
+        color: theme(colors.neutral.400)
     }
 </style>
-
-<footer class="p-10 flex flex-col gap-6">
-    <div class="flex flex-col gap-4">
+<footer class="px-2 py-4 flex flex-col gap-6 w-full max-w-4xl">
+    <div class="flex flex-col lg:flex-row gap-4">
         <div class="flex flex-col">
-            <h4>Project links</h4>
+            <h4 class="font-bold">Project links</h4>
             <a href="https://github.com/lassewolpmann-org/{seriesName}-countdown-svelte-kit" target="_blank">
                 Code
             </a>
@@ -28,7 +20,7 @@
             <a href="/privacy-policy" target="_blank">Privacy Policy</a>
         </div>
         <div class="flex flex-col">
-            <h4>Data sources</h4>
+            <h4 class="font-bold">Data sources</h4>
             <a href="https://github.com/sportstimes/f1" target="_blank">
                sportstimes
             </a>

@@ -8,22 +8,9 @@
     export let nextEvents: RaceData[], flags: {[key: string]: string}, dataConfig: DataConfig;
 </script>
 
-<style lang="scss">
-    .upcoming-event-list {
-        display: flex;
-        flex-direction: column;
-
-        gap: 30px;
-
-        width: min(90vw, 1200px);
-
-        margin: 25px 0;
-    }
-</style>
-
-<div class="upcoming-event-list">
+<div class="flex flex-col gap-8 w-full">
     {#if nextEvents.length > 0}
-        <h3>Upcoming Grands Prix</h3>
+        <h3 class="font-semibold text-xl lg:text-2xl">Upcoming Grands Prix</h3>
         {#each nextEvents as event}
             <UpcomingEvent {event} {flags} {dataConfig} />
         {/each}

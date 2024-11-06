@@ -54,6 +54,7 @@
 
     // Function imports
     import { onDestroy } from "svelte";
+    import { longSessionName } from "$lib/functions/parseSessionName";
 
     export let sessionName: string, sessionDate: string | undefined;
 
@@ -68,8 +69,8 @@
     })
 </script>
 
-<div class="flex flex-col items-start justify-center m-3 gap-1 bg-neutral-900 rounded-xl p-2">
-    <h1 class="text-lg font-medium">{sessionName.toUpperCase()}</h1>
+<div class="flex flex-col items-start justify-center gap-2 lg:gap-4 bg-neutral-900 rounded-xl px-4 py-2">
+    <h1 class="text-base lg:text-2xl font-semibold">{longSessionName(sessionName)}</h1>
     <div class="grid grid-cols-4 gap-3">
         <TimerElement timeValue={timer.deltaDays} timeValuePct={timer.deltaDaysPct} strokeColor="rgb(234, 53, 19)"/>
         <TimerElement timeValue={timer.deltaHours} timeValuePct={timer.deltaHoursPct} strokeColor="rgb(244, 200, 68)"/>

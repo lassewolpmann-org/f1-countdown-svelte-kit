@@ -4,7 +4,6 @@
     import UpcomingEventList from "$lib/components/UpcomingEventList/UpcomingEventList.svelte";
     import Border from "$lib/components/Border.svelte";
     import RaceTitle from "$lib/components/RaceTitle.svelte";
-    import SessionSelection from "$lib/components/SessionSelection.svelte";
 
     // Type imports
     import type { PageData } from './$types';
@@ -25,12 +24,19 @@
 </script>
 <style lang="postcss">
     :global(html) {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Poppins', system-ui;
         background: theme(colors.neutral.950);
         color: theme(colors.neutral.200);
     }
+
+    :global(body) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
-<main class="flex flex-col items-center justify-center">
+<main class="flex flex-col items-center justify-center gap-4 px-2 py-4 w-full max-w-4xl">
     {#if Object.keys(apiData.nextRace).length > 0}
         <RaceTitle nextRace={apiData.nextRace} flags={apiData.flags} />
 
