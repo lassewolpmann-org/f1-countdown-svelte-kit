@@ -14,7 +14,9 @@
                 License
             </a>
             <a href="mailto:lasse@f1-countdown.com">Contact</a>
-            <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/app-privacy-policy">App Privacy Policy</a>
+            <a href="/support">Support</a>
         </div>
         <div class="flex flex-col">
             <h4 class="font-bold">Data sources</h4>

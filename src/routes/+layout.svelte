@@ -7,6 +7,7 @@
     import type {RaceData} from "$lib/types/RaceData";
     import { seriesName} from "$lib/functions/parseSeriesName";
     import { longSessionName, shortSessionName } from "$lib/functions/parseSessionName";
+    import type { SeriesData } from "$lib/classes/APIData";
 
     interface Props {
         data: LayoutData;
@@ -16,14 +17,16 @@
     let { data, children }: Props = $props();
 
     class MetaDescription {
-        metaString: string;
+        metaString: string
 
-        constructor(series: string, nextRace: RaceData) {
-            if (Object.keys(nextRace).length === 0) {
-                this.metaString = `When is the next ${seriesName(series)} race?`;
+        constructor(series: string, seriesData: SeriesData | undefined) {
+            this.metaString = `Countdown to the next ${seriesName(series)}. Full schedule for all Sessions on the Weekend.`
 
-                return
-            }
+            if (!seriesData) return
+
+            let nextRace = seriesData.nextRace
+
+            if (Object.keys(nextRace).length === 0) return
 
             const firstSessionDate = Object.values(nextRace.sessions).at(0);
             const eventYear = firstSessionDate ? new Date(firstSessionDate).getFullYear() : new Date().getFullYear();
@@ -43,17 +46,18 @@
 
     const { apiData } = data;
 
-    let metaDescription: MetaDescription = $state();
     let series = "f1";
     let seriesData = apiData.seriesData[series];
-
-    if (seriesData) {
-        metaDescription = new MetaDescription(series, seriesData.nextRace);
-    }
+    let metaDescription = new MetaDescription(series, seriesData);
 </script>
-
+<style lang="postcss">
+    :global(html) {
+        font-family: 'Poppins', system-ui;
+        background: theme(colors.neutral.950);
+        color: theme(colors.neutral.200);
+    }
+</style>
 <svelte:head>
-    <title>Formula Countdown</title>
     <meta name="apple-itunes-app" content="app-id=6472580786">
     <meta name="description" content="{metaDescription.metaString}">
 </svelte:head>

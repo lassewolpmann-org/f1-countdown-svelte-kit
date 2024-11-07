@@ -1,7 +1,7 @@
 import type {DataConfig, RaceData} from "$lib/types/RaceData";
 import { flags } from "$lib/data/flags";
 
-interface SeriesData {
+export interface SeriesData {
     allRaces: RaceData[]
     nextRaces: RaceData[]
     nextRace: RaceData

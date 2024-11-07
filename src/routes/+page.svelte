@@ -25,21 +25,14 @@
     }
 
     let { data }: Props = $props();
-
     const { apiData } = data;
 
-    let currentSeries: string = $state("f1");
-
+    let currentSeries = $state("f1");
     let currentData = $derived(apiData.seriesData[currentSeries])
 </script>
-<style lang="postcss">
-    :global(html) {
-        font-family: 'Poppins', system-ui;
-        background: theme(colors.neutral.950);
-        color: theme(colors.neutral.200);
-    }
-</style>
-
+<svelte:head>
+    <title>Formula Countdown - {seriesName(currentSeries)}</title>
+</svelte:head>
 {#if apiData}
     <main class="flex flex-col items-center justify-center gap-4 w-full">
         <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5">
