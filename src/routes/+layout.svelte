@@ -8,7 +8,12 @@
     import { seriesName} from "$lib/functions/parseSeriesName";
     import { longSessionName, shortSessionName } from "$lib/functions/parseSessionName";
 
-    export let data: LayoutData;
+    interface Props {
+        data: LayoutData;
+        children?: import('svelte').Snippet;
+    }
+
+    let { data, children }: Props = $props();
 
     class MetaDescription {
         metaString: string;
@@ -38,7 +43,7 @@
 
     const { apiData } = data;
 
-    let metaDescription: MetaDescription;
+    let metaDescription: MetaDescription = $state();
     let series = "f1";
     let seriesData = apiData.seriesData[series];
 
@@ -54,7 +59,7 @@
 </svelte:head>
 {#if apiData}
     <div class="flex flex-col items-center justify-center px-4 py-6 xl:px-6 xl:py-9 gap-4">
-        <slot></slot>
+        {@render children?.()}
         <Border />
         <Footer />
     </div>

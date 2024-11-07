@@ -20,13 +20,17 @@
     // Function imports
     import { seriesName } from "$lib/functions/parseSeriesName";
 
-    export let data: PageData;
+    interface Props {
+        data: PageData;
+    }
+
+    let { data }: Props = $props();
 
     const { apiData } = data;
 
-    let currentSeries: string = "f1";
+    let currentSeries: string = $state("f1");
 
-    $: currentData = apiData.seriesData[currentSeries]
+    let currentData = $derived(apiData.seriesData[currentSeries])
 </script>
 <style lang="postcss">
     :global(html) {

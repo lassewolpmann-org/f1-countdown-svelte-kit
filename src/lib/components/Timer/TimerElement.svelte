@@ -1,12 +1,18 @@
 <script lang="ts">
-    export let timeValue: number, timeValuePct: number, strokeColor: string;
+    interface Props {
+        timeValue: number;
+        timeValuePct: number;
+        strokeColor: string;
+    }
 
-    let svgWidth: number = 300;
+    let { timeValue, timeValuePct, strokeColor }: Props = $props();
+
+    let svgWidth: number = $state(300);
 
     let strokeWidth = 8;
-    $: radius = (svgWidth / 2) - (strokeWidth / 2);
-    $: dashArray = 2 * Math.PI * radius;
-    $: dashOffset = dashArray - dashArray * (timeValuePct - Math.floor(timeValuePct));
+    let radius = $derived((svgWidth / 2) - (strokeWidth / 2));
+    let dashArray = $derived(2 * Math.PI * radius);
+    let dashOffset = $derived(dashArray - dashArray * (timeValuePct - Math.floor(timeValuePct)));
 </script>
 
 <div bind:clientWidth={svgWidth} class="w-auto aspect-square relative">

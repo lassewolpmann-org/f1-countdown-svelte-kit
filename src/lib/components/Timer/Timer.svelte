@@ -56,9 +56,14 @@
     import { onDestroy } from "svelte";
     import { longSessionName } from "$lib/functions/parseSessionName";
 
-    export let sessionName: string, sessionDate: string | undefined;
+    interface Props {
+        sessionName: string;
+        sessionDate: string | undefined;
+    }
 
-    let timer = new Timer(sessionDate);
+    let { sessionName, sessionDate }: Props = $props();
+
+    let timer = $state(new Timer(sessionDate));
 
     timer.timerInterval = setInterval(() => {
         timer.delta = timer.calculateDelta(sessionDate);

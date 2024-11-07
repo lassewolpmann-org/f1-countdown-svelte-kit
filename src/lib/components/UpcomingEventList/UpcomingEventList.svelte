@@ -5,7 +5,13 @@
     // Component imports
     import UpcomingEvent from "$lib/components/UpcomingEventList/UpcomingEvent/UpcomingEvent.svelte";
 
-    export let nextEvents: RaceData[], flags: {[key: string]: string}, dataConfig: DataConfig;
+    interface Props {
+        nextEvents: RaceData[];
+        flags: {[key: string]: string};
+        dataConfig: DataConfig;
+    }
+
+    let { nextEvents, flags, dataConfig }: Props = $props();
 </script>
 
 <div class="flex flex-col w-full max-w-6xl gap-4 xl:sticky xl:top-0">

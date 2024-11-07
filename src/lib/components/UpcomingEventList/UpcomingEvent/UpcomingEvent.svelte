@@ -44,9 +44,15 @@
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
-    export let event: RaceData, flags: {[key: string]: string}, dataConfig: DataConfig;
+    interface Props {
+        event: RaceData;
+        flags: {[key: string]: string};
+        dataConfig: DataConfig;
+    }
 
-    $: upcomingEvent = new UpcomingEvent(event, flags, dataConfig);
+    let { event, flags, dataConfig }: Props = $props();
+
+    let upcomingEvent = $derived(new UpcomingEvent(event, flags, dataConfig));
 </script>
 
 <div class="flex flex-col gap-2">
