@@ -34,17 +34,10 @@
         background: theme(colors.neutral.950);
         color: theme(colors.neutral.200);
     }
-
-    :global(body) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
 </style>
 
 {#if apiData}
-    <main class="flex flex-col items-center justify-center gap-4 px-2 py-4 w-full">
+    <main class="flex flex-col items-center justify-center gap-4 w-full">
         <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5">
             {#each apiData.seriesOptions as seriesOption}
                 <option value="{seriesOption}">{seriesName(seriesOption)}</option>

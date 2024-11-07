@@ -3,7 +3,7 @@
         color: theme(colors.neutral.400)
     }
 </style>
-<footer class="px-2 py-4 flex flex-col gap-6 w-full max-w-6xl">
+<footer class="flex flex-col gap-6 w-full max-w-6xl xl:min-w-full">
     <div class="flex flex-col lg:flex-row gap-4">
         <div class="flex flex-col">
             <h4 class="font-bold">Project links</h4>

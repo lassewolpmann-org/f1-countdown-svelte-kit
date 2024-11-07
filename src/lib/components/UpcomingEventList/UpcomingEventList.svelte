@@ -8,7 +8,7 @@
     export let nextEvents: RaceData[], flags: {[key: string]: string}, dataConfig: DataConfig;
 </script>
 
-<div class="flex flex-col w-full max-w-6xl gap-4">
+<div class="flex flex-col w-full max-w-6xl gap-4 xl:sticky xl:top-0">
     {#if nextEvents.length > 0}
         <span class="text-xl lg:text-2xl xl:text-5xl font-medium">Upcoming Grands Prix</span>
         <div class="flex flex-col gap-6">

@@ -51,12 +51,20 @@ export class APIData {
     }
 
     getNextRaces(allRaces: RaceData[]): RaceData[] {
-        return allRaces.filter((race: RaceData): boolean => {
+        let nextRaces = allRaces.filter((race: RaceData): boolean => {
             const lastSessionDate: string | undefined = Object.values(race.sessions).at(-1);
             const lastSessionTimestamp: number = lastSessionDate ? new Date(lastSessionDate).getTime() : 0;
 
             const currentTimestamp: number = new Date().getTime();
             return lastSessionTimestamp > currentTimestamp
         })
+
+        if (nextRaces.length > 0) {
+            return nextRaces
+        } else {
+            let lastRace = allRaces.at(-1)
+
+            return lastRace ? [lastRace] : [{} as RaceData]
+        }
     }
 }
