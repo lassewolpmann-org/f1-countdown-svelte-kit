@@ -19,6 +19,7 @@
 
     // Function imports
     import { seriesName } from "$lib/functions/parseSeriesName";
+    import { onDestroy } from "svelte";
 
     interface Props {
         data: PageData;
@@ -29,6 +30,15 @@
 
     let currentSeries = $state("f1");
     let currentData = $derived(apiData.seriesData[currentSeries])
+
+    let timestamp = $state(Math.floor(Date.now() / 1000));
+    let timestampInterval = setInterval(() => {
+        timestamp += 1
+    }, 1000)
+
+    onDestroy(() => {
+        clearInterval(timestampInterval)
+    })
 </script>
 <svelte:head>
     <title>Formula Countdown - {seriesName(currentSeries)}</title>
@@ -47,7 +57,7 @@
                     <RaceTitle nextRace={currentData.nextRace} flags={apiData.flags} />
 
                     {#each Object.keys(currentData.nextRace.sessions) as sessionName}
-                        <Timer {sessionName} sessionDate={currentData.nextRace.sessions[sessionName]} />
+                        <Timer {sessionName} sessionDate={currentData.nextRace.sessions[sessionName]} {timestamp} />
                     {/each}
                 </div>
 
