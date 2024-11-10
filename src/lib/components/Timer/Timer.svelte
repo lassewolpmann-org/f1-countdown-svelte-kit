@@ -19,7 +19,9 @@
         if (!sessionDate) return delta
 
         let sessionTimestamp = Math.floor(new Date(sessionDate).getTime() / 1000)
-        return sessionTimestamp - timestamp;
+        delta = sessionTimestamp - timestamp
+
+        return delta >= 0 ? delta : 0
     })
 
     let days = $derived(Math.floor(delta / 86400))

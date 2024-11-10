@@ -45,6 +45,9 @@
 </svelte:head>
 {#if apiData}
     <main class="flex flex-col items-center justify-center gap-4 w-full">
+        <div class="bg-neutral-900 text-neutral-500 p-3 text-xs rounded-xl">
+            ⚠️ f1-countdown.com is now formulacountdown.com
+        </div>
         <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5">
             {#each apiData.seriesOptions as seriesOption}
                 <option value="{seriesOption}">{seriesName(seriesOption)}</option>
