@@ -13,7 +13,7 @@
             <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit/blob/main/LICENSE.md" target="_blank">
                 License
             </a>
-            <a href="mailto:lasse@f1-countdown.com">Contact</a>
+            <a href="mailto:support@formulacountdown.com">Contact</a>
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="/app-privacy-policy">App Privacy Policy</a>
             <a href="/support">Support</a>

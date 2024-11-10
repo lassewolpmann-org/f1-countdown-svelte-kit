@@ -18,7 +18,7 @@
     <a href="/" class="bg-neutral-800 w-max p-2 rounded hover:text-neutral-400">Back to main page</a>
     <h1>Support</h1>
     <section>
-        <p>You can contact us <a href="mailto:lasse©f1-countdown.com" class="underline">here</a> via e-mail.</p>
+        <p>You can contact us <a href="mailto:support@formulacountdown.com" class="underline">here</a> via e-mail.</p>
         <p>Or create an issue on GitHub <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit/issues" target="_blank" class="underline"> here.</a></p>
     </section>
 </div>
