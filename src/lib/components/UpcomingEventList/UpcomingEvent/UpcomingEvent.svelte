@@ -1,11 +1,11 @@
 <script lang="ts">
     // Function imports
-    import {parseName} from "$lib/functions/parseName";
-    import {parseDate} from "$lib/functions/parseDate";
-    import {parseEndTimes, parseTime} from "$lib/functions/parseTime";
-    import {longSessionName} from "$lib/functions/parseSessionName";
+    import { parseName } from "$lib/functions/parseName";
+    import { parseDate } from "$lib/functions/parseDate";
+    import { parseEndTimes, parseTime } from "$lib/functions/parseTime";
+    import { longSessionName } from "$lib/functions/parseSessionName";
     // Type imports
-    import type {DataConfig, RaceData} from "$lib/types/RaceData";
+    import type { DataConfig, RaceData } from "$lib/types/RaceData";
 
     // Component imports
     import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
