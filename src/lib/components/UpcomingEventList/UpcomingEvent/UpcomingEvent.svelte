@@ -1,9 +1,14 @@
 <script lang="ts">
     // Function imports
-    import { parseName } from "$lib/functions/parseName";
-    import { parseDate } from "$lib/functions/parseDate";
-    import { parseEndTimes, parseTime } from "$lib/functions/parseTime";
-    import { longSessionName } from "$lib/functions/parseSessionName";
+    import {parseName} from "$lib/functions/parseName";
+    import {parseDate} from "$lib/functions/parseDate";
+    import {parseEndTimes, parseTime} from "$lib/functions/parseTime";
+    import {longSessionName} from "$lib/functions/parseSessionName";
+    // Type imports
+    import type {DataConfig, RaceData} from "$lib/types/RaceData";
+
+    // Component imports
+    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
 
     class UpcomingEvent {
         event: RaceData
@@ -38,12 +43,6 @@
         }
     }
 
-    // Type imports
-    import type {DataConfig, RaceData} from "$lib/types/RaceData";
-
-    // Component imports
-    import Body from "$lib/components/UpcomingEventList/UpcomingEvent/SessionBody.svelte";
-
     interface Props {
         event: RaceData;
         flags: {[key: string]: string};
@@ -53,11 +52,80 @@
     let { event, flags, dataConfig }: Props = $props();
 
     let upcomingEvent = $derived(new UpcomingEvent(event, flags, dataConfig));
+
+    let scrollEl: HTMLElement | undefined = $state();
+    let scrollbarEl: HTMLElement | undefined = $state();
+    let nippleEl: HTMLElement | undefined = $state();
+
+    let scrollOffsetWidth = $state(0);
+    let nippleWidth = $state(0);
+
+    let isMouseDown = $state(false);
+
+    let initialMousePos = $state(0);
+    let initialNipplePos = $state(0);
+
+    $effect(() => {
+        if (!scrollEl || !scrollbarEl || !nippleEl) return
+
+        let scrollElementScrollWidth = scrollEl.scrollWidth
+        let scrollElementVisibleWidth = scrollOffsetWidth
+
+        let widthRatio = scrollElementVisibleWidth / scrollElementScrollWidth
+
+        if (widthRatio === 1) {
+            scrollbarEl.style.display = "none";
+        } else {
+            scrollbarEl.style.display = "block";
+        }
+
+        nippleWidth = Math.floor(scrollElementVisibleWidth * widthRatio)
+        nippleEl.style.width = nippleWidth + "px";
+    })
+
+    const changeNipplePosition = () => {
+        if (!nippleEl || !scrollEl) return
+
+        let scrollableWidth = scrollEl.scrollWidth - scrollOffsetWidth
+        let nippleOffsetRatio = scrollEl.scrollLeft / scrollableWidth
+        let nippleOffset = nippleOffsetRatio * (scrollOffsetWidth - nippleWidth)
+
+        nippleEl.style.left = `${nippleOffset}px`
+    }
+
+    const handleMouseDown = (e: MouseEvent) => {
+        e.preventDefault()
+
+        if (!nippleEl || !scrollEl) return
+        isMouseDown = true
+        initialMousePos = e.clientX
+        initialNipplePos = nippleEl.offsetLeft
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+        e.preventDefault()
+        if (!nippleEl || !scrollEl || !isMouseDown) return
+
+        let nippleOffset = initialNipplePos + (e.clientX - initialMousePos)
+
+        if (nippleOffset <= 0) {
+            nippleOffset = 0
+        } else if (nippleOffset >= scrollOffsetWidth - nippleWidth) {
+            nippleOffset = scrollOffsetWidth - nippleWidth
+        }
+
+        nippleEl.style.left = `${nippleOffset}px`
+
+        let nippleOffsetRatio = nippleOffset / (scrollOffsetWidth - nippleWidth)
+        let scrollableWidth = scrollEl.scrollWidth - scrollOffsetWidth
+        scrollEl.scrollLeft = scrollableWidth * nippleOffsetRatio
+    }
 </script>
 
+<svelte:window on:mouseup={() => isMouseDown = false} on:mousemove={handleMouseMove}></svelte:window>
 <div class="flex flex-col gap-2">
     <span class="font-semibold text-base lg:text-xl bg-neutral-800 rounded-xl px-5 py-2.5">{flags[event.localeKey]} {event.name}</span>
-    <div class="flex flex-row overflow-x-auto gap-2">
+    <div bind:offsetWidth={scrollOffsetWidth} bind:this={scrollEl} class="flex flex-row overflow-x-auto gap-2 no-scrollbar" onscroll={changeNipplePosition}>
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
             <div class="px-5 py-2.5 bg-neutral-800 rounded-xl w-full flex flex-col gap-1">
                 <span class="font-semibold w-max">{upcomingEvent.sessionNames.at(i)}</span>
@@ -68,5 +136,9 @@
                 />
             </div>
         {/each}
+    </div>
+    <div class="scrollbar relative w-full h-1 overflow-hidden rounded-xl cursor-grab" onmousedown={handleMouseDown} bind:this={scrollbarEl}>
+        <div class="background absolute w-full h-full bg-neutral-800 rounded-xl"></div>
+        <div bind:this={nippleEl} class="absolute h-full bg-neutral-500 rounded-xl"></div>
     </div>
 </div>
