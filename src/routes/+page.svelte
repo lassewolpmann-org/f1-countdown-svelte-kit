@@ -48,7 +48,7 @@
         <div class="bg-neutral-900 text-neutral-500 px-4 py-2 text-xs rounded-xl text-center">
             ⚠️ f1-countdown.com is now formulacountdown.com
         </div>
-        <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5">
+        <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5" aria-label="Selection of Series (F1, F2, F3, F1 Academy)">
             {#each apiData.seriesOptions as seriesOption}
                 <option value="{seriesOption}">{seriesName(seriesOption)}</option>
             {/each}

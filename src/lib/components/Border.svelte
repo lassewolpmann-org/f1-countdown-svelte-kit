@@ -1,1 +1,0 @@
-<div class="block h-0.5 w-full bg-neutral-800"></div>

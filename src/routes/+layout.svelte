@@ -1,10 +1,8 @@
 <script lang="ts">
     import Footer from "$lib/components/Footer.svelte";
-    import Border from "$lib/components/Border.svelte";
 
     import "../app.css";
     import type { LayoutData } from './$types';
-    import type {RaceData} from "$lib/types/RaceData";
     import { seriesName} from "$lib/functions/parseSeriesName";
     import { longSessionName, shortSessionName } from "$lib/functions/parseSessionName";
     import type { SeriesData } from "$lib/classes/APIData";
@@ -64,7 +62,6 @@
 {#if apiData}
     <div class="flex flex-col items-center justify-center px-4 py-6 xl:px-6 xl:py-9 gap-4">
         {@render children?.()}
-        <Border />
         <Footer />
     </div>
 {/if}
