@@ -65,6 +65,8 @@
     let initialMousePos = $state(0);
     let initialNipplePos = $state(0);
 
+    let currentAriaValue = $state(0);
+
     $effect(() => {
         if (!scrollEl || !scrollbarEl || !nippleEl) return
 
@@ -91,6 +93,16 @@
         let nippleOffset = nippleOffsetRatio * (scrollOffsetWidth - nippleWidth)
 
         nippleEl.style.left = `${nippleOffset}px`
+
+        if (nippleOffset <= 0) {
+            currentAriaValue = 0
+        } else if (nippleOffset >= scrollOffsetWidth - nippleWidth) {
+            currentAriaValue = scrollOffsetWidth - nippleWidth
+        } else {
+            currentAriaValue = nippleOffset
+        }
+
+        currentAriaValue = Math.floor(currentAriaValue)
     }
 
     const handleMouseDown = (e: MouseEvent) => {
@@ -120,12 +132,22 @@
         let scrollableWidth = scrollEl.scrollWidth - scrollOffsetWidth
         scrollEl.scrollLeft = scrollableWidth * nippleOffsetRatio
     }
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+        if (!scrollEl) return
+        let scrollableWidth = scrollEl.scrollWidth - scrollOffsetWidth
+        if (e.code === "ArrowLeft") {
+            scrollEl.scrollLeft -= scrollableWidth * 0.2
+        } else if (e.code === "ArrowRight") {
+            scrollEl.scrollLeft += scrollableWidth * 0.2
+        }
+    }
 </script>
 
 <svelte:window on:mouseup={() => isMouseDown = false} on:mousemove={handleMouseMove}></svelte:window>
 <div class="flex flex-col gap-2">
     <span class="font-semibold text-base lg:text-xl bg-neutral-800 rounded-xl px-5 py-2.5">{flags[event.localeKey]} {event.name}</span>
-    <div bind:offsetWidth={scrollOffsetWidth} bind:this={scrollEl} class="flex flex-row overflow-x-auto gap-2 no-scrollbar" onscroll={changeNipplePosition}>
+    <div bind:offsetWidth={scrollOffsetWidth} bind:this={scrollEl} class="flex flex-row overflow-x-auto gap-2 no-scrollbar" onscroll={changeNipplePosition} id="sessions">
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
             <div class="px-5 py-2.5 bg-neutral-800 rounded-xl w-full flex flex-col gap-1">
                 <span class="font-semibold w-max">{upcomingEvent.sessionNames.at(i)}</span>
@@ -137,7 +159,7 @@
             </div>
         {/each}
     </div>
-    <div class="scrollbar relative w-full h-1 overflow-hidden rounded-xl cursor-grab" onmousedown={handleMouseDown} bind:this={scrollbarEl}>
+    <div class="scrollbar relative w-full h-1 overflow-hidden rounded-xl cursor-grab" onmousedown={handleMouseDown} onkeydown={handleKeyPress} bind:this={scrollbarEl} role="scrollbar" aria-controls="sessions" aria-valuemin=0 aria-valuemax={scrollOffsetWidth - nippleWidth} aria-valuenow={currentAriaValue} tabindex="0">
         <div class="background absolute w-full h-full bg-neutral-800 rounded-xl"></div>
         <div bind:this={nippleEl} class="absolute h-full bg-neutral-500 rounded-xl"></div>
     </div>
