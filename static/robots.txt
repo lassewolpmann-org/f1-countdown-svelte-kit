@@ -4,5 +4,3 @@ User-agent: *
 Disallow: /*.xml$
 Disallow: /cdn-cgi/
 Disallow: /_app/
-Disallow: /privacy-policy
-Disallow: /app-privacy-policy
