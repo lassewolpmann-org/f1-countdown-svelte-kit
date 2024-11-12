@@ -3,23 +3,18 @@
     import TimerElement from "$lib/components/Timer/TimerElement.svelte";
 
     // Function imports
-    import { longSessionName } from "$lib/functions/parseSessionName";
+    import type { PrettySession } from "$lib/types/RaceData";
 
     interface Props {
-        sessionName: string;
-        sessionDate: string | undefined;
-        timestamp: number;
+        session: PrettySession
+        timestamp: number
     }
 
-    let { sessionName, sessionDate, timestamp }: Props = $props();
+    let { session, timestamp }: Props = $props();
 
     let delta = $derived.by(() => {
-        let delta = 0
-
-        if (!sessionDate) return delta
-
-        let sessionTimestamp = Math.floor(new Date(sessionDate).getTime() / 1000)
-        delta = sessionTimestamp - timestamp
+        let sessionTimestamp = Math.floor(session.startDate.getTime() / 1000)
+        let delta = sessionTimestamp - timestamp
 
         return delta >= 0 ? delta : 0
     })
@@ -35,7 +30,7 @@
 </script>
 
 <div class="flex-col-center gap-2 lg:gap-4 bg-neutral-900 rounded-xl px-4 py-2 max-w-2xl">
-    <h1 class="text-base lg:text-2xl font-semibold">{longSessionName(sessionName)}</h1>
+    <h1 class="text-base lg:text-2xl font-semibold self-start">{session.longName}</h1>
     <div class="grid grid-cols-4 gap-3">
         <TimerElement timeValue={days} timeValuePct={daysPct} strokeColor="rgb(234, 53, 19)"/>
         <TimerElement timeValue={hours} timeValuePct={hoursPct} strokeColor="rgb(244, 200, 68)"/>

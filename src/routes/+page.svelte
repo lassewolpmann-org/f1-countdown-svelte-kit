@@ -57,18 +57,14 @@
         {#if currentData && Object.keys(currentData.nextRace).length > 0}
             <div class="flex-col-center xl:flex-row-items-start w-full gap-8">
                 <div class="flex-col-center gap-4">
-                    <RaceTitle nextRace={currentData.nextRace} flags={apiData.flags} />
+                    <RaceTitle nextRace={currentData.nextRace} />
 
-                    {#each Object.keys(currentData.nextRace.sessions) as sessionName}
-                        <Timer {sessionName} sessionDate={currentData.nextRace.sessions[sessionName]} {timestamp} />
+                    {#each currentData.nextRace.prettySessions as session}
+                        <Timer {session} {timestamp} />
                     {/each}
                 </div>
 
-                <UpcomingEventList
-                        nextEvents={currentData.nextRaces}
-                        flags={apiData.flags}
-                        dataConfig={currentData.dataConfig}
-                />
+                <UpcomingEventList nextEvents={currentData.nextRaces} />
             </div>
         {:else}
             <div class="p-10">

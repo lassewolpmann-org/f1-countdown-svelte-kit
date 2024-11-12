@@ -11,7 +11,7 @@ export const load: LayoutLoad = (async ({ fetch }: any) => {
         if (!seriesData) continue
 
         seriesData.dataConfig = await apiData.getDataConfig(fetch, series);
-        seriesData.allRaces = await apiData.getAllRaces(fetch, series);
+        seriesData.allRaces = await apiData.getAllRaces(fetch, series, seriesData.dataConfig);
         seriesData.nextRaces = apiData.getNextRaces(seriesData.allRaces);
 
         let nextRace = seriesData.nextRaces.at(0)

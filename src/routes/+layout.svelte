@@ -3,8 +3,7 @@
 
     import "../app.css";
     import type { LayoutData } from './$types';
-    import { seriesName} from "$lib/functions/parseSeriesName";
-    import { longSessionName, shortSessionName } from "$lib/functions/parseSessionName";
+    import { seriesName } from "$lib/functions/parseSeriesName";
     import type { SeriesData } from "$lib/classes/APIData";
 
     interface Props {
@@ -32,8 +31,8 @@
             let metaString = `When is the next ${seriesName(series)} race? Countdown to the ${eventYear}`;
 
             const raceName = `${nextRace.name} Grand Prix. Full schedule for`;
-            const sessionNames = Object.keys(nextRace.sessions).map((session) => {
-                return `${longSessionName(session)} (${shortSessionName(session)})`
+            const sessionNames = nextRace.prettySessions.map((session) => {
+                return `${session.longName} (${session.shortName})`
             });
 
             metaString = metaString.concat(` ${seriesName(series)} ${raceName} ${sessionNames.join(', ')}.`);

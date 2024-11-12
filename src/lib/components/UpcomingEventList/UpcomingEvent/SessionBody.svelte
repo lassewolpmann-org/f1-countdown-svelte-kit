@@ -1,13 +1,13 @@
 <script lang="ts">
+    import type { PrettySession } from "$lib/types/RaceData";
+
     interface Props {
-        date: string | undefined;
-        time: string | undefined;
-        endTime: string | undefined;
+        session: PrettySession
     }
 
-    let { date, time, endTime }: Props = $props();
+    let { session }: Props = $props();
 </script>
 <div class="flex-col-start w-max">
-    <span>{date}</span>
-    <span>{time} - {endTime}</span>
+    <span>{session.startDateLocaleString}</span>
+    <span>{session.startTimeLocaleString} - {session.endTimeLocaleString}</span>
 </div>

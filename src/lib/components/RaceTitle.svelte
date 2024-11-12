@@ -4,10 +4,8 @@
 
     interface Props {
         nextRace: RaceData;
-        flags: {[key: string]: string};
     }
 
-    let { nextRace, flags }: Props = $props();
-    let flag = $derived(flags[nextRace.localeKey]);
+    let { nextRace }: Props = $props();
 </script>
-<span class="text-3xl lg:text-5xl font-medium w-full">{flag} {nextRace.name}</span>
+<span class="text-3xl lg:text-5xl font-medium w-full">{nextRace.flag} {nextRace.name}</span>
