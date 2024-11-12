@@ -41,7 +41,9 @@
     })
 </script>
 <svelte:head>
-    <title>Formula Countdown - {seriesName(currentSeries)}</title>
+    {#if currentData}
+        <title>{seriesName(currentSeries)} {currentData.nextRace.name} Countdown</title>
+    {/if}
 </svelte:head>
 {#if apiData}
     <main class="flex-col-center gap-4 w-full">

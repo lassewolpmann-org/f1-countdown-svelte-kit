@@ -43,6 +43,8 @@ export class APIData {
             const data = await res.json();
             let races: RaceData[] = data['races']
             races = races.map(race => {
+                race.name += " Grand Prix"
+
                 // Add Flag
                 let flag = flags[race.localeKey]
                 if (!flag) return race
