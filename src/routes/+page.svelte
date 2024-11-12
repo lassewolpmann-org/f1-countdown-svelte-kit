@@ -44,7 +44,7 @@
     <title>Formula Countdown - {seriesName(currentSeries)}</title>
 </svelte:head>
 {#if apiData}
-    <main class="flex flex-col items-center justify-center gap-4 w-full">
+    <main class="flex-col-center gap-4 w-full">
         <div class="bg-neutral-900 text-neutral-500 px-4 py-2 text-xs rounded-xl text-center">
             ⚠️ f1-countdown.com is now formulacountdown.com
         </div>
@@ -55,8 +55,8 @@
         </select>
 
         {#if currentData && Object.keys(currentData.nextRace).length > 0}
-            <div class="flex flex-col xl:flex-row xl:items-start items-center justify-center w-full gap-8">
-                <div class="flex flex-col items-center justify-center gap-4">
+            <div class="flex-col-center xl:flex-row-items-start w-full gap-8">
+                <div class="flex-col-center gap-4">
                     <RaceTitle nextRace={currentData.nextRace} flags={apiData.flags} />
 
                     {#each Object.keys(currentData.nextRace.sessions) as sessionName}

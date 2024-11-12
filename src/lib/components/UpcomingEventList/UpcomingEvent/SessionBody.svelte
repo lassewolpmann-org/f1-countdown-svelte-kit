@@ -7,7 +7,7 @@
 
     let { date, time, endTime }: Props = $props();
 </script>
-<div class="flex flex-col w-max">
+<div class="flex-col-start w-max">
     <span>{date}</span>
     <span>{time} - {endTime}</span>
 </div>

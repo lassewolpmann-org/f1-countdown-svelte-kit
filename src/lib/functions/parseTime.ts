@@ -1,4 +1,4 @@
-import type {DataConfig} from "$lib/types/RaceData";
+import type { DataConfig } from "$lib/types/RaceData";
 
 export const parseTime = (date: string) => {
     return new Date(date).toLocaleString(undefined, {

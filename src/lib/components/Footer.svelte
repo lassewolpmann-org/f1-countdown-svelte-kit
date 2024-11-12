@@ -1,6 +1,6 @@
-<footer class="flex flex-col gap-6 w-full max-w-6xl xl:min-w-full bg-neutral-900 px-6 py-3 rounded-xl mt-10 lg:mt-20">
-    <div class="flex flex-col lg:flex-row gap-4">
-        <div class="flex flex-col items-start">
+<footer class="flex-col-start gap-6 w-full max-w-6xl xl:min-w-full bg-neutral-900 px-6 py-3 rounded-xl mt-10 lg:mt-20">
+    <div class="flex-col-start lg:flex-row gap-4 links-hover">
+        <div class="flex-col-items-start">
             <span class="font-bold">Project links</span>
             <a href="https://github.com/lassewolpmann-org/f1-countdown-svelte-kit" target="_blank">
                 Code
@@ -13,7 +13,7 @@
             <a href="/app-privacy-policy">App Privacy Policy</a>
             <a href="/support">Support</a>
         </div>
-        <div class="flex flex-col items-start">
+        <div class="flex-col-items-start">
             <span class="font-bold">Data sources</span>
             <a href="https://github.com/sportstimes/f1" target="_blank">
                sportstimes

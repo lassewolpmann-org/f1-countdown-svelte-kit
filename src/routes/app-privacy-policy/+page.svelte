@@ -14,7 +14,7 @@
     <title>Formula Countdown - App Privacy Policy</title>
 </svelte:head>
 
-<div class="w-full flex flex-col gap-4">
+<div class="w-full flex-col-items-start gap-4">
     <a href="/" class="bg-neutral-800 w-max p-2 rounded hover:text-neutral-400">Back to main page</a>
 
     <section>

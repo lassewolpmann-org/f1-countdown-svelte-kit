@@ -34,7 +34,7 @@
     let secondsPct = $derived(seconds / 60)
 </script>
 
-<div class="flex flex-col items-start justify-center gap-2 lg:gap-4 bg-neutral-900 rounded-xl px-4 py-2 max-w-2xl">
+<div class="flex-col-center gap-2 lg:gap-4 bg-neutral-900 rounded-xl px-4 py-2 max-w-2xl">
     <h1 class="text-base lg:text-2xl font-semibold">{longSessionName(sessionName)}</h1>
     <div class="grid grid-cols-4 gap-3">
         <TimerElement timeValue={days} timeValuePct={daysPct} strokeColor="rgb(234, 53, 19)"/>

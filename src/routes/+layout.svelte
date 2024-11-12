@@ -60,7 +60,7 @@
     <meta name="description" content="{metaDescription.metaString}">
 </svelte:head>
 {#if apiData}
-    <div class="flex flex-col items-center justify-center px-4 py-6 xl:px-6 xl:py-9 gap-4">
+    <div class="flex-col-center px-4 py-6 xl:px-6 xl:py-9 gap-4">
         {@render children?.()}
         <Footer />
     </div>

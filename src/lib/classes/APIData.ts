@@ -1,4 +1,4 @@
-import type {DataConfig, RaceData} from "$lib/types/RaceData";
+import type { DataConfig, RaceData } from "$lib/types/RaceData";
 import { flags } from "$lib/data/flags";
 
 export interface SeriesData {
@@ -42,6 +42,15 @@ export class APIData {
         try {
             const res = await fetch(apiURL);
             const data = await res.json();
+            let races: RaceData[] = data['races']
+            races = races.map(race => {
+                // Add Flag
+                let flag = flags[race.localeKey]
+                if (!flag) return race
+                race.flag = flag
+                return race
+            })
+            console.log(races)
             return data['races']
         } catch (e) {
             console.error(e);

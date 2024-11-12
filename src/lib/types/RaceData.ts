@@ -8,6 +8,7 @@ export interface RaceData {
     localeKey: string;
     tbc: boolean;
     sessions: { [key: string]: string };
+    flag: string
 }
 
 export interface DataConfig {

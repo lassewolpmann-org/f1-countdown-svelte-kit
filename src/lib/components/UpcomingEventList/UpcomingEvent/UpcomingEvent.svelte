@@ -146,10 +146,10 @@
 
 <svelte:window on:mouseup={() => isMouseDown = false} on:mousemove={handleMouseMove}></svelte:window>
 <div class="flex flex-col gap-2">
-    <span class="font-semibold text-base lg:text-xl bg-neutral-800 rounded-xl px-5 py-2.5">{flags[event.localeKey]} {event.name}</span>
-    <div bind:offsetWidth={scrollOffsetWidth} bind:this={scrollEl} class="flex flex-row overflow-x-auto gap-2 no-scrollbar" onscroll={changeNipplePosition} id="sessions-{upcomingEvent.event.slug}">
+    <span class="font-semibold text-base lg:text-xl bg-neutral-900 rounded-xl px-5 py-2.5">{flags[event.localeKey]} {event.name}</span>
+    <div bind:offsetWidth={scrollOffsetWidth} bind:this={scrollEl} class="flex-row-justify-start justify-start overflow-x-auto gap-2 no-scrollbar" onscroll={changeNipplePosition} id="sessions-{upcomingEvent.event.slug}">
         {#each { length: upcomingEvent.sessionNames.length } as _, i}
-            <div class="px-5 py-2.5 bg-neutral-800 rounded-xl w-full flex flex-col gap-1">
+            <div class="flex-col-start gap-1 px-5 py-2.5 bg-neutral-800 rounded-xl w-full">
                 <span class="font-semibold w-max">{upcomingEvent.sessionNames.at(i)}</span>
                 <Body
                         date={upcomingEvent.sessionDates.at(i)}
@@ -159,8 +159,8 @@
             </div>
         {/each}
     </div>
-    <div class="scrollbar relative w-full h-1 overflow-hidden rounded-xl cursor-grab" onmousedown={handleMouseDown} onkeydown={handleKeyPress} bind:this={scrollbarEl} role="scrollbar" aria-controls="sessions-{upcomingEvent.event.slug}" aria-valuemin=0 aria-valuemax={scrollOffsetWidth - nippleWidth} aria-valuenow={currentAriaValue} tabindex="0">
-        <div class="background absolute w-full h-full bg-neutral-800 rounded-xl"></div>
+    <div class="relative w-full h-1 overflow-hidden rounded-xl cursor-grab" onmousedown={handleMouseDown} onkeydown={handleKeyPress} bind:this={scrollbarEl} role="scrollbar" aria-controls="sessions-{upcomingEvent.event.slug}" aria-valuemin=0 aria-valuemax={scrollOffsetWidth - nippleWidth} aria-valuenow={currentAriaValue} tabindex="0">
+        <div class="background absolute w-full h-full bg-neutral-900 rounded-xl"></div>
         <div bind:this={nippleEl} class="absolute h-full bg-neutral-500 rounded-xl"></div>
     </div>
 </div>

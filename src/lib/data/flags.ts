@@ -1,4 +1,4 @@
-export const flags = {
+export const flags: {[key: string]: string} = {
     "bahrain-grand-prix": "🇧🇭",
     "bahrain": "🇧🇭",
     "saudi-arabia-grand-prix": "🇸🇦",
