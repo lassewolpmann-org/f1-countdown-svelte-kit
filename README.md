@@ -1,3 +1,6 @@
+# ARCHIVED
+This repository is archived. Development continues [here](https://github.com/lassewolpmann/formulacountdown)
+
 # <img src="https://raw.githubusercontent.com/lassewolpmann-org/f1-countdown-svelte-kit/main/static/favicon.png" alt="drawing" width="24"/> formulacountdown.com
 Source code for formulacountdown.com, a website created for FORMULA 1/2/3/Academy Fans to keep track of the schedule and never miss a race again.
 
