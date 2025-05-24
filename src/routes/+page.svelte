@@ -41,13 +41,26 @@
     })
 </script>
 <svelte:head>
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
     {#if currentData}
         <title>{seriesName(currentSeries)} {currentData.nextRace.name} Countdown</title>
     {/if}
 </svelte:head>
 {#if apiData}
     <main class="flex-col-center gap-4 w-full">
-        <select bind:value={currentSeries} class="bg-neutral-800 border-0 rounded-xl p-2.5" aria-label="Selection of Series (F1, F2, F3, F1 Academy)">
+        <select
+                bind:value={currentSeries}
+                class="bg-neutral-800 border-0 rounded-xl p-2.5"
+                aria-label="Selection of Series (F1, F2, F3, F1 Academy)"
+                onchange={() => {
+                    plausible('Series changed', {
+                        props: {
+                            selectedSeries: currentSeries
+                        }
+                    })
+                }}
+        >
             {#each apiData.seriesOptions as seriesOption}
                 <option value="{seriesOption}">{seriesName(seriesOption)}</option>
             {/each}

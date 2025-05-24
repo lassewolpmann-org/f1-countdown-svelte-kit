@@ -1,3 +1,6 @@
+<script lang="ts">
+
+</script>
 <footer class="flex-col-start gap-6 w-full max-w-6xl xl:min-w-full bg-neutral-900 px-6 py-3 rounded-xl mt-10 lg:mt-20">
     <div class="flex-col-start lg:flex-row gap-4 links-hover">
         <div class="flex-col-items-start">
